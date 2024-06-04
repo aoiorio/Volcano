@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
 
-class SignUpTextShape extends ConsumerWidget {
+class SignUpTextShape extends ConsumerStatefulWidget {
   const SignUpTextShape({
     super.key,
     required this.gradientColorBegin,
     required this.gradientColorEnd,
     required this.stepTitle,
     required this.hintString,
-    required this.textEditingController,
-    // required this.isFilledProvider,
   });
 
   final Color gradientColorBegin;
   final Color gradientColorEnd;
   final String stepTitle;
   final String hintString;
-  final TextEditingController textEditingController;
-  // final StateProvider isFilledProvider;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SignUpTextShapeState();
+}
+
+class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    final textEditingController = ref
+        .watch(signUpTextEditingControllerProvider(widget.hintString).notifier)
+        .state;
+    final passwordText =
+        ref.watch(passwordTextControllerProvider.notifier).state.text;
 
     return Expanded(
       child: Stack(
@@ -39,7 +50,7 @@ class SignUpTextShape extends ConsumerWidget {
                   topRight: Radius.circular(100),
                 ),
                 gradient: LinearGradient(
-                  colors: [gradientColorBegin, gradientColorEnd],
+                  colors: [widget.gradientColorBegin, widget.gradientColorEnd],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -49,7 +60,7 @@ class SignUpTextShape extends ConsumerWidget {
           Positioned(
             top: 50,
             child: Text(
-              stepTitle,
+              widget.stepTitle,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
@@ -57,22 +68,43 @@ class SignUpTextShape extends ConsumerWidget {
             ),
           ),
           Positioned(
-            // bottom: 20,
+            // top: 20,
             child: SizedBox(
               width: 300,
               height: 90,
               child: TextField(
                 controller: textEditingController,
                 onChanged: (value) {
-                  if (!value.contains("@") && hintString.contains("email")) {
+                  // NOTE Validations
+                  if (!value.contains("@") &&
+                      widget.hintString.contains("email")) {
                     ref.watch(isEmailFilledProvider.notifier).state = false;
-                  } else if (hintString.contains("email")) {
+                  } else if (widget.hintString.contains("email") &&
+                      value.trim().isNotEmpty &&
+                      value.length >= 3) {
                     ref.watch(isEmailFilledProvider.notifier).state = true;
-                  } else if (hintString == '"password"') {
-                    ref.watch(isPasswordFilledProvider.notifier).state = true;
-                  } else if (hintString == '"confirm pw') {
-                    ref.watch(isConfirmPasswordFilledProvider.notifier).state =
-                        true;
+                  }
+                  if (widget.hintString.contains("password")) {
+                    if (value.trim().isNotEmpty && value.length >= 4) {
+                      ref.watch(isPasswordFilledProvider.notifier).state = true;
+                    } else {
+                      ref.watch(isPasswordFilledProvider.notifier).state =
+                          false;
+                    }
+                  }
+                  if (widget.hintString.contains("confirm")) {
+                    if (value.trim().isNotEmpty &&
+                        passwordText.length == value.length &&
+                        passwordText == value &&
+                        value.length >= 4) {
+                      ref
+                          .watch(isConfirmPasswordFilledProvider.notifier)
+                          .state = true;
+                    } else {
+                      ref
+                          .watch(isConfirmPasswordFilledProvider.notifier)
+                          .state = false;
+                    }
                   }
                 },
                 cursorColor: Colors.grey,
@@ -81,7 +113,7 @@ class SignUpTextShape extends ConsumerWidget {
                   contentPadding: const EdgeInsets.all(30),
                   filled: true,
                   fillColor: const Color(0xff343434),
-                  hintText: hintString,
+                  hintText: widget.hintString,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -99,6 +131,21 @@ class SignUpTextShape extends ConsumerWidget {
               ),
             ),
           ),
+          Positioned(
+            top: 385,
+            child: SignUpMainButton(
+                title: widget.hintString.contains("confirm")
+                    ? '"Finish"'
+                    : '"Next"',
+                onPress: () {
+                  HapticFeedback.mediumImpact();
+                  widget.hintString.contains("confirm")
+                      ? context.pop()
+                      : ref
+                          .watch(stepCounterProvider.notifier)
+                          .update((state) => state + 1);
+                }),
+          )
         ],
       ),
     );

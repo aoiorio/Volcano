@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
-import 'package:volcano/presentation/component/sign_up_shape_button.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
@@ -21,11 +22,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget build(BuildContext context) {
     // NOTE my providers!
     final emailStatus =
-        ref.watch(isEmailFilledProvider.notifier).state ? "OK" : "";
+        ref.watch(isEmailFilledProvider) ? "OK" : "";
     final passwordStatus =
-        ref.watch(isPasswordFilledProvider.notifier).state ? "OK" : "";
+        ref.watch(isPasswordFilledProvider) ? "OK" : "";
     final confirmPasswordStatus =
-        ref.watch(isConfirmPasswordFilledProvider.notifier).state ? "OK" : "";
+        ref.watch(isConfirmPasswordFilledProvider) ? "OK" : "";
+
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
       body: Column(
@@ -48,8 +50,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 GestureDetector(
                   onTap: () {
                     HapticFeedback.lightImpact();
+                    // NOTE change stepCounter
+                    ref.watch(stepCounterProvider.notifier).state = 0;
+
                     // NOTE go to SignUpEmailPage and to change the text of fields, I'm adding then function.
-                    context.push('/sign-up-email').then((value) {
+                    context.push('/sign-up-step').then((value) {
                       setState(() {});
                     });
                     print('This is email field');
@@ -67,11 +72,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: GestureDetector(
                     onTap: () {
                       HapticFeedback.lightImpact();
+                      ref.watch(stepCounterProvider.notifier).state = 1;
+                      context.push('/sign-up-step').then((value) {
+                        setState(() {});
+                      });
                       print('This is password field');
                     },
                     child: SignUpShapeButton(
-                      gradientColorBegin: Color(0xffB09C93),
-                      gradientColorEnd: Color(0xffBDAEAE),
+                      gradientColorBegin: const Color(0xffB09C93),
+                      gradientColorEnd: const Color(0xffBDAEAE),
                       // TODO Add status provider here like this {"Email": ${PasswordStatusProvider.read()}}
                       fieldString: '{"Password": "$passwordStatus"}',
                     ),
@@ -83,6 +92,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: GestureDetector(
                     onTap: () {
                       HapticFeedback.lightImpact();
+                      ref.watch(stepCounterProvider.notifier).state = 2;
+                      context.push('/sign-up-step').then((value) {
+                        setState(() {});
+                      });
                       print('This is Confirm PW field');
                     },
                     child: SignUpShapeButton(
@@ -95,30 +108,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 ),
                 Positioned(
                   bottom: 100,
-                  child: SizedBox(
-                    width: 200,
-                    height: 75,
-                    child: BouncedButton(
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          '"Submit"',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  fontSize: 20, color: const Color(0xff343434)),
-                        ),
-                      ),
-                      onPress: () {
-                        HapticFeedback.mediumImpact();
-                        print('hi submit');
-                      },
-                    ),
+                  child: SignUpMainButton(
+                    onPress: () {
+                      HapticFeedback.mediumImpact();
+                      print("Submit button");
+                    },
+                    title: '"Submit"',
                   ),
                 ),
                 Positioned(

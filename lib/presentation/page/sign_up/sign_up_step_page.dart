@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:flutter/services.dart';
-import 'package:volcano/presentation/component/sign_up_text_shape.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_text_shape.dart';
 import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
 
 // TODO Implement my own step by step feature by using List on so on.
@@ -13,35 +13,36 @@ class SignUpStepPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emailTextController = ref.watch(emailTextControllerProvider);
-    final passwordTextController = ref.watch(passwordTextControllerProvider);
-    final confirmPasswordTextController =
-        ref.watch(confirmPasswordTextControllerProvider);
+    // ! DO NOT USE ref.watch(stepCounterProvider.notifier).state; because it won't work
+    final stepCount = ref.watch(stepCounterProvider);
 
     final List<Widget> stepPages = [
-      SignUpTextShape(
+      const SignUpTextShape(
         gradientColorBegin: Color(0xff756980),
         gradientColorEnd: Color(0xffBDAEAE),
         stepTitle: '{\n   "1": \n   "type email"\n}',
-        hintString: '"email"',
-        textEditingController: emailTextController,
+        hintString: '"type email"',
+        // textEditingController: emailTextController,
       ),
-      SignUpTextShape(
+      const SignUpTextShape(
         gradientColorBegin: Color(0xffB09C93),
         gradientColorEnd: Color(0xffBDAEAE),
-        stepTitle: '{\n   "1": \n   "type password"\n}',
-        hintString: '"password"',
-        textEditingController: passwordTextController,
+        stepTitle: '{\n   "2": \n   "type password"\n}',
+        hintString: '"type password"',
+        // textEditingController: passwordTextController,
       ),
-      SignUpTextShape(
+      const SignUpTextShape(
         gradientColorBegin: Color(0xff8A8E7C),
         gradientColorEnd: Color(0xffBDAEAE),
-        stepTitle: '{\n   "1": \n   "type confirm PW"\n}',
-        hintString: '"confirm PW"',
-        textEditingController: confirmPasswordTextController,
+        stepTitle: '{\n   "3": \n   "type confirm PW"\n}',
+        hintString: '"type confirm PW"',
+        // textEditingController: confirmPasswordTextController,
       ),
     ];
+
     return Scaffold(
+      // NOTE it means that when I show up keyboard, the widgets won't move
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         forceMaterialTransparency: true,
 
@@ -61,7 +62,9 @@ class SignUpStepPage extends ConsumerWidget {
             ),
             onPress: () {
               HapticFeedback.lightImpact();
-              context.pop(true);
+              stepCount >= 1
+                  ? ref.watch(stepCounterProvider.notifier).state -= 1
+                  : context.pop(true);
             },
           ),
         ),
@@ -78,31 +81,50 @@ class SignUpStepPage extends ConsumerWidget {
             const SizedBox(
               height: 150,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
                   children: [
-                    Text('{1}'),
+                    const Text('{1}'),
+                    stepCount == 0
+                        ? const Icon(
+                            Icons.arrow_upward_outlined,
+                            size: 30,
+                          )
+                        : const SizedBox()
                   ],
                 ),
-                SizedBox(width: 60),
+                const SizedBox(width: 60),
                 Column(
                   children: [
-                    Text('{2}'),
+                    const Text('{2}'),
+                    stepCount == 1
+                        ? const Icon(
+                            Icons.arrow_upward_outlined,
+                            size: 30,
+                          )
+                        : const SizedBox()
                   ],
                 ),
-                SizedBox(width: 60),
+                const SizedBox(width: 60),
                 Column(
                   children: [
-                    Text('{3}'),
+                    const Text('{3}'),
+                    stepCount == 2
+                        ? const Icon(
+                            Icons.arrow_upward_outlined,
+                            size: 30,
+                          )
+                        : const SizedBox()
                   ],
                 ),
               ],
             ),
             const SizedBox(height: 80),
-            stepPages[0]
+            // NOTE show page
+            stepPages[stepCount]
           ],
         ),
       ),

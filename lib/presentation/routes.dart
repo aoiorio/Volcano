@@ -21,8 +21,8 @@ final GoRouter goRouter = GoRouter(
     ),
     // NOTE SignUpPage router
     GoRoute(
-        path: '/sign-up-email',
-        name: 'sign-up-email',
+        path: '/sign-up-step',
+        name: 'sign-up-step',
         pageBuilder: (context, state) =>
             buildTransitionPage(child: const SignUpStepPage())),
   ],

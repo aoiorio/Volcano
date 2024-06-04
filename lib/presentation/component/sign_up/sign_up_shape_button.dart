@@ -3,21 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
 
 // TODO add provider and change the class to provider class for changing email, password texts
-// class SignUpShapeButton extends ConsumerStatefulWidget {
-//   const SignUpShapeButton({
-//     super.key,
-//     required this.gradientColorBegin,
-//     required this.gradientColorEnd,
-//     required this.fieldString,
-//   });
-
-//   final Color gradientColorBegin;
-//   final Color gradientColorEnd;
-//   final String fieldString;
-//   @override
-//   ConsumerState<ConsumerStatefulWidget> createState() => SignUpShapeButton();
-// }
-
 class SignUpShapeButton extends ConsumerStatefulWidget {
   const SignUpShapeButton({
     super.key,
@@ -68,12 +53,13 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
               widget.fieldString,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             // TODO Change this text by usign provider, so I'll create three providers which save strings of user input
             Text(
-              textEditingControllerText,
+              // NOTE hide password values
+              widget.fieldString.contains("Email")
+                  ? textEditingControllerText
+                  : textEditingControllerText.replaceAll(RegExp(r"."), "*"),
               style: Theme.of(context).textTheme.bodySmall,
             )
           ],
