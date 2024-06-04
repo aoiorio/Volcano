@@ -76,6 +76,7 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
                 controller: textEditingController,
                 onChanged: (value) {
                   // NOTE Validations
+                  // FIXME - There's a bug of validation, if I changed password again after I inputted confirm PW and password then I got home, Confirm PW status will be OK. (it's not OK!!)
                   if (!value.contains("@") &&
                       widget.hintString.contains("email")) {
                     ref.watch(isEmailFilledProvider.notifier).state = false;
