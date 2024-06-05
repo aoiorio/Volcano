@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
-import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/auth/sign_up_page_providers.dart';
 
 class SignUpTextShape extends ConsumerStatefulWidget {
   const SignUpTextShape({
@@ -77,6 +77,7 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
                 onChanged: (value) {
                   // NOTE Validations
                   // FIXME - There's a bug of validation, if I changed password again after I inputted confirm PW and password then I got home, Confirm PW status will be OK. (it's not OK!!)
+                  // NOTE I think that I should create provider like final signUpStatusProvider = StateProvider() and then I want to execute it in initState function. So that I can refresh the page
                   if (!value.contains("@") &&
                       widget.hintString.contains("email")) {
                     ref.watch(isEmailFilledProvider.notifier).state = false;

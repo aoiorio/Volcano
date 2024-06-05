@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/auth/auth_providers.dart';
+import 'package:volcano/presentation/provider/auth/sign_up_page_providers.dart';
 
 // TODO Implement SignUp features!
 class SignUpPage extends ConsumerStatefulWidget {
@@ -21,12 +23,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     // NOTE my providers!
-    final emailStatus =
-        ref.watch(isEmailFilledProvider) ? "OK" : "";
-    final passwordStatus =
-        ref.watch(isPasswordFilledProvider) ? "OK" : "";
+    final emailStatus = ref.watch(isEmailFilledProvider) ? "OK" : "";
+    final passwordStatus = ref.watch(isPasswordFilledProvider) ? "OK" : "";
     final confirmPasswordStatus =
         ref.watch(isConfirmPasswordFilledProvider) ? "OK" : "";
+    final authUseCase = ref.read(authUseCaseProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
@@ -111,7 +112,16 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: SignUpMainButton(
                     onPress: () {
                       HapticFeedback.mediumImpact();
-                      print("Submit button");
+                      // TODO Create API Endpoints for signing up!!!
+                      // NOTE I should create provider for this method (SignUp method) with validation!!!!!
+                      final submitResult = authUseCase.executeSignUp(
+                          email: ref.read(emailTextControllerProvider).text,
+                          password:
+                              ref.read(passwordTextControllerProvider).text,
+                          confirmPassword: ref
+                              .read(confirmPasswordTextControllerProvider)
+                              .text);
+                      print(submitResult);
                     },
                     title: '"Submit"',
                   ),

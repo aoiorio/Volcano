@@ -25,10 +25,5 @@ class MyApp extends StatelessWidget {
       title: 'Volcano',
       theme: createTheme(),
     );
-    // MaterialApp(
-    //   title: 'Volcano',
-    //   theme: createTheme(),
-    //   home: const SignUpScreen(),
-    // );
   }
 }
