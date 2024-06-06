@@ -1,6 +1,5 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/volcano_user.dart';
 import 'package:volcano/domain/repository/auth/auth_repository.dart';
 import 'package:volcano/infrastructure/datasource/auth/auth_data_source.dart';
 import 'package:volcano/infrastructure/dto/token_dto.dart';
@@ -41,21 +40,17 @@ class AuthRepositoryImpl implements AuthRepository {
           .then((value) {
         return value;
       });
+      print(Either.right(res.email));
       return Either.right(res);
-      // return Either.right(result) ;
     } on DioException catch (e) {
-      print(e.response);
       final res = e.response;
       print(res?.statusCode);
       return Either.left(
-          AuthError(statusCode: res?.statusCode, message: res?.statusMessage));
+          AuthError(statusCode: res?.statusCode, message: AuthErrorMessage.fromJson(res?.data)));
     }
   }
 }
 
-class User {
-  // Future<VolcanoUserDTO> getUser();
-}
 /*
 / ! error codes are here
 await client
@@ -82,13 +77,3 @@ await client
       return
 
 */
-
-final dio = Dio();
-
-  //Dio Options
-// dio.options = BaseOptions(
-//   contentType: 'application/json',
-//   connectTimeout: Duration(minutes: 1),
-//   sendTimeout: Duration(minutes: 1),
-//   receiveTimeout: Duration(minutes: 1),
-// );

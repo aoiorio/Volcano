@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:flutter/services.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_text_shape.dart';
-import 'package:volcano/presentation/provider/auth/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // TODO Implement my own step by step feature by using List on so on.
 class SignUpStepPage extends ConsumerWidget {
@@ -89,6 +89,7 @@ class SignUpStepPage extends ConsumerWidget {
                 Column(
                   children: [
                     const Text('{1}'),
+                    // NOTE add arrow when user is in the email field page
                     stepCount == 0
                         ? const Icon(
                             Icons.arrow_upward_outlined,

@@ -25,7 +25,6 @@ final signUpTextEditingControllerProvider =
 // NOTE it is for signup page texts
 final signUpTextControllerTextProvider =
     StateProvider.family<String, String>((ref, text) {
-  print(text);
   return text.contains("Email")
       ? ref.watch(emailTextControllerProvider).text
       : text.contains("Password")
@@ -38,3 +37,5 @@ final isEmailFilledProvider = StateProvider((ref) => false);
 final isPasswordFilledProvider = StateProvider((ref) => false);
 
 final isConfirmPasswordFilledProvider = StateProvider((ref) => false);
+
+final isSignUpLoadingProvider = StateProvider((ref) => false);

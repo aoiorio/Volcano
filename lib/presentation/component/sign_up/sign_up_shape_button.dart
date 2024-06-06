@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:volcano/presentation/provider/auth/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // TODO add provider and change the class to provider class for changing email, password texts
 class SignUpShapeButton extends ConsumerStatefulWidget {
