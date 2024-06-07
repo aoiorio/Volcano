@@ -171,10 +171,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               if (!context.mounted) return;
                               // NOTE users can't go back this page if they pushed this button
                               context.pushReplacement('/volcano');
-                              ref.read(isSignUpLoadingProvider.notifier).state =
-                                  false;
                               showToastMessage(toast, "💡 You've signed Up!",
                                   ToastWidgetKind.success);
+                              ref.read(isSignUpLoadingProvider.notifier).state =
+                                  false;
                             } else if (signUpResult.isLeft()) {
                               signUpResult.getLeft().fold(() => null, (error) {
                                 final String errorMessage =
