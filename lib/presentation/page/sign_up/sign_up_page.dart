@@ -1,16 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/volcano_user.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_methods.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
@@ -26,18 +21,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     // NOTE my providers!
-    final emailStatus = ref.watch(isEmailFilledProvider) ? "OK" : "";
-    final passwordStatus = ref.watch(isPasswordFilledProvider) ? "OK" : "";
+    final emailStatus = ref.watch(emailStatusProvider) ? "OK" : "";
+    final passwordStatus = ref.watch(passwordStatusProvider) ? "OK" : "";
     final confirmPasswordStatus =
-        ref.watch(isConfirmPasswordFilledProvider) ? "OK" : "";
+        ref.watch(confirmPasswordStatusProvider) ? "OK" : "";
     final authUseCase = ref.read(authUseCaseProvider);
     final isLoading = ref.watch(isSignUpLoadingProvider);
-
-    // @override
-    // void dispose() {
-    //   // ref.read(signUpProvider)
-    //   super.dispose();
-    // }
 
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
@@ -73,9 +62,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           print('This is email field');
                         },
                         child: SignUpShapeButton(
-                          gradientColorBegin: Color(0xff756980),
-                          gradientColorEnd: Color(0xffBDAEAE),
-                          // TODO Add status provider here like this {"Email": ${StatusProvider.read()}}
+                          gradientColorBegin: const Color(0xff756980),
+                          gradientColorEnd: const Color(0xffBDAEAE),
+                          // DONE Add status provider here like this {"Email": ${StatusProvider.read()}}
                           fieldString: '{"Email": "$emailStatus"}',
                         ),
                       ),
@@ -94,7 +83,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           child: SignUpShapeButton(
                             gradientColorBegin: const Color(0xffB09C93),
                             gradientColorEnd: const Color(0xffBDAEAE),
-                            // TODO Add status provider here like this {"Email": ${PasswordStatusProvider.read()}}
+                            // DONE Add status provider here like this {"Email": ${PasswordStatusProvider.read()}}
                             fieldString: '{"Password": "$passwordStatus"}',
                           ),
                         ),
@@ -112,9 +101,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             print('This is Confirm PW field');
                           },
                           child: SignUpShapeButton(
-                            gradientColorBegin: Color(0xff8A8E7C),
-                            gradientColorEnd: Color(0xffBDAEAE),
-                            // TODO Add status provider here like this {"Email": ${ConfirmPasswordStatusProvider.read()}}
+                            gradientColorBegin: const Color(0xff8A8E7C),
+                            gradientColorEnd: const Color(0xffBDAEAE),
+                            // DONE Add status provider here like this {"Email": ${ConfirmPasswordStatusProvider.read()}}
                             fieldString:
                                 '{"Confirm PW": "$confirmPasswordStatus"}',
                           ),
@@ -125,8 +114,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         child: SignUpMainButton(
                           onPress: () async {
                             HapticFeedback.mediumImpact();
-                            // TODO Create API Endpoints for signing up!!!
+                            // DONE Create API Endpoints for signing up!!!
                             // NOTE I should create provider for this method (SignUp method) with validation!!!!!
+                            if (emailStatus.isEmpty) {
+                              showMessage(
+                                  'Email must be at least 3 characters and contain @');
+                              return;
+                            }
                             ref.read(isSignUpLoadingProvider.notifier).state =
                                 true;
                             final signUpResult = await authUseCase.executeSignUp(
@@ -146,8 +140,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               ref.read(isSignUpLoadingProvider.notifier).state =
                                   false;
                             } else if (signUpResult.isLeft()) {
-                              signUpResult.getLeft().fold(() => null,
-                                  (error) => print(error.message?.detail ?? ""));
+                              signUpResult.getLeft().fold(
+                                  () => null,
+                                  (error) =>
+                                      print(error.message?.detail ?? ""));
                             }
                             ref.read(isSignUpLoadingProvider.notifier).state =
                                 false;

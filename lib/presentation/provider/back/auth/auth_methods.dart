@@ -2,12 +2,6 @@
 // TODO use FutureProvider for loading page
 // I think I don't need to create a class though
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/volcano_user.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
-import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // final signUpFutureProvider =
 //     FutureProvider<Either<AuthError, VolcanoUser>>((ref) async {

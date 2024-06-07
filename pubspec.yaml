@@ -51,7 +51,12 @@ dependencies:
   build_runner: ^2.4.9
   flutter_dotenv: ^5.1.0
   fpdart: ^1.1.0
+  freezed_annotation: ^2.4.1
+  flash: ^3.1.0
 
+  dio: any
+  riverpod: any
+  fluttertoast: ^8.2.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
