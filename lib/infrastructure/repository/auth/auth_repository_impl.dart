@@ -25,7 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<AuthError, VolcanoUserDTO>> signUp(
+  Future<Either<AuthError, TokenDTO>> signUp(
       {required String email,
       required String password,
       required String confirmPassword}) async {
@@ -40,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
           .then((value) {
         return value;
       });
-      print(Either.right(res.email));
+      print(Either.right(res.accessToken));
       return Either.right(res);
     } on DioException catch (e) {
       final res = e.response;

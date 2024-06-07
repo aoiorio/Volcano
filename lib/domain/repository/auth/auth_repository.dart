@@ -7,7 +7,7 @@ import '../../entity/volcano_user.dart';
 
 // NOTE if the values that return from back-end, they must be an entity.
 abstract class AuthRepository {
-  Future<Either<AuthError, VolcanoUser>> signUp({
+  Future<Either<AuthError, Token>> signUp({
     required String email,
     required String password,
     required String confirmPassword,

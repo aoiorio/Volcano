@@ -4,6 +4,7 @@ import 'package:volcano/domain/entity/token.dart';
 import 'package:volcano/domain/entity/volcano_user.dart';
 import 'package:volcano/domain/repository/auth/auth_repository.dart';
 import 'package:volcano/domain/usecase/auth/auth_use_case.dart';
+import 'package:volcano/infrastructure/dto/token_dto.dart';
 
 class AuthUseCaseImpl implements AuthUseCase {
   final AuthRepository _authRepository;
@@ -14,7 +15,7 @@ class AuthUseCaseImpl implements AuthUseCase {
       : _authRepository = authRepository;
 
   @override
-  Future<Either<AuthError, Token>> executeSignIn({
+  Future<Either<AuthError, TokenDTO>> executeSignIn({
     required String email,
     required String password,
   }) {
@@ -23,13 +24,13 @@ class AuthUseCaseImpl implements AuthUseCase {
   }
 
   @override
-  Future<Either<AuthError, String>> executeSignOut() {
+  Future<Either<AuthError, TokenDTO>> executeSignOut() {
     // TODO: implement executeSignOut
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AuthError, VolcanoUser>> executeSignUp({
+  Future<Either<AuthError, Token>> executeSignUp({
     required String email,
     required String password,
     required String confirmPassword,

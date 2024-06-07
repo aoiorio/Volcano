@@ -18,17 +18,19 @@ void showToastMessage(
   return toast.showToast(
     child: child,
     gravity: ToastGravity.CENTER,
+    // NOTE it means that if this toast is active and the user is trying to active it again, the old toast will be disable
+    isDismissable: true,
   );
 }
 
 Widget toastSuccessWidget(String message) => Container(
       padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-        // borderRadius: BorderRadius.circular(0),
-        gradient: LinearGradient(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        gradient: const LinearGradient(
           colors: [
             Color.fromARGB(255, 0, 0, 0),
-            Color.fromARGB(255, 53, 53, 53),
+            Color.fromARGB(255, 79, 78, 78),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -36,6 +38,7 @@ Widget toastSuccessWidget(String message) => Container(
       ),
       child: Text(
         '"$message"',
+        textAlign: TextAlign.center,
         style: const TextStyle(
           fontSize: 18,
           color: Colors.white,
@@ -45,12 +48,14 @@ Widget toastSuccessWidget(String message) => Container(
 
 Widget toastErrorWidget(String message) => Container(
       padding: const EdgeInsets.all(10),
-      decoration: const  BoxDecoration(
-        // borderRadius: BorderRadius.circular(0),
-        gradient: LinearGradient(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        gradient: const LinearGradient(
           colors: [
-            Color.fromARGB(255, 115, 64, 64),
-            Color.fromARGB(255, 111, 50, 50),
+            Color.fromARGB(255, 101, 72, 72),
+            Color.fromARGB(255, 108, 88, 88),
+            // Color.fromARGB(255, 97, 90, 90),
+            // Color.fromARGB(255, 111, 50, 50),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

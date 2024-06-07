@@ -18,7 +18,7 @@ abstract class AuthDataSource {
 
   // TODO change the value to correct one.
   @POST("/auth/sign_up_user")
-  Future<VolcanoUserDTO> signUp(
+  Future<TokenDTO> signUp(
       @Body() SignUpVolcanoUserModel signUpVolcanoUserModel);
 
   // NOTE signIn method will return Token

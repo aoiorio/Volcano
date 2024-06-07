@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
@@ -41,7 +42,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
       body: isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(
+              child: SpinKitPouringHourGlass(
+              color: Colors.black,
+              duration: Duration(milliseconds: 1000),
+            ))
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,13 +173,18 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               context.pushReplacement('/volcano');
                               ref.read(isSignUpLoadingProvider.notifier).state =
                                   false;
+                              showToastMessage(toast, "💡 You've signed Up!",
+                                  ToastWidgetKind.success);
                             } else if (signUpResult.isLeft()) {
                               signUpResult.getLeft().fold(() => null, (error) {
+                                final String errorMessage =
+                                    error.message?.detail.toString() ??
+                                        "Something went wrong";
                                 showToastMessage(
-                                    toast,
-                                    error.message?.detail ??
-                                        "Something went wrong",
-                                    ToastWidgetKind.error);
+                                  toast,
+                                  "😵‍💫 $errorMessage",
+                                  ToastWidgetKind.error,
+                                );
                               });
                             }
                             ref.read(isSignUpLoadingProvider.notifier).state =
@@ -193,7 +203,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!
-                                    .copyWith(color: const Color(0xff343434)),
+                                    .copyWith(
+                                      color: const Color(0xff343434),
+                                    ),
                               ),
                               const SizedBox(width: 10),
                               const Icon(Icons.arrow_forward)

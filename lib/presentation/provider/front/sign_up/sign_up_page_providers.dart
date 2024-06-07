@@ -40,5 +40,3 @@ final passwordStatusProvider = StateProvider((ref) => false);
 final confirmPasswordStatusProvider = StateProvider((ref) => false);
 
 final isSignUpLoadingProvider = StateProvider((ref) => false);
-// TODO create own toast here with gradient color
-void showMessage(String message) => Fluttertoast.showToast(msg: message, backgroundColor: Colors.black87);

@@ -4,7 +4,7 @@ import 'package:volcano/domain/entity/token.dart';
 import 'package:volcano/domain/entity/volcano_user.dart';
 
 abstract class AuthUseCase {
-  Future<Either<AuthError, VolcanoUser>> executeSignUp({
+  Future<Either<AuthError, Token>> executeSignUp({
     required String email,
     required String password,
     required String confirmPassword,
@@ -15,5 +15,5 @@ abstract class AuthUseCase {
     required String password,
   });
 
-  Future<Either<AuthError, String>> executeSignOut();
+  Future<Either<AuthError, Token>> executeSignOut();
 }

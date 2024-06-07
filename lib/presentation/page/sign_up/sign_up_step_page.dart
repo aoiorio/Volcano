@@ -62,9 +62,7 @@ class SignUpStepPage extends ConsumerWidget {
             ),
             onPress: () {
               HapticFeedback.lightImpact();
-              stepCount >= 1
-                  ? ref.watch(stepCounterProvider.notifier).state -= 1
-                  : context.pop(true);
+              context.pop(true);
             },
           ),
         ),
@@ -85,41 +83,59 @@ class SignUpStepPage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    const Text('{1}'),
-                    // NOTE add arrow when user is in the email field page
-                    stepCount == 0
-                        ? const Icon(
-                            Icons.arrow_upward_outlined,
-                            size: 30,
-                          )
-                        : const SizedBox()
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    ref.watch(stepCounterProvider.notifier).state = 0;
+                  },
+                  child: Column(
+                    children: [
+                      const Text('{1}'),
+                      // NOTE add arrow when user is in the email field page
+                      stepCount == 0
+                          ? const Icon(
+                              Icons.arrow_upward_outlined,
+                              size: 30,
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 60),
-                Column(
-                  children: [
-                    const Text('{2}'),
-                    stepCount == 1
-                        ? const Icon(
-                            Icons.arrow_upward_outlined,
-                            size: 30,
-                          )
-                        : const SizedBox()
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    ref.watch(stepCounterProvider.notifier).state = 1;
+                  },
+                  child: Column(
+                    children: [
+                      const Text('{2}'),
+                      stepCount == 1
+                          ? const Icon(
+                              Icons.arrow_upward_outlined,
+                              size: 30,
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 60),
-                Column(
-                  children: [
-                    const Text('{3}'),
-                    stepCount == 2
-                        ? const Icon(
-                            Icons.arrow_upward_outlined,
-                            size: 30,
-                          )
-                        : const SizedBox()
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    ref.watch(stepCounterProvider.notifier).state = 2;
+                  },
+                  child: Column(
+                    children: [
+                      const Text('{3}'),
+                      stepCount == 2
+                          ? const Icon(
+                              Icons.arrow_upward_outlined,
+                              size: 30,
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
               ],
             ),

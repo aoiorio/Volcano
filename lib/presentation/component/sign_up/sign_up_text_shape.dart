@@ -25,11 +25,11 @@ class SignUpTextShape extends ConsumerStatefulWidget {
 }
 
 class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
-  @override
-  void initState() {
-    if (ref.read(passwordTextControllerProvider).text ==
-        ref.read(confirmPasswordTextControllerProvider).text) super.initState();
-  }
+  // @override
+  // void initState() {
+  //   if (ref.read(passwordTextControllerProvider).text ==
+  //       ref.read(confirmPasswordTextControllerProvider).text) super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,6 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
     final textEditingController = ref
         .watch(signUpTextEditingControllerProvider(widget.hintString).notifier)
         .state;
-    final passwordText =
-        ref.watch(passwordTextControllerProvider.notifier).state.text;
 
     return Expanded(
       child: Stack(
