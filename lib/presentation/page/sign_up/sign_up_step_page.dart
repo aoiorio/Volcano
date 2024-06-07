@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:flutter/services.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_text_shape.dart';
-import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // TODO Implement my own step by step feature by using List on so on.
 class SignUpStepPage extends ConsumerWidget {
@@ -41,6 +40,7 @@ class SignUpStepPage extends ConsumerWidget {
     ];
 
     return Scaffold(
+      //LINK - Please Write Notion about resizeToAvoidBottomInset
       // NOTE it means that when I show up keyboard, the widgets won't move
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -62,9 +62,7 @@ class SignUpStepPage extends ConsumerWidget {
             ),
             onPress: () {
               HapticFeedback.lightImpact();
-              stepCount >= 1
-                  ? ref.watch(stepCounterProvider.notifier).state -= 1
-                  : context.pop(true);
+              context.pop(true);
             },
           ),
         ),
@@ -85,40 +83,59 @@ class SignUpStepPage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    const Text('{1}'),
-                    stepCount == 0
-                        ? const Icon(
-                            Icons.arrow_upward_outlined,
-                            size: 30,
-                          )
-                        : const SizedBox()
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    ref.watch(stepCounterProvider.notifier).state = 0;
+                  },
+                  child: Column(
+                    children: [
+                      const Text('{1}'),
+                      // NOTE add arrow when user is in the email field page
+                      stepCount == 0
+                          ? const Icon(
+                              Icons.arrow_upward_outlined,
+                              size: 30,
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 60),
-                Column(
-                  children: [
-                    const Text('{2}'),
-                    stepCount == 1
-                        ? const Icon(
-                            Icons.arrow_upward_outlined,
-                            size: 30,
-                          )
-                        : const SizedBox()
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    ref.watch(stepCounterProvider.notifier).state = 1;
+                  },
+                  child: Column(
+                    children: [
+                      const Text('{2}'),
+                      stepCount == 1
+                          ? const Icon(
+                              Icons.arrow_upward_outlined,
+                              size: 30,
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 60),
-                Column(
-                  children: [
-                    const Text('{3}'),
-                    stepCount == 2
-                        ? const Icon(
-                            Icons.arrow_upward_outlined,
-                            size: 30,
-                          )
-                        : const SizedBox()
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    ref.watch(stepCounterProvider.notifier).state = 2;
+                  },
+                  child: Column(
+                    children: [
+                      const Text('{3}'),
+                      stepCount == 2
+                          ? const Icon(
+                              Icons.arrow_upward_outlined,
+                              size: 30,
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
                 ),
               ],
             ),

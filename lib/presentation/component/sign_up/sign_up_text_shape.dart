@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
-import 'package:volcano/presentation/provider/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 class SignUpTextShape extends ConsumerStatefulWidget {
   const SignUpTextShape({
@@ -25,6 +25,12 @@ class SignUpTextShape extends ConsumerStatefulWidget {
 }
 
 class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
+  // @override
+  // void initState() {
+  //   if (ref.read(passwordTextControllerProvider).text ==
+  //       ref.read(confirmPasswordTextControllerProvider).text) super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -33,8 +39,6 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
     final textEditingController = ref
         .watch(signUpTextEditingControllerProvider(widget.hintString).notifier)
         .state;
-    final passwordText =
-        ref.watch(passwordTextControllerProvider.notifier).state.text;
 
     return Expanded(
       child: Stack(
@@ -76,36 +80,30 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
                 controller: textEditingController,
                 onChanged: (value) {
                   // NOTE Validations
-                  // FIXME - There's a bug of validation, if I changed password again after I inputted confirm PW and password then I got home, Confirm PW status will be OK. (it's not OK!!)
-                  if (!value.contains("@") &&
-                      widget.hintString.contains("email")) {
-                    ref.watch(isEmailFilledProvider.notifier).state = false;
-                  } else if (widget.hintString.contains("email") &&
-                      value.trim().isNotEmpty &&
-                      value.length >= 3) {
-                    ref.watch(isEmailFilledProvider.notifier).state = true;
+                  // DONE - There's a bug of validation, if I changed password again after I inputted confirm PW and password then I got home, Confirm PW status will be OK. (it's not OK!!)
+                  final emailText = ref.read(emailTextControllerProvider).text;
+                  final passwordText =
+                      ref.read(passwordTextControllerProvider).text;
+                  final confirmPasswordText =
+                      ref.read(confirmPasswordTextControllerProvider).text;
+                  if (emailText.contains('@') && emailText.trim().length >= 3) {
+                    ref.read(emailStatusProvider.notifier).state = true;
+                  } else {
+                    ref.read(emailStatusProvider.notifier).state = false;
                   }
-                  if (widget.hintString.contains("password")) {
-                    if (value.trim().isNotEmpty && value.length >= 4) {
-                      ref.watch(isPasswordFilledProvider.notifier).state = true;
-                    } else {
-                      ref.watch(isPasswordFilledProvider.notifier).state =
-                          false;
-                    }
+                  if (passwordText.trim().length >= 4) {
+                    ref.read(passwordStatusProvider.notifier).state = true;
+                  } else {
+                    ref.read(passwordStatusProvider.notifier).state = false;
                   }
-                  if (widget.hintString.contains("confirm")) {
-                    if (value.trim().isNotEmpty &&
-                        passwordText.length == value.length &&
-                        passwordText == value &&
-                        value.length >= 4) {
-                      ref
-                          .watch(isConfirmPasswordFilledProvider.notifier)
-                          .state = true;
-                    } else {
-                      ref
-                          .watch(isConfirmPasswordFilledProvider.notifier)
-                          .state = false;
-                    }
+
+                  if (confirmPasswordText.trim().length >= 4 &&
+                      confirmPasswordText == passwordText) {
+                    ref.read(confirmPasswordStatusProvider.notifier).state =
+                        true;
+                  } else {
+                    ref.read(confirmPasswordStatusProvider.notifier).state =
+                        false;
                   }
                 },
                 cursorColor: Colors.grey,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:volcano/presentation/theme.dart';
 
 import 'presentation/routes.dart';
+
 
 void main() {
   runApp(
@@ -19,16 +21,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      // key: navigatorKey,
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,
       routeInformationProvider: goRouter.routeInformationProvider,
       title: 'Volcano',
       theme: createTheme(),
     );
-    // MaterialApp(
-    //   title: 'Volcano',
-    //   theme: createTheme(),
-    //   home: const SignUpScreen(),
-    // );
   }
 }

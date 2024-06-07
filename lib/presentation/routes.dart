@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/page/sign_up/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/sign_up/sign_up_page.dart';
-
+import 'package:volcano/presentation/page/volcano/volcano_page.dart';
 /// The route configuration.
 final GoRouter goRouter = GoRouter(
   initialLocation: '/',
@@ -21,10 +21,17 @@ final GoRouter goRouter = GoRouter(
     ),
     // NOTE SignUpPage router
     GoRoute(
-        path: '/sign-up-step',
-        name: 'sign-up-step',
-        pageBuilder: (context, state) =>
-            buildTransitionPage(child: const SignUpStepPage())),
+      path: '/sign-up-step',
+      name: 'sign-up-step',
+      pageBuilder: (context, state) =>
+          buildTransitionPage(child: const SignUpStepPage()),
+    ),
+    GoRoute(
+      path: '/volcano',
+      name: 'volcano',
+      pageBuilder: (context, state) =>
+          buildTransitionPage(child: const VolcanoPage()),
+    ),
   ],
 );
 

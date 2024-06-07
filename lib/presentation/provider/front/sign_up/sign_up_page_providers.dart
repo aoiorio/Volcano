@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:riverpod/riverpod.dart';
 
 final stepCounterProvider = StateProvider((ref) => 0);
@@ -25,7 +26,6 @@ final signUpTextEditingControllerProvider =
 // NOTE it is for signup page texts
 final signUpTextControllerTextProvider =
     StateProvider.family<String, String>((ref, text) {
-  print(text);
   return text.contains("Email")
       ? ref.watch(emailTextControllerProvider).text
       : text.contains("Password")
@@ -33,8 +33,10 @@ final signUpTextControllerTextProvider =
           : ref.watch(confirmPasswordTextControllerProvider).text;
 });
 
-final isEmailFilledProvider = StateProvider((ref) => false);
+final emailStatusProvider = StateProvider((ref) => false);
 
-final isPasswordFilledProvider = StateProvider((ref) => false);
+final passwordStatusProvider = StateProvider((ref) => false);
 
-final isConfirmPasswordFilledProvider = StateProvider((ref) => false);
+final confirmPasswordStatusProvider = StateProvider((ref) => false);
+
+final isSignUpLoadingProvider = StateProvider((ref) => false);

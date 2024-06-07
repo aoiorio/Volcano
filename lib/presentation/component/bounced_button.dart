@@ -29,22 +29,26 @@ class _BouncedButtonState extends State<BouncedButton>
     });
   }
 
+  // NOTE _controller must be above the super.dispose() method here!!!
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (mounted) {
+      setState(() {});
+    }
     _scale = 1 - _controller.value;
     return Listener(
       onPointerDown: (PointerDownEvent event) {
-          _controller.forward();
+        _controller.forward();
       },
       onPointerUp: (PointerUpEvent event) {
-          _controller.reverse();
-          widget.onPress();
+        _controller.reverse();
+        widget.onPress();
       },
       child: Transform.scale(
         scale: _scale,

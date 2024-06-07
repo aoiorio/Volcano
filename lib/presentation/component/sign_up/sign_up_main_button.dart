@@ -31,7 +31,7 @@ class SignUpMainButton extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
-                .copyWith(fontSize: 20, color: const Color(0xff343434)),
+                .copyWith(fontSize: 20, color: const Color(0xff343434), fontWeight: FontWeight.bold),
           ),
         ),
       ),
