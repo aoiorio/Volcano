@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
+import 'package:volcano/presentation/component/show_custom_toast.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +20,14 @@ class SignUpPage extends ConsumerStatefulWidget {
 }
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
+  final toast = FToast();
+  @override
+  void initState() {
+    // TODO: implement initState
+    toast.init(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // NOTE my providers!
@@ -116,9 +126,27 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             HapticFeedback.mediumImpact();
                             // DONE Create API Endpoints for signing up!!!
                             // NOTE I should create provider for this method (SignUp method) with validation!!!!!
+                            // NOTE validation and show Toasts!
                             if (emailStatus.isEmpty) {
-                              showMessage(
-                                  'Email must be at least 3 characters and contain @');
+                              showToastMessage(
+                                toast,
+                                "Email must have at least \n 3 characters and contain @",
+                                ToastWidgetKind.error,
+                              );
+                              return;
+                            } else if (passwordStatus.isEmpty) {
+                              showToastMessage(
+                                toast,
+                                "Password must have \n at least 4 characters",
+                                ToastWidgetKind.error,
+                              );
+                              return;
+                            } else if (confirmPasswordStatus.isEmpty) {
+                              showToastMessage(
+                                toast,
+                                "Confirm PW must be \n same as password",
+                                ToastWidgetKind.error,
+                              );
                               return;
                             }
                             ref.read(isSignUpLoadingProvider.notifier).state =
@@ -133,17 +161,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                     .read(confirmPasswordTextControllerProvider)
                                     .text);
 
-                            // TODO implement flutter toast!!! pop up here!!!
+                            // DONE implement flutter toast!!! pop up here!!!
                             if (signUpResult.isRight()) {
                               if (!context.mounted) return;
-                              context.push('/volcano');
+                              // NOTE users can't go back this page if they pushed this button
+                              context.pushReplacement('/volcano');
                               ref.read(isSignUpLoadingProvider.notifier).state =
                                   false;
                             } else if (signUpResult.isLeft()) {
-                              signUpResult.getLeft().fold(
-                                  () => null,
-                                  (error) =>
-                                      print(error.message?.detail ?? ""));
+                              signUpResult.getLeft().fold(() => null, (error) {
+                                showToastMessage(
+                                    toast,
+                                    error.message?.detail ??
+                                        "Something went wrong",
+                                    ToastWidgetKind.error);
+                              });
                             }
                             ref.read(isSignUpLoadingProvider.notifier).state =
                                 false;
