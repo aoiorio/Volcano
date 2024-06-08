@@ -1,15 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/repository/auth/auth_repository.dart';
 import 'package:volcano/infrastructure/datasource/auth/auth_data_source.dart';
 import 'package:volcano/infrastructure/dto/token_dto.dart';
-import 'package:volcano/infrastructure/dto/volcano_user_dto.dart';
-import 'package:dio/dio.dart';
 import 'package:volcano/infrastructure/model/sign_up_volcano_user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthDataSource _client;
   AuthRepositoryImpl({required AuthDataSource client}) : _client = client;
+  final AuthDataSource _client;
 
   @override
   Future<Either<AuthError, TokenDTO>> signIn(

@@ -1,15 +1,14 @@
 import 'dart:convert';
 class AuthError {
-  final int? statusCode;
-  final AuthErrorMessage? message;
 
   AuthError({this.statusCode, this.message});
+  final int? statusCode;
+  final AuthErrorMessage? message;
 }
 
 
 
 class AuthErrorMessage {
-    final String? detail;
 
     AuthErrorMessage({
         this.detail,
@@ -17,13 +16,14 @@ class AuthErrorMessage {
 
     factory AuthErrorMessage.fromRawJson(String str) => AuthErrorMessage.fromJson(json.decode(str));
 
+    factory AuthErrorMessage.fromJson(Map<String, dynamic> json) => AuthErrorMessage(
+        detail: json['detail'],
+    );
+    final String? detail;
+
     String toRawJson() => json.encode(toJson());
 
-    factory AuthErrorMessage.fromJson(Map<String, dynamic> json) => AuthErrorMessage(
-        detail: json["detail"],
-    );
-
     Map<String, dynamic> toJson() => {
-        "detail": detail,
+        'detail': detail,
     };
 }

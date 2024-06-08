@@ -1,5 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 // part 'volcano_user.freezed.dart';
 // part 'volcano_user.g.dart';
 

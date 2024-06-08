@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
-// TODO add provider and change the class to provider class for changing email, password texts
+// TODOadd provider and change the class to provider class for changing email, password texts
 class SignUpShapeButton extends ConsumerStatefulWidget {
   const SignUpShapeButton({
     super.key,
@@ -23,10 +23,10 @@ class SignUpShapeButton extends ConsumerStatefulWidget {
 class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    final textEditingControllerText = widget.fieldString.contains("Email")
+    final width = MediaQuery.of(context).size.width;
+    final textEditingControllerText = widget.fieldString.contains('Email')
         ? ref.watch(emailTextControllerProvider.notifier).state.text
-        : widget.fieldString.contains("Password")
+        : widget.fieldString.contains('Password')
             ? ref.watch(passwordTextControllerProvider.notifier).state.text
             : ref
                 .watch(confirmPasswordTextControllerProvider.notifier)
@@ -54,12 +54,12 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 10),
-            // TODO Change this text by usign provider, so I'll create three providers which save strings of user input
+            // TODOChange this text by using provider, so I'll create three providers which save strings of user input
             Text(
               // NOTE hide password values
-              widget.fieldString.contains("Email")
+              widget.fieldString.contains('Email')
                   ? textEditingControllerText
-                  : textEditingControllerText.replaceAll(RegExp(r"."), "*"),
+                  : textEditingControllerText.replaceAll(RegExp(r'.'), '*'),
               style: Theme.of(context).textTheme.bodySmall,
             )
           ],

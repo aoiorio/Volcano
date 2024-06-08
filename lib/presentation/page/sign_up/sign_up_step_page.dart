@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
-import 'package:flutter/services.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_text_shape.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
-// TODO Implement my own step by step feature by using List on so on.
+// TODOImplement my own step by step feature by using List on so on.
 class SignUpStepPage extends ConsumerWidget {
   const SignUpStepPage({super.key});
 
@@ -15,7 +15,7 @@ class SignUpStepPage extends ConsumerWidget {
     // ! DO NOT USE ref.watch(stepCounterProvider.notifier).state; because it won't work
     final stepCount = ref.watch(stepCounterProvider);
 
-    final List<Widget> stepPages = [
+    final stepPages = <Widget>[
       const SignUpTextShape(
         gradientColorBegin: Color(0xff756980),
         gradientColorEnd: Color(0xffBDAEAE),

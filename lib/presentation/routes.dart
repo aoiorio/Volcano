@@ -1,10 +1,12 @@
-// TODO Implement routes by using go_router package
+// TODOImplement routes by using go_router package
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/presentation/page/sign_up/sign_up_step_page.dart';
+import 'package:volcano/presentation/page/sign_in/sign_in_page.dart';
 import 'package:volcano/presentation/page/sign_up/sign_up_page.dart';
+import 'package:volcano/presentation/page/sign_up/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
+
 /// The route configuration.
 final GoRouter goRouter = GoRouter(
   initialLocation: '/',
@@ -22,9 +24,15 @@ final GoRouter goRouter = GoRouter(
     // NOTE SignUpPage router
     GoRoute(
       path: '/sign-up-step',
-      name: 'sign-up-step',
+      name: 'signUpStep',
       pageBuilder: (context, state) =>
           buildTransitionPage(child: const SignUpStepPage()),
+    ),
+    GoRoute(
+      path: '/sign-in',
+      name: 'signIn',
+      pageBuilder: (context, state) =>
+          buildTransitionPage(child: const SignInPage()),
     ),
     GoRoute(
       path: '/volcano',

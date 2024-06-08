@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:riverpod/riverpod.dart';
 
 final stepCounterProvider = StateProvider((ref) => 0);
@@ -16,9 +15,9 @@ final confirmPasswordTextControllerProvider =
 // NOTE family means that return TextEditingController value and get String value
 final signUpTextEditingControllerProvider =
     StateProvider.family<TextEditingController, String>((ref, text) {
-  return text.contains("email")
+  return text.contains('email')
       ? ref.watch(emailTextControllerProvider)
-      : text.contains("password")
+      : text.contains('password')
           ? ref.watch(passwordTextControllerProvider)
           : ref.watch(confirmPasswordTextControllerProvider);
 });
@@ -26,9 +25,9 @@ final signUpTextEditingControllerProvider =
 // NOTE it is for signup page texts
 final signUpTextControllerTextProvider =
     StateProvider.family<String, String>((ref, text) {
-  return text.contains("Email")
+  return text.contains('Email')
       ? ref.watch(emailTextControllerProvider).text
-      : text.contains("Password")
+      : text.contains('Password')
           ? ref.watch(passwordTextControllerProvider).text
           : ref.watch(confirmPasswordTextControllerProvider).text;
 });

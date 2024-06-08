@@ -33,11 +33,5 @@ ThemeData createTheme() {
           fontWeight: FontWeight.bold,
         ),
       ),
-      // pageTransitionsTheme: const PageTransitionsTheme(
-      //   builders: <TargetPlatform, PageTransitionsBuilder>{
-      //     TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(transitionType: SharedAxisTransitionType.horizontal,),
-      //   },
-      // ),
-      
       );
 }

@@ -1,5 +1,5 @@
-// TODO create class with Provider and it will give me some methods such as signUp, signIn and signOut
-// TODO use FutureProvider for loading page
+// TODOcreate class with Provider and it will give me some methods such as signUp, signIn and signOut
+// TODOuse FutureProvider for loading page
 // I think I don't need to create a class though
 
 

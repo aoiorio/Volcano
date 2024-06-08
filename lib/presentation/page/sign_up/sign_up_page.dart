@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
-import 'package:volcano/presentation/component/show_custom_toast.dart';
+import 'package:volcano/presentation/component/custom_toast.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
-import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
-// TODO Implement SignUp features!
+// DONE Implement SignUp features!
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
@@ -22,9 +21,9 @@ class SignUpPage extends ConsumerStatefulWidget {
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
   final toast = FToast();
+
   @override
   void initState() {
-    // TODO: implement initState
     toast.init(context);
     super.initState();
   }
@@ -32,21 +31,24 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     // NOTE my providers!
-    final emailStatus = ref.watch(emailStatusProvider) ? "OK" : "";
-    final passwordStatus = ref.watch(passwordStatusProvider) ? "OK" : "";
+    final emailStatus = ref.watch(emailStatusProvider) ? 'OK' : '';
+    final passwordStatus = ref.watch(passwordStatusProvider) ? 'OK' : '';
     final confirmPasswordStatus =
-        ref.watch(confirmPasswordStatusProvider) ? "OK" : "";
+        ref.watch(confirmPasswordStatusProvider) ? 'OK' : '';
     final authUseCase = ref.read(authUseCaseProvider);
     final isLoading = ref.watch(isSignUpLoadingProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
       body: isLoading
-          ? const Center(
-              child: SpinKitPouringHourGlass(
-              color: Colors.black,
-              duration: Duration(milliseconds: 1000),
-            ))
+          ?  Center(
+              child: Container(
+                decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xff76A4AE), Color(0xffA6A4AD)]) ),
+                child: const SpinKitPouringHourGlass(
+                color: Colors.white,
+                duration: Duration(milliseconds: 1000),
+                            ),
+              ))
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +56,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 const SizedBox(height: 120),
                 const Center(
                   child: Image(
-                    image: AssetImage("assets/images/volcano_logo.png"),
+                    image: AssetImage('assets/images/volcano_logo.png'),
                     width: 250,
                     fit: BoxFit.cover,
                   ),
@@ -74,7 +76,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           context.push('/sign-up-step').then((value) {
                             setState(() {});
                           });
-                          print('This is email field');
                         },
                         child: SignUpShapeButton(
                           gradientColorBegin: const Color(0xff756980),
@@ -93,7 +94,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             context.push('/sign-up-step').then((value) {
                               setState(() {});
                             });
-                            print('This is password field');
                           },
                           child: SignUpShapeButton(
                             gradientColorBegin: const Color(0xffB09C93),
@@ -113,7 +113,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             context.push('/sign-up-step').then((value) {
                               setState(() {});
                             });
-                            print('This is Confirm PW field');
                           },
                           child: SignUpShapeButton(
                             gradientColorBegin: const Color(0xff8A8E7C),
@@ -135,21 +134,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             if (emailStatus.isEmpty) {
                               showToastMessage(
                                 toast,
-                                "Email must have at least \n 3 characters and contain @",
+                                'Email must have at least \n 3 characters and contain @',
                                 ToastWidgetKind.error,
                               );
                               return;
                             } else if (passwordStatus.isEmpty) {
                               showToastMessage(
                                 toast,
-                                "Password must have \n at least 4 characters",
+                                'Password must have \n at least 4 characters',
                                 ToastWidgetKind.error,
                               );
                               return;
                             } else if (confirmPasswordStatus.isEmpty) {
                               showToastMessage(
                                 toast,
-                                "Confirm PW must be \n same as password",
+                                'Confirm PW must be \n same as password',
                                 ToastWidgetKind.error,
                               );
                               return;
@@ -177,12 +176,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                   false;
                             } else if (signUpResult.isLeft()) {
                               signUpResult.getLeft().fold(() => null, (error) {
-                                final String errorMessage =
+                                final errorMessage =
                                     error.message?.detail.toString() ??
-                                        "Something went wrong";
+                                        'Something went wrong';
                                 showToastMessage(
                                   toast,
-                                  "😵‍💫 $errorMessage",
+                                  '😵‍💫 $errorMessage',
                                   ToastWidgetKind.error,
                                 );
                               });
@@ -212,7 +211,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             ],
                           ),
                           onPress: () {
-                            // TODO Go to SignInPage
+                            // TODOGo to SignInPage
+                            context.push('/sign-in');
                             print('Hi SignIn');
                           },
                         ),
