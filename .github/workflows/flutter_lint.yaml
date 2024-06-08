@@ -16,6 +16,7 @@ jobs:
     steps:
       # Clones the project on the machine
       - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
 
       # Installs flutter and related dependency on this machine
       - name: Setup Flutter
