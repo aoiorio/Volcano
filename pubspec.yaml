@@ -28,42 +28,36 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  animations: ^2.0.11
+  build_runner: ^2.4.9
   cupertino_icons: ^1.0.2
+  dio: any
 
+  flash: ^3.1.0
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-
-  # NOTE Navigation
-  go_router: ^14.1.4
-  animations: ^2.0.11
-  page_transition: ^2.1.0
-
   flutter_riverpod: ^2.5.1
-
-  # NOTE API Client
-  retrofit: ^4.1.0
-  json_annotation: ^4.9.0
-  http: ^1.2.1
-
+  flutter_spinkit: ^5.2.1
+  fluttertoast: ^8.2.6
   fpdart: ^1.1.0
   freezed_annotation: ^2.4.1
-  flash: ^3.1.0
 
-  dio: any
+  go_router: ^14.1.4 # NOTE Navigation
+  http: ^1.2.1
+  json_annotation: ^4.9.0
+  page_transition: ^2.1.0 # NOTE Navigation
+
+  retrofit: ^4.1.0  # NOTE API Client
+
+
   riverpod: any
-  fluttertoast: ^8.2.6
-  flutter_spinkit: ^5.2.1
-  build_runner: ^2.4.9
 
 dev_dependencies:
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  retrofit_generator: ^8.1.0
   pedantic_mono: any
+  retrofit_generator: ^8.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

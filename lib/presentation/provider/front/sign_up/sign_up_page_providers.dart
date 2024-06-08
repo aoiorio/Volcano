@@ -37,5 +37,3 @@ final emailStatusProvider = StateProvider((ref) => false);
 final passwordStatusProvider = StateProvider((ref) => false);
 
 final confirmPasswordStatusProvider = StateProvider((ref) => false);
-
-final isSignUpLoadingProvider = StateProvider((ref) => false);

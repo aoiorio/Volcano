@@ -2,7 +2,6 @@
 // TODOuse FutureProvider for loading page
 // I think I don't need to create a class though
 
-
 // final signUpFutureProvider =
 //     FutureProvider<Either<AuthError, VolcanoUser>>((ref) async {
 //   final result = await ref.watch(authUseCaseProvider).executeSignUp(
@@ -12,7 +11,7 @@
 //   print(result);
 //   // await Future.delayed(const Duration(seconds: 2), () {});
 //   // これ！！！！！！！
-  
+
 //   print('done');
 //   return result;
 // });

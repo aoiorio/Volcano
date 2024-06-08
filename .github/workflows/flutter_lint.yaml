@@ -10,6 +10,7 @@ on:
 
 jobs:
   flutter_formatting:
+    name: 🦓 Flutter Format Codes
     # The machine, we can also use windows-latest or ubuntu-latest
     runs-on: ubuntu-latest
 
@@ -19,33 +20,25 @@ jobs:
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
 
       # Installs flutter and related dependency on this machine
-      - name: Setup Flutter
+      - name: 🐬 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: '3.19.6'
           # ^ If you want to use a specific version of flutter
+      - run: flutter --version
 
       # Fetches proj dependencies from pub
-      - name: Install dependencies
+      - name: 🌓 Install dependencies
         run: flutter pub get
         # ^ If you want to use a specific version of flutter
 
-
-      - name: Analyze codes
+      - name: 🧠 Analyze project source
         run: |
             touch ./lib/core/config.dart
-            echo "const BASE_URL = 'url here';" >> ./lib/core/config.dart
+            echo "const baseUrl = 'url here';" >> ./lib/core/config.dart
+            flutter pub run build_runner build
             dart analyze --fatal-infos
 
-
-        # Verifies if the dart code is formatted well
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
-        # --set-exit-if-changed stops execution if the any code is not well formatted
-        # --output=none prints files which needs to be formatted
-
-      # Checks for Symantic errors. Can be configured using analysis_options.yaml
-      - name: Analyze project source
-        run: flutter analyze
-        # optionally use --fatal-warnings to stop execution if any warnings are found
+      - name: 🥸  Formatter
+        run: dart format $(find lib -name "*.dart" -not \( -name "*.*freezed.dart" -o -name "*.*g.dart" \) ) --set-exit-if-changed

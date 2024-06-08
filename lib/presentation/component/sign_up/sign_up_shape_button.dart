@@ -33,7 +33,7 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
                 .state
                 .text;
 
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(50),
@@ -61,7 +61,7 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
                   ? textEditingControllerText
                   : textEditingControllerText.replaceAll(RegExp(r'.'), '*'),
               style: Theme.of(context).textTheme.bodySmall,
-            )
+            ),
           ],
         ),
       ),

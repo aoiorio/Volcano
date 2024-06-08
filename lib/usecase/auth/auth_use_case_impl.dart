@@ -1,3 +1,4 @@
+// ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/token.dart';
@@ -40,6 +41,9 @@ class AuthUseCaseImpl implements AuthUseCase {
     required String confirmPassword,
   }) async {
     return _authRepository.signUp(
-        email: email, password: password, confirmPassword: confirmPassword);
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
   }
 }

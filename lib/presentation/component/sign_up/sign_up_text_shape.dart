@@ -25,7 +25,6 @@ class SignUpTextShape extends ConsumerStatefulWidget {
 }
 
 class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -128,18 +127,18 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
           Positioned(
             top: 385,
             child: SignUpMainButton(
-                title: widget.hintString.contains('confirm')
-                    ? '"Finish"'
-                    : '"Next"',
-                onPress: () {
-                  HapticFeedback.mediumImpact();
-                  widget.hintString.contains('confirm')
-                      ? context.pop()
-                      : ref
-                          .watch(stepCounterProvider.notifier)
-                          .update((state) => state + 1);
-                }),
-          )
+              title:
+                  widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
+              onPress: () {
+                HapticFeedback.mediumImpact();
+                widget.hintString.contains('confirm')
+                    ? context.pop()
+                    : ref
+                        .watch(stepCounterProvider.notifier)
+                        .update((state) => state + 1);
+              },
+            ),
+          ),
         ],
       ),
     );

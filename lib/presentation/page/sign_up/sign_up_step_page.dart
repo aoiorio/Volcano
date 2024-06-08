@@ -81,7 +81,6 @@ class SignUpStepPage extends ConsumerWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -97,7 +96,7 @@ class SignUpStepPage extends ConsumerWidget {
                               Icons.arrow_upward_outlined,
                               size: 30,
                             )
-                          : const SizedBox()
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -115,7 +114,7 @@ class SignUpStepPage extends ConsumerWidget {
                               Icons.arrow_upward_outlined,
                               size: 30,
                             )
-                          : const SizedBox()
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -133,7 +132,7 @@ class SignUpStepPage extends ConsumerWidget {
                               Icons.arrow_upward_outlined,
                               size: 30,
                             )
-                          : const SizedBox()
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -141,7 +140,7 @@ class SignUpStepPage extends ConsumerWidget {
             ),
             const SizedBox(height: 80),
             // NOTE show page
-            stepPages[stepCount]
+            stepPages[stepCount],
           ],
         ),
       ),

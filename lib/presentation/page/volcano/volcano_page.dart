@@ -7,9 +7,10 @@ class VolcanoPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('h i i i ii i'),
-        ),
-        body: const Center(child: Text('what is this??')));
+      appBar: AppBar(
+        title: const Text('h i i i ii i'),
+      ),
+      body: const Center(child: Text('what is this??')),
+    );
   }
 }

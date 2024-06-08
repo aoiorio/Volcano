@@ -1,30 +1,3 @@
-// part 'volcano_user.freezed.dart';
-// part 'volcano_user.g.dart';
-
-// @freezed
-// class VolcanoUser with _$VolcanoUser {
-//     const factory VolcanoUser({
-//         @JsonKey(name: "user_id")
-//         String? userId,
-//         @JsonKey(name: "username")
-//         String? username,
-//         @JsonKey(name: "email")
-//         String? email,
-//         @JsonKey(name: "created_at")
-//         DateTime? createdAt,
-//         @JsonKey(name: "hashed_password")
-//         String? hashedPassword,
-//         @JsonKey(name: "id")
-//         int? id,
-//         @JsonKey(name: "icon")
-//         String? icon,
-//         @JsonKey(name: "updated_at")
-//         DateTime? updatedAt,
-//     }) = _VolcanoUser;
-
-//     factory VolcanoUser.fromJson(Map<String, dynamic> json) => _$VolcanoUserFromJson(json);
-// }
-
 class VolcanoUser {
   VolcanoUser({
     this.id,

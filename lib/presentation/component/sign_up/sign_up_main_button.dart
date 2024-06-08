@@ -26,10 +26,11 @@ class SignUpMainButton extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(fontSize: 20, color: const Color(0xff343434), fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20,
+                  color: const Color(0xff343434),
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
       ),
