@@ -31,8 +31,13 @@ jobs:
         run: flutter pub get
         # ^ If you want to use a specific version of flutter
 
+
       - name: Analyze codes
-        run: dart analyze --fatal-infos
+        run: |
+            touch ./lib/core/config.dart
+            echo "const BASE_URL = 'url here';" >> ./lib/core/config.dart
+            dart analyze --fatal-infos
+
 
         # Verifies if the dart code is formatted well
       - name: Verify formatting
