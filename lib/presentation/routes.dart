@@ -1,10 +1,10 @@
-// TODOImplement routes by using go_router package
+// DONE Implement routes by using go_router package
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/page/sign_in/sign_in_page.dart';
-import 'package:volcano/presentation/page/sign_up/sign_up_page.dart';
 import 'package:volcano/presentation/page/sign_up/sign_up_step_page.dart';
+import 'package:volcano/presentation/page/start/start_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
 
 /// The route configuration.
@@ -13,11 +13,11 @@ final GoRouter goRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      name: 'signUpScreen',
+      name: 'startPage',
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: const SignUpPage(),
+          child: const StartPage(),
         );
       },
     ),

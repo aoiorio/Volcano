@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:volcano/core/errors.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:volcano/presentation/component/custom_toast.dart';
 import 'package:volcano/presentation/component/loading_transparent_dialog.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
+import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // DONE Implement SignUp features!
@@ -36,20 +38,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     final confirmPasswordStatus =
         ref.watch(confirmPasswordStatusProvider) ? 'OK' : '';
     final authUseCase = ref.read(authUseCaseProvider);
+    final authSharedPreferenceNotifier =
+        ref.watch(authSharedPreferenceProvider.notifier);
+    final authSharedPreference = ref.watch(authSharedPreferenceProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
-      // isLoading
-      // ?  const Center(
-      //     child: DecoratedBox(
-      //       decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xff76A4AE), Color(0xffA6A4AD)]) ),
-      //       child: SpinKitPouringHourGlass(
-      //       color: Colors.white,
-      //       duration: Duration(milliseconds: 1000),
-      //                   ),
-      //     ),)
-      // ? showLoadingDialog(context: context)
-      // :
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -169,14 +163,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           return;
                         }
                         // NOTE users can't go back this page if they pushed this button
-                        context
-                          ..pushReplacement('/volcano')
-                          ..pop();
+                          context.pop();
                         showToastMessage(
                           toast,
                           "💡 You've signed Up!",
                           ToastWidgetKind.success,
                         );
+                        // NOTE set accessToken to Local Storage
+                        signUpResult.foldRight(AuthError, (acc, result) {
+                          authSharedPreferenceNotifier
+                            ..setAccessToken(result.accessToken ?? '')
+                            ..getAccessToken();
+                          debugPrint(authSharedPreference);
+                          return acc;
+                        });
                       } else if (signUpResult.isLeft()) {
                         signUpResult.getLeft().fold(() => null, (error) {
                           context.pop();
