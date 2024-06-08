@@ -9,7 +9,7 @@ on:
     branches: ['develop']
 
 jobs:
-  flutter_job:
+  flutter_formatting:
     # The machine, we can also use windows-latest or ubuntu-latest
     runs-on: ubuntu-latest
 
@@ -31,7 +31,10 @@ jobs:
         run: flutter pub get
         # ^ If you want to use a specific version of flutter
 
-      # Verifies if the dart code is formatted well
+      - name: Analyze codes
+        run: dart analyze --fatal-infos
+
+        # Verifies if the dart code is formatted well
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
         # --set-exit-if-changed stops execution if the any code is not well formatted
