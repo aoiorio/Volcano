@@ -9,7 +9,7 @@ class SignUpMainButton extends StatelessWidget {
   });
 
   final String title;
-  final Function onPress;
+  final void Function() onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,7 @@ class SignUpMainButton extends StatelessWidget {
       width: 200,
       height: 75,
       child: BouncedButton(
-        onPress: () {
-          onPress();
-        },
+        onPress: onPress,
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -28,10 +26,11 @@ class SignUpMainButton extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(fontSize: 20, color: const Color(0xff343434), fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20,
+                  color: const Color(0xff343434),
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
       ),

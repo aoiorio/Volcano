@@ -25,17 +25,11 @@ class SignUpTextShape extends ConsumerStatefulWidget {
 }
 
 class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
-  // @override
-  // void initState() {
-  //   if (ref.read(passwordTextControllerProvider).text ==
-  //       ref.read(confirmPasswordTextControllerProvider).text) super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     final textEditingController = ref
         .watch(signUpTextEditingControllerProvider(widget.hintString).notifier)
         .state;
@@ -133,18 +127,18 @@ class _SignUpTextShapeState extends ConsumerState<SignUpTextShape> {
           Positioned(
             top: 385,
             child: SignUpMainButton(
-                title: widget.hintString.contains("confirm")
-                    ? '"Finish"'
-                    : '"Next"',
-                onPress: () {
-                  HapticFeedback.mediumImpact();
-                  widget.hintString.contains("confirm")
-                      ? context.pop()
-                      : ref
-                          .watch(stepCounterProvider.notifier)
-                          .update((state) => state + 1);
-                }),
-          )
+              title:
+                  widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
+              onPress: () {
+                HapticFeedback.mediumImpact();
+                widget.hintString.contains('confirm')
+                    ? context.pop()
+                    : ref
+                        .watch(stepCounterProvider.notifier)
+                        .update((state) => state + 1);
+              },
+            ),
+          ),
         ],
       ),
     );

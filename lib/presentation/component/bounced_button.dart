@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BouncedButton extends StatefulWidget {
+  const BouncedButton({super.key, required this.child, required this.onPress});
   final Widget child;
   final VoidCallback onPress;
-
-  const BouncedButton({super.key, required this.child, required this.onPress});
 
   @override
   State<BouncedButton> createState() => _BouncedButtonState();
@@ -21,7 +20,7 @@ class _BouncedButtonState extends State<BouncedButton>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 150),
-      lowerBound: 0.0,
+      // lowerBound: 0,
       upperBound: 0.03,
     );
     _controller.addListener(() {
@@ -43,10 +42,10 @@ class _BouncedButtonState extends State<BouncedButton>
     }
     _scale = 1 - _controller.value;
     return Listener(
-      onPointerDown: (PointerDownEvent event) {
+      onPointerDown: (event) {
         _controller.forward();
       },
-      onPointerUp: (PointerUpEvent event) {
+      onPointerUp: (event) {
         _controller.reverse();
         widget.onPress();
       },

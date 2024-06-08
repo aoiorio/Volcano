@@ -12,12 +12,16 @@ import 'package:volcano/usecase/auth/auth_use_case_impl.dart';
 // Domain
 // -----------------------------------------------------------------------------
 final authClientProvider = Provider<AuthDataSource>(
-    (ref) => AuthDataSource(ref.read(networkServiceProvider)));
+  (ref) => AuthDataSource(ref.read(networkServiceProvider)),
+);
 
 final authRepositoryProvider = Provider<AuthRepository>(
-    (ref) => AuthRepositoryImpl(client: ref.read(authClientProvider)));
+  (ref) => AuthRepositoryImpl(client: ref.read(authClientProvider)),
+);
 
 // -----------------------------------------------------------------------------
 // UseCase
 // -----------------------------------------------------------------------------
-final authUseCaseProvider = Provider<AuthUseCase>((ref) => AuthUseCaseImpl(authRepository: ref.read(authRepositoryProvider)));
+final authUseCaseProvider = Provider<AuthUseCase>(
+  (ref) => AuthUseCaseImpl(authRepository: ref.read(authRepositoryProvider)),
+);

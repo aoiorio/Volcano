@@ -12,7 +12,7 @@ void showToastMessage(
   String message,
   ToastWidgetKind kind,
 ) {
-  final Widget child = kind.name == 'error'
+  final child = kind.name == 'error'
       ? toastErrorWidget(message)
       : toastSuccessWidget(message);
   return toast.showToast(
