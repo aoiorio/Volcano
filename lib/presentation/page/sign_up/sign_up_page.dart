@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/presentation/component/bounced_button.dart';
-import 'package:volcano/presentation/component/custom_toast.dart';
-import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
+import 'package:volcano/presentation/component/global/bounced_button.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_execute_methods_controller.dart';
+import 'package:volcano/presentation/provider/back/auth/controller/auth_execute_sign_up_controller.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // DONE Implement SignUp features!
@@ -30,10 +30,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     // NOTE my providers!
-    final emailStatus = ref.watch(emailStatusProvider) ? 'OK' : '';
-    final passwordStatus = ref.watch(passwordStatusProvider) ? 'OK' : '';
+    final emailStatus = ref.watch(signUpEmailStatusProvider) ? 'OK' : '';
+    final passwordStatus = ref.watch(signUpPasswordStatusProvider) ? 'OK' : '';
     final confirmPasswordStatus =
-        ref.watch(confirmPasswordStatusProvider) ? 'OK' : '';
+        ref.watch(signUpConfirmPasswordStatusProvider) ? 'OK' : '';
     final authExecuteSignUpMethodsControllerNotifier =
         ref.watch(authExecuteSignUpControllerProvider.notifier);
 
@@ -59,7 +59,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   onTap: () {
                     HapticFeedback.lightImpact();
                     // NOTE change stepCounter
-                    ref.watch(stepCounterProvider.notifier).state = 0;
+                    ref.watch(signUpStepCounterProvider.notifier).state = 0;
 
                     // NOTE go to SignUpEmailPage and to change the text of fields, I'm adding then function.
                     context.push('/sign-up-step').then((value) {
@@ -79,7 +79,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: GestureDetector(
                     onTap: () {
                       HapticFeedback.lightImpact();
-                      ref.watch(stepCounterProvider.notifier).state = 1;
+                      ref.watch(signUpStepCounterProvider.notifier).state = 1;
                       context.push('/sign-up-step').then((value) {
                         setState(() {});
                       });
@@ -87,7 +87,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     child: SignUpShapeButton(
                       gradientColorBegin: const Color(0xffB09C93),
                       gradientColorEnd: const Color(0xffBDAEAE),
-                      // DONE Add status provider here like this {"Email": ${PasswordStatusProvider.read()}}
+                      // DONE Add status provider here like this {"Email": ${signUpPasswordStatusProvider.read()}}
                       fieldString: '{"Password": "$passwordStatus"}',
                     ),
                   ),
@@ -98,7 +98,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: GestureDetector(
                     onTap: () {
                       HapticFeedback.lightImpact();
-                      ref.watch(stepCounterProvider.notifier).state = 2;
+                      ref.watch(signUpStepCounterProvider.notifier).state = 2;
                       context.push('/sign-up-step').then((value) {
                         setState(() {});
                       });
@@ -106,14 +106,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     child: SignUpShapeButton(
                       gradientColorBegin: const Color(0xff8A8E7C),
                       gradientColorEnd: const Color(0xffBDAEAE),
-                      // DONE Add status provider here like this {"Email": ${ConfirmPasswordStatusProvider.read()}}
+                      // DONE Add status provider here like this {"Email": ${signUpConfirmPasswordStatusProvider.read()}}
                       fieldString: '{"Confirm PW": "$confirmPasswordStatus"}',
                     ),
                   ),
                 ),
                 Positioned(
                   bottom: 100,
-                  child: SignUpMainButton(
+                  child: WhiteMainButton(
                     onPress: () async {
                       HapticFeedback.mediumImpact();
 

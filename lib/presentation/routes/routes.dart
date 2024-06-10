@@ -3,10 +3,12 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/page/sign_in/sign_in_page.dart';
+import 'package:volcano/presentation/page/sign_in/sign_in_step_page.dart';
 import 'package:volcano/presentation/page/sign_up/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/start/start_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
 
+// ANCHOR -  if you use buildTransitionPage for three more times, you shouldn't use it. Because it'll cause flicking in it. So please try to use MaterialPage!
 /// The route configuration.
 final GoRouter goRouter = GoRouter(
   initialLocation: '/',
@@ -24,35 +26,44 @@ final GoRouter goRouter = GoRouter(
     // NOTE SignUpPage router
     GoRoute(
       path: '/sign-up-step',
-      name: 'signUpStep',
+      name: 'signUpStepPage',
       pageBuilder: (context, state) =>
-          buildTransitionPage(child: const SignUpStepPage()),
+          buildTransitionPage(state: state, child: const SignUpStepPage()),
     ),
     GoRoute(
       path: '/sign-in',
-      name: 'signIn',
+      name: 'signInPage',
       pageBuilder: (context, state) =>
-          buildTransitionPage(child: const SignInPage()),
+          const MaterialPage( child: SignInPage()),
+    ),
+    GoRoute(
+      path: '/sign-in-step',
+      name: 'signInStepPage',
+      pageBuilder: (context, state) =>
+          buildTransitionPage(state: state, child: const SignInStepPage()),
     ),
     GoRoute(
       path: '/volcano',
-      name: 'volcano',
+      name: 'volcanoPage',
       pageBuilder: (context, state) =>
-          buildTransitionPage(child: const VolcanoPage()),
+          buildTransitionPage(state: state, child: const VolcanoPage()),
     ),
   ],
 );
 
 CustomTransitionPage<T> buildTransitionPage<T>({
   required Widget child,
+  required  GoRouterState state,
 }) {
   return CustomTransitionPage<T>(
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return SharedAxisTransition(
+        key: state.pageKey,
         animation: animation,
         secondaryAnimation: secondaryAnimation,
         transitionType: SharedAxisTransitionType.horizontal,
+        fillColor: Colors.transparent,
         child: child,
       );
     },

@@ -1,3 +1,4 @@
+// ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/volcano_user.dart';

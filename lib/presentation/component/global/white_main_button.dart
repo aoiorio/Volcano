@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:volcano/presentation/component/bounced_button.dart';
+import 'package:volcano/presentation/component/global/bounced_button.dart';
 
-class SignUpMainButton extends StatelessWidget {
-  const SignUpMainButton({
+class WhiteMainButton extends StatelessWidget {
+  const WhiteMainButton({
     super.key,
     required this.title,
     required this.onPress,

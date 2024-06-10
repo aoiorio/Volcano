@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:volcano/presentation/component/loading_widget.dart';
+import 'package:volcano/presentation/component/global/loading_widget.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 import 'package:volcano/presentation/routes/routes.dart';

@@ -5,19 +5,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // NOTE Project Packages
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/token.dart';
-import 'package:volcano/presentation/component/custom_toast.dart';
+import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
-part 'auth_execute_methods_controller.g.dart';
+part 'auth_execute_sign_up_controller.g.dart';
 
 @riverpod
 class AuthExecuteSignUpController extends _$AuthExecuteSignUpController {
   @override
-  Either<BackEndError, Token> build() {
+  Either<BackEndError, TokenDTO> build() {
     return Either.left(BackEndError());
   }
 
@@ -31,10 +31,10 @@ class AuthExecuteSignUpController extends _$AuthExecuteSignUpController {
         .read(progressControllerProvider.notifier)
         .executeWithProgress(
           authUseCase.executeSignUp(
-            email: ref.read(emailTextControllerProvider).text,
-            password: ref.read(passwordTextControllerProvider).text,
+            email: ref.read(signUpEmailTextControllerProvider).text,
+            password: ref.read(signUpPasswordTextControllerProvider).text,
             confirmPassword:
-                ref.read(confirmPasswordTextControllerProvider).text,
+                ref.read(signUpConfirmPasswordTextControllerProvider).text,
           ),
         )
         .then(
