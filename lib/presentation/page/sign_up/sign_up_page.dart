@@ -3,14 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/core/errors.dart';
 import 'package:volcano/presentation/component/bounced_button.dart';
 import 'package:volcano/presentation/component/custom_toast.dart';
-import 'package:volcano/presentation/component/loading_transparent_dialog.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
+import 'package:volcano/presentation/provider/back/auth/auth_execute_methods_controller.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // DONE Implement SignUp features!
@@ -37,10 +34,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     final passwordStatus = ref.watch(passwordStatusProvider) ? 'OK' : '';
     final confirmPasswordStatus =
         ref.watch(confirmPasswordStatusProvider) ? 'OK' : '';
-    final authUseCase = ref.read(authUseCaseProvider);
-    final authSharedPreferenceNotifier =
-        ref.watch(authSharedPreferenceProvider.notifier);
-    final authSharedPreference = ref.watch(authSharedPreferenceProvider);
+    final authExecuteSignUpMethodsControllerNotifier =
+        ref.watch(authExecuteSignUpControllerProvider.notifier);
 
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
@@ -147,49 +142,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         );
                         return;
                       }
-                      // NOTE show
-                      showLoadingDialog(context: context);
-                      final signUpResult = await authUseCase.executeSignUp(
-                        email: ref.read(emailTextControllerProvider).text,
-                        password: ref.read(passwordTextControllerProvider).text,
-                        confirmPassword: ref
-                            .read(confirmPasswordTextControllerProvider)
-                            .text,
-                      );
 
-                      // DONE implement flutter toast!!! pop up here!!!
-                      if (signUpResult.isRight()) {
-                        if (!context.mounted) {
-                          return;
-                        }
-                        // NOTE users can't go back this page if they pushed this button
-                          context.pop();
-                        showToastMessage(
-                          toast,
-                          "💡 You've signed Up!",
-                          ToastWidgetKind.success,
-                        );
-                        // NOTE set accessToken to Local Storage
-                        signUpResult.foldRight(AuthError, (acc, result) {
-                          authSharedPreferenceNotifier
-                            ..setAccessToken(result.accessToken ?? '')
-                            ..getAccessToken();
-                          debugPrint(authSharedPreference);
-                          return acc;
-                        });
-                      } else if (signUpResult.isLeft()) {
-                        signUpResult.getLeft().fold(() => null, (error) {
-                          context.pop();
-                          final errorMessage =
-                              error.message?.detail.toString() ??
-                                  'Something went wrong';
-                          showToastMessage(
-                            toast,
-                            '😵‍💫 $errorMessage',
-                            ToastWidgetKind.error,
-                          );
-                        });
-                      }
+                      authExecuteSignUpMethodsControllerNotifier
+                          .executeSignUp(toast);
                     },
                     title: '"Submit"',
                   ),

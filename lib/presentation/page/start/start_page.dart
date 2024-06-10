@@ -13,6 +13,7 @@ class StartPage extends ConsumerWidget {
     final authSharedPreference = ref.watch(authSharedPreferenceProvider);
     // final authSharedPreferenceNotifier =
     //     ref.watch(authSharedPreferenceProvider.notifier);
+    // // ignore: cascade_invocations
     // authSharedPreferenceNotifier.deleteAccessToken();
     return Scaffold(
       body: authSharedPreference.isEmpty
