@@ -17,8 +17,8 @@ part 'auth_execute_methods_controller.g.dart';
 @riverpod
 class AuthExecuteSignUpController extends _$AuthExecuteSignUpController {
   @override
-  Either<AuthError, Token> build() {
-    return Either.left(AuthError());
+  Either<BackEndError, Token> build() {
+    return Either.left(BackEndError());
   }
 
   void executeSignUp(FToast toast) {
@@ -47,7 +47,7 @@ class AuthExecuteSignUpController extends _$AuthExecuteSignUpController {
             ToastWidgetKind.success,
           );
           // NOTE set accessToken to Local Storage
-          value.foldRight(AuthError, (acc, result) {
+          value.foldRight(BackEndError, (acc, result) {
             authSharedPreferenceNotifier
               ..setAccessToken(result.accessToken ?? '')
               ..getAccessToken();

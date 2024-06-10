@@ -12,7 +12,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _client;
 
   @override
-  Future<Either<AuthError, TokenDTO>> signIn({
+  Future<Either<BackEndError, TokenDTO>> signIn({
     required String email,
     required String password,
   }) {
@@ -21,18 +21,17 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<AuthError, String>> signOut() {
+  Future<Either<BackEndError, String>> signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AuthError, TokenDTO>> signUp({
+  Future<Either<BackEndError, TokenDTO>> signUp({
     required String email,
     required String password,
     required String confirmPassword,
   }) async {
-    // TODO: implement signUp
     // NOTE I think the data email, password and confirmPassword will be in SignUpVolcanoUserModel.
     try {
       final res = await _client
@@ -52,9 +51,9 @@ class AuthRepositoryImpl implements AuthRepository {
       final res = e.response;
       debugPrint(res?.statusCode.toString());
       return Either.left(
-        AuthError(
+        BackEndError(
           statusCode: res?.statusCode,
-          message: AuthErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(res?.data),
         ),
       );
     }
