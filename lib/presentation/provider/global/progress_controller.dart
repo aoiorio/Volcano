@@ -10,7 +10,9 @@ class ProgressController extends _$ProgressController {
   @override
   bool build() => false;
 
-  Future<Either<AuthError, Token>> executeWithProgress(Future<Either<AuthError, Token>>  f) async {
+  Future<Either<AuthError, Token>> executeWithProgress(
+    Future<Either<AuthError, Token>> f,
+  ) async {
     try {
       state = true; // status to true
       return await f;
