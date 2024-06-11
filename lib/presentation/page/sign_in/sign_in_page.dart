@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/component/sign_in/sign_in_shape_button.dart';
+import 'package:volcano/presentation/provider/back/auth/controller/auth_execute_sign_in_controller.dart';
 import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
@@ -15,6 +18,7 @@ class SignInPage extends ConsumerStatefulWidget {
 }
 
 class _SignInPageState extends ConsumerState<SignInPage> {
+  final toast = FToast();
   @override
   Widget build(BuildContext context) {
     final signInEmailStatus = ref.watch(signInEmailStatusProvider) ? 'OK' : '';
@@ -128,7 +132,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   },
                   child: SignInShapeButton(
                     gradientColorBegin:
-                        const Color(0xff484A5A).withOpacity(0.85),
+                        const Color(0xff484A5A).withOpacity(0.75),
                     gradientColorEnd: const Color(0xffBDAEAE),
                     // DONE Add status provider here like this {"Email": ${signUpPasswordStatusProvider.read()}}
                     fieldString: '{"Email": "$signInEmailStatus"}',
@@ -147,7 +151,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     },
                     child: SignInShapeButton(
                       gradientColorBegin:
-                          const Color(0xff5E4A49).withOpacity(0.55),
+                          const Color(0xff5E4A49).withOpacity(0.45),
                       gradientColorEnd: const Color(0xffBDAEAE),
                       // DONE Add status provider here like this {"Email": ${signUpConfirmPasswordStatusProvider.read()}}
                       fieldString: '{"Password": "$signInPasswordStatus"}',
@@ -159,6 +163,25 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   child: WhiteMainButton(
                     onPress: () async {
                       HapticFeedback.mediumImpact();
+                      if (signInEmailStatus.isEmpty) {
+                        showToastMessage(
+                          toast,
+                          'Email must have at least \n 3 characters and contain @',
+                          ToastWidgetKind.error,
+                        );
+                        return;
+                      } else if (signInPasswordStatus.isEmpty) {
+                        showToastMessage(
+                          toast,
+                          'Password must have \n at least 4 characters',
+                          ToastWidgetKind.error,
+                        );
+                        return;
+                      }
+
+                      ref
+                          .watch(authExecuteSignInControllerProvider.notifier)
+                          .executeSignIn(toast, context);
                     },
                     title: '"Submit"',
                   ),

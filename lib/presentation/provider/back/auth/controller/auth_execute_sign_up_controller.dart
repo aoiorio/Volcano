@@ -43,15 +43,15 @@ class AuthExecuteSignUpController extends _$AuthExecuteSignUpController {
           // NOTE users can't go back this page if they pushed this button
           showToastMessage(
             toast,
-            "💡 You've signed Up!",
+            "💡 You've Signed Up!",
             ToastWidgetKind.success,
           );
           // NOTE set accessToken to Local Storage
           value.foldRight(BackEndError, (acc, result) {
             authSharedPreferenceNotifier
               ..setAccessToken(result.accessToken ?? '')
+              // NOTE get Access Token so it'll set AccessToken.
               ..getAccessToken();
-            debugPrint(authSharedPreference);
             return acc;
           });
         } else if (value.isLeft()) {

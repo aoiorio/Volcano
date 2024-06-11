@@ -20,12 +20,12 @@ class AuthUseCaseImpl implements AuthUseCase {
   final AuthRepository _authRepository;
 
   @override
-  Future<Either<BackEndError, TokenDTO>> executeSignIn({
+  Future<Either<BackEndError, Token>> executeSignIn({
     required String email,
     required String password,
-  }) {
-    // TODO(new feature): executeSignIn
-    throw UnimplementedError();
+  }) async {
+    // NOTE it will return access_token
+    return _authRepository.signIn(email: email, password: password);
   }
 
   @override

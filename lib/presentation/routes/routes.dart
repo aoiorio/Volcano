@@ -33,8 +33,7 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       path: '/sign-in',
       name: 'signInPage',
-      pageBuilder: (context, state) =>
-          const MaterialPage( child: SignInPage()),
+      pageBuilder: (context, state) => const MaterialPage(child: SignInPage()),
     ),
     GoRoute(
       path: '/sign-in-step',
@@ -53,7 +52,7 @@ final GoRouter goRouter = GoRouter(
 
 CustomTransitionPage<T> buildTransitionPage<T>({
   required Widget child,
-  required  GoRouterState state,
+  required GoRouterState state,
 }) {
   return CustomTransitionPage<T>(
     child: child,

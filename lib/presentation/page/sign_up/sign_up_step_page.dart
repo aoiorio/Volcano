@@ -40,7 +40,6 @@ class SignUpStepPage extends ConsumerWidget {
     ];
 
     return Scaffold(
-      //LINK - Please Write Notion about resizeToAvoidBottomInset
       // NOTE it means that when I show up keyboard, the widgets won't move
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(

@@ -20,7 +20,7 @@ abstract class AuthDataSource {
   );
 
   // NOTE signIn method will return Token
-  @POST('auth/sign_in_user')
+  @POST('/auth/sign_in_user')
   Future<TokenDTO> signIn(
     @Body() SignInVolcanoUserModel signInVolcanoUserModel,
   );

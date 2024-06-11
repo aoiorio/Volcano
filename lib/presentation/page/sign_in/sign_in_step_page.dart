@@ -5,11 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/sign_in/sign_in_step_shape.dart';
 
-
 import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
 
-
-// TODO Implement my own step by step feature by using List on so on.
+// DONE Implement my own step by step feature by using List on so on.
 class SignInStepPage extends ConsumerWidget {
   const SignInStepPage({super.key});
 
@@ -23,11 +21,10 @@ class SignInStepPage extends ConsumerWidget {
         gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "1": \n   "type email"\n}',
         hintString: '"type email"',
-
       ),
-      const SignInStepShape(
-        gradientColorBegin: Color(0xff5E4A49),
-        gradientColorEnd: Color(0xffBDAEAE),
+      SignInStepShape(
+        gradientColorBegin: const Color(0xff5E4A49).withOpacity(0.85),
+        gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "2": \n   "type password"\n}',
         hintString: '"type password"',
       ),
@@ -60,7 +57,6 @@ class SignInStepPage extends ConsumerWidget {
       ),
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xffD7D7D7),
-
       body: GestureDetector(
         onTap: () {
           primaryFocus?.unfocus();

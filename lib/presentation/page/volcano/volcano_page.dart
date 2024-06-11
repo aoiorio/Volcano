@@ -12,6 +12,8 @@ class VolcanoPage extends ConsumerWidget {
     final authSharedPreference = ref.watch(authSharedPreferenceProvider);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        // leading: ,
         title: const Text('h i i i ii i'),
       ),
       body: Center(

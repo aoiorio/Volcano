@@ -5,6 +5,7 @@ import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/repository/auth/auth_repository.dart';
 import 'package:volcano/infrastructure/datasource/auth/auth_data_source.dart';
 import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/infrastructure/model/sign_in_volcano_user_model.dart';
 import 'package:volcano/infrastructure/model/sign_up_volcano_user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -15,9 +16,25 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<BackEndError, TokenDTO>> signIn({
     required String email,
     required String password,
-  }) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  }) async {
+    try {
+      final res = await _client
+          .signIn(SignInVolcanoUserModel(email: email, password: password))
+          .then((value) {
+        debugPrint(value.accessToken);
+        return value;
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(res?.data),
+        ),
+      );
+    }
   }
 
   @override
