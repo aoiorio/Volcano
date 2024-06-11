@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
 
 // TODOadd provider and change the class to provider class for changing email, password texts
-class SignUpShapeButton extends ConsumerStatefulWidget {
-  const SignUpShapeButton({
+class SignInShapeButton extends ConsumerStatefulWidget {
+  const SignInShapeButton({
     super.key,
     required this.gradientColorBegin,
     required this.gradientColorEnd,
@@ -17,24 +17,16 @@ class SignUpShapeButton extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _SignUpShapeButtonState();
+      _SignInShapeButtonState();
 }
 
-class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
+class _SignInShapeButtonState extends ConsumerState<SignInShapeButton> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final textEditingControllerText = widget.fieldString.contains('Email')
-        ? ref.watch(signUpEmailTextControllerProvider.notifier).state.text
-        : widget.fieldString.contains('Password')
-            ? ref
-                .watch(signUpPasswordTextControllerProvider.notifier)
-                .state
-                .text
-            : ref
-                .watch(signUpConfirmPasswordTextControllerProvider.notifier)
-                .state
-                .text;
+        ? ref.watch(signInEmailTextControllerProvider).text
+        : ref.watch(signInPasswordTextControllerProvider).text;
 
     return DecoratedBox(
       decoration: BoxDecoration(

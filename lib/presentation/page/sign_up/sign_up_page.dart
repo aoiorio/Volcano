@@ -3,12 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/presentation/component/bounced_button.dart';
-import 'package:volcano/presentation/component/custom_toast.dart';
-import 'package:volcano/presentation/component/loading_transparent_dialog.dart';
-import 'package:volcano/presentation/component/sign_up/sign_up_main_button.dart';
+import 'package:volcano/presentation/component/global/bounced_button.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
+import 'package:volcano/presentation/provider/back/auth/controller/auth_execute_sign_up_controller.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // DONE Implement SignUp features!
@@ -31,25 +30,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     // NOTE my providers!
-    final emailStatus = ref.watch(emailStatusProvider) ? 'OK' : '';
-    final passwordStatus = ref.watch(passwordStatusProvider) ? 'OK' : '';
+    final emailStatus = ref.watch(signUpEmailStatusProvider) ? 'OK' : '';
+    final passwordStatus = ref.watch(signUpPasswordStatusProvider) ? 'OK' : '';
     final confirmPasswordStatus =
-        ref.watch(confirmPasswordStatusProvider) ? 'OK' : '';
-    final authUseCase = ref.read(authUseCaseProvider);
+        ref.watch(signUpConfirmPasswordStatusProvider) ? 'OK' : '';
+    final authExecuteSignUpMethodsControllerNotifier =
+        ref.watch(authExecuteSignUpControllerProvider.notifier);
 
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
-      // isLoading
-      // ?  const Center(
-      //     child: DecoratedBox(
-      //       decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xff76A4AE), Color(0xffA6A4AD)]) ),
-      //       child: SpinKitPouringHourGlass(
-      //       color: Colors.white,
-      //       duration: Duration(milliseconds: 1000),
-      //                   ),
-      //     ),)
-      // ? showLoadingDialog(context: context)
-      // :
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -70,7 +59,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   onTap: () {
                     HapticFeedback.lightImpact();
                     // NOTE change stepCounter
-                    ref.watch(stepCounterProvider.notifier).state = 0;
+                    ref.watch(signUpStepCounterProvider.notifier).state = 0;
 
                     // NOTE go to SignUpEmailPage and to change the text of fields, I'm adding then function.
                     context.push('/sign-up-step').then((value) {
@@ -90,7 +79,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: GestureDetector(
                     onTap: () {
                       HapticFeedback.lightImpact();
-                      ref.watch(stepCounterProvider.notifier).state = 1;
+                      ref.watch(signUpStepCounterProvider.notifier).state = 1;
                       context.push('/sign-up-step').then((value) {
                         setState(() {});
                       });
@@ -98,7 +87,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     child: SignUpShapeButton(
                       gradientColorBegin: const Color(0xffB09C93),
                       gradientColorEnd: const Color(0xffBDAEAE),
-                      // DONE Add status provider here like this {"Email": ${PasswordStatusProvider.read()}}
+                      // DONE Add status provider here like this {"Email": ${signUpPasswordStatusProvider.read()}}
                       fieldString: '{"Password": "$passwordStatus"}',
                     ),
                   ),
@@ -109,7 +98,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: GestureDetector(
                     onTap: () {
                       HapticFeedback.lightImpact();
-                      ref.watch(stepCounterProvider.notifier).state = 2;
+                      ref.watch(signUpStepCounterProvider.notifier).state = 2;
                       context.push('/sign-up-step').then((value) {
                         setState(() {});
                       });
@@ -117,14 +106,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     child: SignUpShapeButton(
                       gradientColorBegin: const Color(0xff8A8E7C),
                       gradientColorEnd: const Color(0xffBDAEAE),
-                      // DONE Add status provider here like this {"Email": ${ConfirmPasswordStatusProvider.read()}}
+                      // DONE Add status provider here like this {"Email": ${signUpConfirmPasswordStatusProvider.read()}}
                       fieldString: '{"Confirm PW": "$confirmPasswordStatus"}',
                     ),
                   ),
                 ),
                 Positioned(
                   bottom: 100,
-                  child: SignUpMainButton(
+                  child: WhiteMainButton(
                     onPress: () async {
                       HapticFeedback.mediumImpact();
 
@@ -153,43 +142,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         );
                         return;
                       }
-                      // NOTE show
-                      showLoadingDialog(context: context);
-                      final signUpResult = await authUseCase.executeSignUp(
-                        email: ref.read(emailTextControllerProvider).text,
-                        password: ref.read(passwordTextControllerProvider).text,
-                        confirmPassword: ref
-                            .read(confirmPasswordTextControllerProvider)
-                            .text,
-                      );
 
-                      // DONE implement flutter toast!!! pop up here!!!
-                      if (signUpResult.isRight()) {
-                        if (!context.mounted) {
-                          return;
-                        }
-                        // NOTE users can't go back this page if they pushed this button
-                        context
-                          ..pushReplacement('/volcano')
-                          ..pop();
-                        showToastMessage(
-                          toast,
-                          "💡 You've signed Up!",
-                          ToastWidgetKind.success,
-                        );
-                      } else if (signUpResult.isLeft()) {
-                        signUpResult.getLeft().fold(() => null, (error) {
-                          context.pop();
-                          final errorMessage =
-                              error.message?.detail.toString() ??
-                                  'Something went wrong';
-                          showToastMessage(
-                            toast,
-                            '😵‍💫 $errorMessage',
-                            ToastWidgetKind.error,
-                          );
-                        });
-                      }
+                      authExecuteSignUpMethodsControllerNotifier
+                          .executeSignUp(toast);
                     },
                     title: '"Submit"',
                   ),

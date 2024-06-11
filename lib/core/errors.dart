@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-class AuthError {
-  AuthError({this.statusCode, this.message});
+class BackEndError {
+  BackEndError({this.statusCode, this.message});
   final int? statusCode;
-  final AuthErrorMessage? message;
+  final BackEndErrorMessage? message;
 }
 
-class AuthErrorMessage {
-  AuthErrorMessage({
+class BackEndErrorMessage {
+  BackEndErrorMessage({
     this.detail,
   });
 
-  factory AuthErrorMessage.fromRawJson(String str) =>
-      AuthErrorMessage.fromJson(json.decode(str));
+  factory BackEndErrorMessage.fromRawJson(String str) =>
+      BackEndErrorMessage.fromJson(json.decode(str));
 
-  factory AuthErrorMessage.fromJson(Map<String, dynamic> json) =>
-      AuthErrorMessage(
+  factory BackEndErrorMessage.fromJson(Map<String, dynamic> json) =>
+      BackEndErrorMessage(
         detail: json['detail'],
       );
   final String? detail;

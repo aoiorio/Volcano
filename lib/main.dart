@@ -1,30 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:volcano/presentation/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:volcano/presentation/component/global/loading_widget.dart';
+import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
+import 'package:volcano/presentation/provider/global/progress_controller.dart';
+import 'package:volcano/presentation/routes/routes.dart';
 
-import 'package:volcano/presentation/theme.dart';
+import 'package:volcano/presentation/theme/theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(
+          await SharedPreferences.getInstance(),
+        ),
+      ],
+      child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of Volcano.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      // key: navigatorKey,
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,
       routeInformationProvider: goRouter.routeInformationProvider,
       title: 'Volcano',
       theme: createTheme(),
+      builder: (context, child) {
+        final progress = ref.watch(progressControllerProvider);
+        return Stack(
+          children: [
+            child!,
+            if (progress) const Center(child: LoadingWidget()),
+          ],
+        );
+      },
     );
   }
 }

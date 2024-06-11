@@ -5,6 +5,7 @@ import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/repository/auth/auth_repository.dart';
 import 'package:volcano/infrastructure/datasource/auth/auth_data_source.dart';
 import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/infrastructure/model/sign_in_volcano_user_model.dart';
 import 'package:volcano/infrastructure/model/sign_up_volcano_user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -12,27 +13,42 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _client;
 
   @override
-  Future<Either<AuthError, TokenDTO>> signIn({
+  Future<Either<BackEndError, TokenDTO>> signIn({
     required String email,
     required String password,
-  }) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  }) async {
+    try {
+      final res = await _client
+          .signIn(SignInVolcanoUserModel(email: email, password: password))
+          .then((value) {
+        debugPrint(value.accessToken);
+        return value;
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(res?.data),
+        ),
+      );
+    }
   }
 
   @override
-  Future<Either<AuthError, String>> signOut() {
+  Future<Either<BackEndError, String>> signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AuthError, TokenDTO>> signUp({
+  Future<Either<BackEndError, TokenDTO>> signUp({
     required String email,
     required String password,
     required String confirmPassword,
   }) async {
-    // TODO: implement signUp
     // NOTE I think the data email, password and confirmPassword will be in SignUpVolcanoUserModel.
     try {
       final res = await _client
@@ -52,9 +68,9 @@ class AuthRepositoryImpl implements AuthRepository {
       final res = e.response;
       debugPrint(res?.statusCode.toString());
       return Either.left(
-        AuthError(
+        BackEndError(
           statusCode: res?.statusCode,
-          message: AuthErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(res?.data),
         ),
       );
     }
