@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,7 +24,6 @@ class AuthExecuteSignUpController extends _$AuthExecuteSignUpController {
     final authUseCase = ref.read(authUseCaseProvider);
     final authSharedPreferenceNotifier =
         ref.watch(authSharedPreferenceProvider.notifier);
-    final authSharedPreference = ref.watch(authSharedPreferenceProvider);
 
     ref
         .read(progressControllerProvider.notifier)
