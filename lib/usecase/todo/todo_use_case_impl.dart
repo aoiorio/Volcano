@@ -1,5 +1,7 @@
 // ignore_for_file: implementation_imports
 
+import 'dart:io';
+
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';
@@ -12,9 +14,25 @@ class TodoUseCaseImpl implements TodoUseCase {
   final TodoRepository _todoRepository;
 
   @override
-  Future<Either<BackEndError, Todo>> executePostTodo({required Todo todo}) {
-    // TODO: implement executePostTodo
-    throw UnimplementedError();
+  Future<Either<BackEndError, Todo>> executePostTodo({
+    required String token,
+    required String title,
+    required String? description,
+    required String type,
+    required DateTime period,
+    required int priority,
+    required File audio,
+  }) {
+    final todo = _todoRepository.postTodo(
+      token: token,
+      title: title,
+      description: description,
+      type: type,
+      period: period,
+      priority: priority,
+      audio: audio,
+    );
+    return todo;
   }
 
   @override

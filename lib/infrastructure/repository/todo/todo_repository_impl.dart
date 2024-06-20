@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
@@ -19,15 +21,17 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<BackEndError, List<TodoDTO>>> readTodo(
-      {required String userId,}) {
+  Future<Either<BackEndError, List<TodoDTO>>> readTodo({
+    required String userId,
+  }) {
     // TODO: implement readTodo
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<BackEndError, TodoDTO>> textToTodo(
-      {required String voiceText,}) async {
+  Future<Either<BackEndError, TodoDTO>> textToTodo({
+    required String voiceText,
+  }) async {
     try {
       final res = await _client.textToTodo(voiceText).then((value) {
         debugPrint(value.period.toString());
@@ -53,14 +57,32 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<BackEndError, Todo>> postTodo({
+  Future<Either<BackEndError, TodoDTO>> postTodo({
+    required String token,
     required String title,
-    required String description,
+    required String? description,
     required String type,
     required DateTime period,
     required int priority,
-  }) {
-
-    throw UnimplementedError();
+    required File audio,
+  }) async {
+    try {
+      final res = await _client
+          .postTodo(token, title, description, period, type, priority, audio)
+          .then((value) {
+        debugPrint(value.audioUrl.toString());
+        return value;
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(res?.data),
+        ),
+      );
+    }
   }
 }

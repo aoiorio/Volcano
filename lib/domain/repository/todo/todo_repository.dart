@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';
@@ -6,11 +8,13 @@ abstract class TodoRepository {
   Future<Either<BackEndError, Todo>> textToTodo({required String voiceText});
 
   Future<Either<BackEndError, Todo>> postTodo({
+    required String token,
     required String title,
-    required String description,
+    required String? description,
     required String type,
     required DateTime period,
     required int priority,
+    required File audio,
   });
 
   // TODO add todo_id as required

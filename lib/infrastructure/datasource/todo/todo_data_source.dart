@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
 
@@ -12,4 +15,16 @@ abstract class TodoDataSource {
 
   @GET('/todo/text-to-todo')
   Future<TodoDTO> textToTodo(@Query('voice_text') String voiceText);
+
+  @POST('/todo/')
+  @MultiPart()
+  Future<TodoDTO> postTodo(
+    @Query('token') String token,
+    @Query('title') String title,
+    @Query('description') String? description,
+    @Query('period') DateTime period,
+    @Query('type') String type,
+    @Query('priority') int priority,
+    @Part(name: 'audio') File audio,
+  );
 }
