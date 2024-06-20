@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';
@@ -19,14 +20,14 @@ class TodoRepositoryImpl implements TodoRepository {
 
   @override
   Future<Either<BackEndError, List<TodoDTO>>> readTodo(
-      {required String userId}) {
+      {required String userId,}) {
     // TODO: implement readTodo
     throw UnimplementedError();
   }
 
   @override
   Future<Either<BackEndError, TodoDTO>> textToTodo(
-      {required String voiceText}) async {
+      {required String voiceText,}) async {
     try {
       final res = await _client.textToTodo(voiceText).then((value) {
         debugPrint(value.period.toString());
@@ -59,7 +60,7 @@ class TodoRepositoryImpl implements TodoRepository {
     required DateTime period,
     required int priority,
   }) {
-    
+
     throw UnimplementedError();
   }
 }
