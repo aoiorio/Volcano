@@ -44,11 +44,13 @@ dependencies:
   go_router: ^14.1.4 # NOTE Navigation
   http: ^1.2.1
   json_annotation: ^4.9.0
+  just_audio: ^0.9.38
   page_transition: ^2.1.0 # NOTE Navigation
   retrofit: ^4.1.0  # NOTE API Client
   riverpod: any
   riverpod_annotation: ^2.3.5
   shared_preferences: ^2.2.3
+  speech_to_text: ^6.6.2
 
 dev_dependencies:
   flutter_lints: ^3.0.0
