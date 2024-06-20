@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
@@ -20,6 +21,7 @@ class SignUpPage extends ConsumerStatefulWidget {
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
   final toast = FToast();
+  final player = AudioPlayer(); // Create a player
 
   @override
   void initState() {
