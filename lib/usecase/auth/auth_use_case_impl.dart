@@ -23,7 +23,7 @@ class AuthUseCaseImpl implements AuthUseCase {
   Future<Either<BackEndError, Token>> executeSignIn({
     required String email,
     required String password,
-  }) async {
+  }) {
     // NOTE it will return access_token
     return _authRepository.signIn(email: email, password: password);
   }
@@ -39,7 +39,7 @@ class AuthUseCaseImpl implements AuthUseCase {
     required String email,
     required String password,
     required String confirmPassword,
-  }) async {
+  }) {
     return _authRepository.signUp(
       email: email,
       password: password,

@@ -11,7 +11,7 @@ import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.d
 import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
-part 'auth_execute_sign_in_controller.g.dart';
+part 'sign_in_controller.g.dart';
 
 @riverpod
 class AuthExecuteSignInController extends _$AuthExecuteSignInController {

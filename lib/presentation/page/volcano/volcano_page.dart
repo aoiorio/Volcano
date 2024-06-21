@@ -1,41 +1,146 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
-import 'package:volcano/presentation/provider/back/user/user_providers.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:record/record.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
+import 'package:volcano/presentation/provider/front/record_voice/record_voice.dart';
+import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_is_listening_controller.dart';
+import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_text_controller.dart';
 
-class VolcanoPage extends ConsumerWidget {
+// ANCHOR - Use LockCachingAudioSource to set the URL
+// final audioSource = LockCachingAudioSource(
+//   Uri.parse(
+//     'https://s3.tebi.io/volcano-bucket/Caffeine-36-50.m4a',
+//   ),
+// );
+// await player.setAudioSource(audioSource);
+// await player.play();
+class VolcanoPage extends ConsumerStatefulWidget {
   const VolcanoPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userUseCase = ref.read(userUseCaseProvider);
-    final authSharedPreference = ref.watch(authSharedPreferenceProvider);
+  ConsumerState<ConsumerStatefulWidget> createState() => _VolcanoPageState();
+}
+
+class _VolcanoPageState extends ConsumerState<VolcanoPage> {
+  final recorder = AudioRecorder();
+  final FToast toast = FToast();
+
+  @override
+  void dispose() {
+    super.dispose();
+    recorder.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final player = AudioPlayer(); // Create a player
+    // final userUseCase = ref.read(userUseCaseProvider);
+    // final authSharedPreference = ref.watch(authSharedPreferenceProvider);
+    final speechToText = SpeechToText();
+    final isListening =
+        ref.watch(voiceRecognitionIsListeningControllerProvider);
+    final recognizedText =
+        ref.watch(voiceRecognitionControllerProvider(speechToText));
+    final voiceRecognitionControllerNotifier =
+        ref.watch(voiceRecognitionControllerProvider(speechToText).notifier);
+    final postTodoController = ref.watch(postTodoControllerProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // leading: ,
-        title: const Text('h i i i ii i'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: ElevatedButton(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await speechToText.initialize();
+                    if (speechToText.isListening || isListening) {
+                      ref
+                          .read(recordVoiceProvider.notifier)
+                          .stopRecording(recorder);
+                      voiceRecognitionControllerNotifier
+                          .stopRecognizing(speechToText);
+                    } else if (await recorder.hasPermission() &&
+                        await speechToText.hasPermission) {
+                      ref
+                          .read(recordVoiceProvider.notifier)
+                          .startRecording(recorder);
+                      voiceRecognitionControllerNotifier
+                          .recognizeVoice(speechToText);
+                    } else {
+                      showToastMessage(
+                        toast,
+                        'Please allow to record the audio',
+                        ToastWidgetKind.error,
+                      );
+                    }
+                  },
+                  child: isListening
+                      ? const Icon(Icons.stop)
+                      : const Icon(
+                          Icons.keyboard_voice_outlined,
+                          size: 50,
+                        ),
+                ),
+              ),
+              Text(recognizedText),
+              ElevatedButton(
                 onPressed: () {
-                  userUseCase.executeReadUser(authSharedPreference);
+                  debugPrint(recognizedText);
+                  if (recognizedText.isEmpty) {
+                    return;
+                  }
+                  ref
+                      .read(textToTodoControllerProvider.notifier)
+                      .executeTextToTodo(recognizedText);
                 },
-                child: const Text(
-                  'Hi there push this button to get your info',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
+                child: const Row(
+                  children: [
+                    Icon(Icons.explore),
+                    Text('Convert text to todo'),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 300,
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    ref.read(postTodoControllerProvider.notifier).postTodo();
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(Icons.add_shopping_cart),
+                      Text('Add Todo'),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              TextField(
+                controller: postTodoController.titleTextController,
+                style: const TextStyle(color: Colors.black),
+              ),
+              TextField(
+                controller: postTodoController.descriptionTextController,
+                style: const TextStyle(color: Colors.black),
+              ),
+              TextField(
+                controller: postTodoController.typeTextController,
+                style: const TextStyle(color: Colors.black),
+              ),
+              Text(postTodoController.period.toString()),
+              Text(postTodoController.priority.toString()),
+            ],
+          ),
         ),
       ),
     );

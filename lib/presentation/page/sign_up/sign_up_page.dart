@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
-import 'package:volcano/presentation/provider/back/auth/controller/auth_execute_sign_up_controller.dart';
+import 'package:volcano/presentation/provider/back/auth/controller/sign_up_controller.dart';
 import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
 
 // DONE Implement SignUp features!
@@ -20,6 +21,7 @@ class SignUpPage extends ConsumerStatefulWidget {
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
   final toast = FToast();
+  final player = AudioPlayer(); // Create a player
 
   @override
   void initState() {
