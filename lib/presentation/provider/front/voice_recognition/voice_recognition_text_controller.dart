@@ -32,7 +32,9 @@ class VoiceRecognitionController extends _$VoiceRecognitionController {
   }
 
   void stopRecognizing(SpeechToText speechToText) {
+    ref
+        .read(voiceRecognitionIsListeningControllerProvider.notifier)
+        .changeToFalse();
     speechToText.stop();
-    // state = 'Say Something';
   }
 }

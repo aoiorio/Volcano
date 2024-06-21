@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/infrastructure/dto/todo_dto.dart';
 import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
 import 'package:volcano/presentation/provider/back/todo/todo_providers.dart';
+import 'package:volcano/presentation/provider/front/record_voice/record_voice.dart';
 
 part 'post_todo_controller.g.dart';
 
@@ -22,17 +23,25 @@ class PostTodoController extends _$PostTodoController {
   }
 
   void postTodo() {
+    final path = ref.read(recordVoiceProvider);
+    if (path!.isEmpty) {
+      return;
+    }
     final token = ref.read(authSharedPreferenceProvider);
-    ref.read(todoUseCaseProvider).executePostTodo(
+    ref
+        .read(todoUseCaseProvider)
+        .executePostTodo(
           token: token,
           title: titleTextController.text,
           description: descriptionTextController.text,
           type: typeTextController.text,
           period: period,
           priority: priority,
-          audio: File(
-            'path_here.mp3',
-          ),
-        );
+          audio: File(path),
+        )
+        .then((value) {
+      // NOTE delete the path
+      File(path).delete();
+    });
   }
 }

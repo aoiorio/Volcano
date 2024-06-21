@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:record/record.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/execute_text_to_todo_controller.dart';
-import 'package:volcano/presentation/provider/front/post_todo/post_todo_controller.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
+import 'package:volcano/presentation/provider/front/record_voice/record_voice.dart';
 import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_is_listening_controller.dart';
 import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_text_controller.dart';
-// import 'package:just_audio/just_audio.dart';
-// import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
-// import 'package:volcano/presentation/provider/back/user/user_providers.dart';
 
-class VolcanoPage extends ConsumerWidget {
+// ANCHOR - Use LockCachingAudioSource to set the URL
+// final audioSource = LockCachingAudioSource(
+//   Uri.parse(
+//     'https://s3.tebi.io/volcano-bucket/Caffeine-36-50.m4a',
+//   ),
+// );
+// await player.setAudioSource(audioSource);
+// await player.play();
+class VolcanoPage extends ConsumerStatefulWidget {
   const VolcanoPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _VolcanoPageState();
+}
+
+class _VolcanoPageState extends ConsumerState<VolcanoPage> {
+  final recorder = AudioRecorder();
+  final FToast toast = FToast();
+
+  @override
+  void dispose() {
+    super.dispose();
+    recorder.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // final player = AudioPlayer(); // Create a player
     // final userUseCase = ref.read(userUseCaseProvider);
     // final authSharedPreference = ref.watch(authSharedPreferenceProvider);
@@ -39,29 +62,27 @@ class VolcanoPage extends ConsumerWidget {
                 height: 200,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // ANCHOR - Use LockCachingAudioSource to set the URL
-                    // final audioSource = LockCachingAudioSource(
-                    //   Uri.parse(
-                    //     'https://s3.tebi.io/volcano-bucket/Caffeine-36-50.m4a',
-                    //   ),
-                    // );
-                    // await player.setAudioSource(audioSource);
-                    // await player.play();
-
-                    // userUseCase.executeReadUser(authSharedPreference);
                     await speechToText.initialize();
-
-                    // if (speechToText.isListening) {
-                    //   voiceRecognitionControllerNotifier
-                    //       .stopRecognizing(speechToText);
-                    // }
-
-                    if (await speechToText.hasPermission) {
+                    if (speechToText.isListening || isListening) {
+                      ref
+                          .read(recordVoiceProvider.notifier)
+                          .stopRecording(recorder);
+                      voiceRecognitionControllerNotifier
+                          .stopRecognizing(speechToText);
+                    } else if (await recorder.hasPermission() &&
+                        await speechToText.hasPermission) {
+                      ref
+                          .read(recordVoiceProvider.notifier)
+                          .startRecording(recorder);
                       voiceRecognitionControllerNotifier
                           .recognizeVoice(speechToText);
+                    } else {
+                      showToastMessage(
+                        toast,
+                        'Please allow to record the audio',
+                        ToastWidgetKind.error,
+                      );
                     }
-                    // DONE send the result (recognizedText) to back-end and get the todo entity from it
-                    // TODO after the user confirmed their stodo and if they push the "add todo" button, the todo entity and the audio file will send to back-end as well
                   },
                   child: isListening
                       ? const Icon(Icons.stop)

@@ -76,6 +76,8 @@ class TodoRepositoryImpl implements TodoRepository {
       return Either.right(res);
     } on DioException catch (e) {
       final res = e.response;
+      debugPrint(e.toString());
+      debugPrint(res.toString());
       debugPrint(res?.statusCode.toString());
       return Either.left(
         BackEndError(
