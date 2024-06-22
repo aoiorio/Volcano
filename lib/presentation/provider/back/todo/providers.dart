@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/domain/usecase/todo.dart';
 import 'package:volcano/infrastructure/datasource/todo/todo_data_source.dart';
-import 'package:volcano/infrastructure/repository/todo/todo_repository_impl.dart';
+import 'package:volcano/infrastructure/repository/todo.dart';
 import 'package:volcano/presentation/provider/back/global_back_providers.dart';
 import 'package:volcano/usecase/todo.dart';
 
