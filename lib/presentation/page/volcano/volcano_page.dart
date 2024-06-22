@@ -6,9 +6,9 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
-import 'package:volcano/presentation/provider/front/record_voice/record_voice.dart';
-import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_is_listening_controller.dart';
-import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_text_controller.dart';
+import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_controller.dart';
+import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
+import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
 
 // ANCHOR - Use LockCachingAudioSource to set the URL
 // final audioSource = LockCachingAudioSource(
@@ -65,14 +65,14 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                     await speechToText.initialize();
                     if (speechToText.isListening || isListening) {
                       ref
-                          .read(recordVoiceProvider.notifier)
+                          .read(recordVoiceControllerProvider.notifier)
                           .stopRecording(recorder);
                       voiceRecognitionControllerNotifier
                           .stopRecognizing(speechToText);
                     } else if (await recorder.hasPermission() &&
                         await speechToText.hasPermission) {
                       ref
-                          .read(recordVoiceProvider.notifier)
+                          .read(recordVoiceControllerProvider.notifier)
                           .startRecording(recorder);
                       voiceRecognitionControllerNotifier
                           .recognizeVoice(speechToText);

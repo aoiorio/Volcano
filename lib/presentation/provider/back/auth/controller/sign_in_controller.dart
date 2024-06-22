@@ -4,11 +4,11 @@ import 'package:fpdart/fpdart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/infrastructure/dto/token.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
-import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
+import 'package:volcano/presentation/provider/back/auth/providers.dart';
+import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/front/auth/sign_in_providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
 part 'sign_in_controller.g.dart';

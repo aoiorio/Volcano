@@ -2,9 +2,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:volcano/presentation/page/sign_in/sign_in_page.dart';
-import 'package:volcano/presentation/page/sign_in/sign_in_step_page.dart';
-import 'package:volcano/presentation/page/sign_up/sign_up_step_page.dart';
+import 'package:volcano/presentation/page/auth/sign_in_page.dart';
+import 'package:volcano/presentation/page/auth/sign_in_step_page.dart';
+import 'package:volcano/presentation/page/auth/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/start/start_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
 

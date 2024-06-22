@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';
-import 'package:volcano/domain/repository/todo/todo_repository.dart';
+import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/infrastructure/datasource/todo/todo_data_source.dart';
-import 'package:volcano/infrastructure/dto/todo_dto.dart';
+import 'package:volcano/infrastructure/dto/todo.dart';
 
 class TodoRepositoryImpl implements TodoRepository {
   TodoRepositoryImpl({required TodoDataSource client}) : _client = client;

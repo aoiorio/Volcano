@@ -4,11 +4,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // NOTE Project Packages
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/infrastructure/dto/token.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_providers.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
-import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
+import 'package:volcano/presentation/provider/back/auth/providers.dart';
+import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/front/auth/sign_up_providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
 part 'sign_up_controller.g.dart';

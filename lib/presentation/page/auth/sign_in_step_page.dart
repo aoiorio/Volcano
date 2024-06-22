@@ -3,48 +3,36 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
-import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
-import 'package:volcano/presentation/provider/front/sign_up/sign_up_page_providers.dart';
+import 'package:volcano/presentation/component/sign_in/sign_in_step_shape.dart';
 
-// TODOImplement my own step by step feature by using List on so on.
-class SignUpStepPage extends ConsumerWidget {
-  const SignUpStepPage({super.key});
+import 'package:volcano/presentation/provider/front/auth/sign_in_providers.dart';
+
+// DONE Implement my own step by step feature by using List on so on.
+class SignInStepPage extends ConsumerWidget {
+  const SignInStepPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ! DO NOT USE ref.watch(signUpStepCounterProvider.notifier).state; because it won't work
-    final stepCount = ref.watch(signUpStepCounterProvider);
+    final stepCount = ref.watch(signInStepCounterProvider);
 
     final stepPages = <Widget>[
-      const SignUpStepShape(
-        gradientColorBegin: Color(0xff756980),
-        gradientColorEnd: Color(0xffBDAEAE),
+      SignInStepShape(
+        gradientColorBegin: const Color(0xff484A5A).withOpacity(0.85),
+        gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "1": \n   "type email"\n}',
         hintString: '"type email"',
-        // textEditingController: emailTextController,
       ),
-      const SignUpStepShape(
-        gradientColorBegin: Color(0xffB09C93),
-        gradientColorEnd: Color(0xffBDAEAE),
+      SignInStepShape(
+        gradientColorBegin: const Color(0xff5E4A49).withOpacity(0.85),
+        gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "2": \n   "type password"\n}',
         hintString: '"type password"',
-        // textEditingController: passwordTextController,
-      ),
-      const SignUpStepShape(
-        gradientColorBegin: Color(0xff8A8E7C),
-        gradientColorEnd: Color(0xffBDAEAE),
-        stepTitle: '{\n   "3": \n   "type confirm PW"\n}',
-        hintString: '"type confirm PW"',
-        // textEditingController: confirmPasswordTextController,
       ),
     ];
 
     return Scaffold(
-      // NOTE it means that when I show up keyboard, the widgets won't move
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         forceMaterialTransparency: true,
-
         leadingWidth: 80,
         // NOTE Back button
         leading: SizedBox(
@@ -84,7 +72,7 @@ class SignUpStepPage extends ConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     HapticFeedback.mediumImpact();
-                    ref.watch(signUpStepCounterProvider.notifier).state = 0;
+                    ref.watch(signInStepCounterProvider.notifier).state = 0;
                   },
                   child: Column(
                     children: [
@@ -103,30 +91,12 @@ class SignUpStepPage extends ConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     HapticFeedback.mediumImpact();
-                    ref.watch(signUpStepCounterProvider.notifier).state = 1;
+                    ref.watch(signInStepCounterProvider.notifier).state = 1;
                   },
                   child: Column(
                     children: [
                       const Text('{2}'),
                       stepCount == 1
-                          ? const Icon(
-                              Icons.arrow_upward_outlined,
-                              size: 30,
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 60),
-                GestureDetector(
-                  onTap: () {
-                    HapticFeedback.mediumImpact();
-                    ref.watch(signUpStepCounterProvider.notifier).state = 2;
-                  },
-                  child: Column(
-                    children: [
-                      const Text('{3}'),
-                      stepCount == 2
                           ? const Icon(
                               Icons.arrow_upward_outlined,
                               size: 30,

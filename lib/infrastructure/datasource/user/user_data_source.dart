@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
 // NOTE project imports
-import 'package:volcano/infrastructure/dto/volcano_user_dto.dart';
+import 'package:volcano/infrastructure/dto/volcano_user.dart';
 
 part 'user_data_source.g.dart';
 

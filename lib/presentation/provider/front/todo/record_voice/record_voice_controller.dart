@@ -4,7 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'record_voice.g.dart';
+part 'record_voice_controller.g.dart';
 
 const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 final rnd = Random();
@@ -20,7 +20,7 @@ String genRandomString(int length) => String.fromCharCodes(
 
 // ! you must specify keepAlive to true here! because it won't be readable from anywhere!
 @Riverpod(keepAlive: true)
-class RecordVoice extends _$RecordVoice {
+class RecordVoiceController extends _$RecordVoiceController {
   @override
   String? build() {
     return '';

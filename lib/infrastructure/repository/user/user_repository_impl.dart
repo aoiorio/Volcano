@@ -5,9 +5,9 @@ import 'package:fpdart/fpdart.dart';
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/volcano_user.dart';
-import 'package:volcano/domain/repository/user/user_repository.dart';
+import 'package:volcano/domain/repository/user.dart';
 import 'package:volcano/infrastructure/datasource/user/user_data_source.dart';
-import 'package:volcano/infrastructure/dto/volcano_user_dto.dart';
+import 'package:volcano/infrastructure/dto/volcano_user.dart';
 
 class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl({required UserDataSource client}) : _client = client;
