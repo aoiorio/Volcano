@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:volcano/presentation/page/sign_up/sign_up_page.dart';
+import 'package:volcano/presentation/page/auth/sign_up_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
+import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
 
 class StartPage extends ConsumerWidget {
   const StartPage({super.key});

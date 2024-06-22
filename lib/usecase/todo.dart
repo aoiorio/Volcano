@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';
-import 'package:volcano/domain/repository/todo/todo_repository.dart';
-import 'package:volcano/domain/usecase/todo/todo_use_case.dart';
+import 'package:volcano/domain/repository/todo.dart';
+import 'package:volcano/domain/usecase/todo.dart';
 
 class TodoUseCaseImpl implements TodoUseCase {
   TodoUseCaseImpl({required TodoRepository todoRepository})

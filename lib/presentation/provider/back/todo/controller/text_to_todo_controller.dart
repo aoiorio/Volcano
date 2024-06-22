@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/infrastructure/dto/todo_dto.dart';
+import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
-import 'package:volcano/presentation/provider/back/todo/todo_providers.dart';
+import 'package:volcano/presentation/provider/back/todo/providers.dart';
 
 part 'text_to_todo_controller.g.dart';
 

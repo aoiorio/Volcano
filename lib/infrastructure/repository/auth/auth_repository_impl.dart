@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/repository/auth/auth_repository.dart';
+import 'package:volcano/domain/repository/auth.dart';
 import 'package:volcano/infrastructure/datasource/auth/auth_data_source.dart';
-import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/infrastructure/dto/token.dart';
 import 'package:volcano/infrastructure/model/auth/sign_in_volcano_user_model.dart';
 import 'package:volcano/infrastructure/model/auth/sign_up_volcano_user_model.dart';
 

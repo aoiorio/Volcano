@@ -5,7 +5,7 @@ import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
 
-import 'package:volcano/infrastructure/dto/todo_dto.dart';
+import 'package:volcano/infrastructure/dto/todo.dart';
 
 part 'todo_data_source.g.dart';
 

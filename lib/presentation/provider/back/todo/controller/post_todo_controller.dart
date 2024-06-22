@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:volcano/infrastructure/dto/todo_dto.dart';
-import 'package:volcano/presentation/provider/back/auth/auth_shared_preference.dart';
-import 'package:volcano/presentation/provider/back/todo/todo_providers.dart';
-import 'package:volcano/presentation/provider/front/record_voice/record_voice.dart';
+import 'package:volcano/infrastructure/dto/todo.dart';
+import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/back/todo/providers.dart';
+import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_controller.dart';
 
 part 'post_todo_controller.g.dart';
 
@@ -23,7 +23,7 @@ class PostTodoController extends _$PostTodoController {
   }
 
   void postTodo() {
-    final path = ref.read(recordVoiceProvider);
+    final path = ref.read(recordVoiceControllerProvider);
     if (path!.isEmpty) {
       return;
     }

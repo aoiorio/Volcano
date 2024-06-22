@@ -2,9 +2,9 @@
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/token.dart';
-import 'package:volcano/domain/repository/auth/auth_repository.dart';
-import 'package:volcano/domain/usecase/auth/auth_use_case.dart';
-import 'package:volcano/infrastructure/dto/token_dto.dart';
+import 'package:volcano/domain/repository/auth.dart';
+import 'package:volcano/domain/usecase/auth.dart';
+import 'package:volcano/infrastructure/dto/token.dart';
 
 class AuthUseCaseImpl implements AuthUseCase {
   /*

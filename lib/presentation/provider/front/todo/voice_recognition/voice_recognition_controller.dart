@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:volcano/presentation/provider/front/voice_recognition/voice_recognition_is_listening_controller.dart';
+import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 
-part 'voice_recognition_text_controller.g.dart';
+part 'voice_recognition_controller.g.dart';
 
 @riverpod
 class VoiceRecognitionController extends _$VoiceRecognitionController {
@@ -24,9 +24,6 @@ class VoiceRecognitionController extends _$VoiceRecognitionController {
         },
       );
     } else {
-      ref
-          .read(voiceRecognitionIsListeningControllerProvider.notifier)
-          .changeToFalse();
       stopRecognizing(speechToText);
     }
   }

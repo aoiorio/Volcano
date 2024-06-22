@@ -8,7 +8,7 @@ import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/component/sign_in/sign_in_shape_button.dart';
 import 'package:volcano/presentation/provider/back/auth/controller/sign_in_controller.dart';
-import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
+import 'package:volcano/presentation/provider/front/auth/sign_in_providers.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});

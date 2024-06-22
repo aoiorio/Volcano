@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
-import 'package:volcano/presentation/provider/front/sign_in/sign_in_page_providers.dart';
+import 'package:volcano/presentation/provider/front/auth/sign_in_providers.dart';
 
 class SignInStepShape extends ConsumerStatefulWidget {
   const SignInStepShape({
