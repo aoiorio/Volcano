@@ -29,13 +29,11 @@ class RecordVoice extends _$RecordVoice {
   Future<void> startRecording(AudioRecorder recorder) async {
     // NOTE generate file path with function
     final directoryName = await getApplicationCacheDirectory();
-    final filePath = '${directoryName.path}/${genRandomString(12)}.wav';
+    final filePath = '${directoryName.path}/${genRandomString(12)}.m4a';
 
     await recorder.start(
-      // NOTE you must specify encoder because ios does not support for other encoder except pcm16bits
-      const RecordConfig(
-        encoder: AudioEncoder.pcm16bits,
-      ),
+      // NOTE default value aacLc is the best performance, if you want to create wav file you should specify encoder to pcm16bits
+      const RecordConfig(),
       path: filePath,
     );
   }
