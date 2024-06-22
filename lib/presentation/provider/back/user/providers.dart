@@ -15,7 +15,6 @@ final userClientProvider = Provider<UserDataSource>(
   (ref) => UserDataSource(ref.read(networkServiceProvider)),
 );
 
-
 // -----------------------------------------------------------------------------
 // Repository
 // -----------------------------------------------------------------------------
