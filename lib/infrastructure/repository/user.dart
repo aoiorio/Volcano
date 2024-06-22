@@ -15,7 +15,6 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<BackEndError, VolcanoUserDTO>> readUser(String token) async {
-    // TODO: implement readUser
     try {
       final res = await _client.readUser(token);
       debugPrint(res.email);
