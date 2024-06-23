@@ -54,8 +54,6 @@ Widget toastErrorWidget(String message) => Container(
           colors: [
             Color.fromARGB(255, 123, 105, 105),
             Color.fromARGB(255, 100, 80, 80),
-            // Color.fromARGB(255, 97, 90, 90),
-            // Color.fromARGB(255, 111, 50, 50),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
