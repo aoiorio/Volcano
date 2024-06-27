@@ -31,6 +31,7 @@ dependencies:
   animated_custom_dropdown: ^3.1.1
   animations: ^2.0.11
   audio_waveforms: ^1.0.5
+  bottom_picker: ^2.8.0
   build_runner: ^2.4.9
   cupertino_icons: ^1.0.2
   dio: any
@@ -38,7 +39,6 @@ dependencies:
   flash: ^3.1.0
   flutter:
     sdk: flutter
-  flutter_datetime_picker_plus: ^2.2.0
   flutter_gen: ^5.5.0+1
   flutter_riverpod: ^2.5.1
   flutter_spinkit: ^5.2.1
