@@ -48,7 +48,11 @@ class CustomTextField extends ConsumerWidget {
             style: const TextStyle(color: Colors.white, fontSize: 18),
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(
-                  left: 30, right: 30, top: 26, bottom: 26),
+                left: 30,
+                right: 30,
+                top: 26,
+                bottom: 26,
+              ),
               filled: true,
               isDense: true,
               fillColor: const Color(0xff343434),
