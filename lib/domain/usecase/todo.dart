@@ -19,5 +19,14 @@ abstract class TodoUseCase {
     required File audio,
   });
 
+  Future<Either<BackEndError, Todo>> executePostTodoFromText({
+    required String token,
+    required String title,
+    required String? description,
+    required String type,
+    required DateTime period,
+    required int priority,
+  });
+
   // TODO create other methods
 }

@@ -17,6 +17,15 @@ abstract class TodoRepository {
     required File audio,
   });
 
+  Future<Either<BackEndError, Todo>> postTodoFromText({
+    required String token,
+    required String title,
+    required String? description,
+    required String type,
+    required DateTime period,
+    required int priority,
+  });
+
   // TODO add todo_id as required
   Future<Either<BackEndError, Todo>> updateTodo({required Todo todo});
 

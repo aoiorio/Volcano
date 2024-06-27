@@ -41,4 +41,24 @@ class TodoUseCaseImpl implements TodoUseCase {
   }) {
     return _todoRepository.textToTodo(voiceText: voiceText);
   }
+
+  @override
+  Future<Either<BackEndError, Todo>> executePostTodoFromText({
+    required String token,
+    required String title,
+    required String? description,
+    required String type,
+    required DateTime period,
+    required int priority,
+  }) {
+    final todo = _todoRepository.postTodoFromText(
+      token: token,
+      title: title,
+      description: description,
+      type: type,
+      period: period,
+      priority: priority,
+    );
+    return todo;
+  }
 }

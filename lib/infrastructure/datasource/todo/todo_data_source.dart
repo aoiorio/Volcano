@@ -6,6 +6,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
 
 import 'package:volcano/infrastructure/dto/todo.dart';
+import 'package:volcano/infrastructure/model/todo/post_todo_model.dart';
 
 part 'todo_data_source.g.dart';
 
@@ -26,5 +27,11 @@ abstract class TodoDataSource {
     @Query('type') String type,
     @Query('priority') int priority,
     @Part(name: 'audio') File audio,
+  );
+
+  @POST('/todo/post-todo-from-text')
+  Future<TodoDTO> postTodoFromText(
+    @Query('token') String token,
+    @Body() PostTodoModel postTodoModel,
   );
 }

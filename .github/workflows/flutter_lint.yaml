@@ -39,6 +39,6 @@ jobs:
             echo "const baseUrl = 'url here';" >> ./lib/core/config.dart
             flutter pub run build_runner build
             dart analyze --fatal-infos
-      # NOTE --set-exit-if-changed menas that if there's even an changed, the action will fail
+      # NOTE --set-exit-if-changed menas that if there's even an changed, the action will be failed
       - name: 🥸  Formatter
         run: dart format $(find lib -name "*.dart" -not \( -name "*.*freezed.dart" -o -name "*.*g.dart" \) ) --set-exit-if-changed

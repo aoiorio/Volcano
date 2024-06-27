@@ -28,7 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  animated_custom_dropdown: ^3.1.1
   animations: ^2.0.11
+  audio_waveforms: ^1.0.5
+  bottom_picker: ^2.8.0
   build_runner: ^2.4.9
   cupertino_icons: ^1.0.2
   dio: any
@@ -36,8 +39,10 @@ dependencies:
   flash: ^3.1.0
   flutter:
     sdk: flutter
+  flutter_gen: ^5.5.0+1
   flutter_riverpod: ^2.5.1
   flutter_spinkit: ^5.2.1
+  flutter_svg: ^2.0.10+1
   fluttertoast: ^8.2.6
   fpdart: ^1.1.0
   freezed_annotation: ^2.4.1
@@ -70,7 +75,10 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+flutter_gen:
 
+  integrations:
+    flutter_svg: true
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -81,7 +89,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/volcano_logo.png
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -20,13 +20,13 @@ class SignInStepPage extends ConsumerWidget {
         gradientColorBegin: const Color(0xff484A5A).withOpacity(0.85),
         gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "1": \n   "type email"\n}',
-        hintString: '"type email"',
+        hintString: 'type email here...',
       ),
       SignInStepShape(
         gradientColorBegin: const Color(0xff5E4A49).withOpacity(0.85),
         gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "2": \n   "type password"\n}',
-        hintString: '"type password"',
+        hintString: 'type password here...',
       ),
     ];
 

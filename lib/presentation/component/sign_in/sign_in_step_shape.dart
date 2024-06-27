@@ -119,7 +119,15 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
           Positioned(
             top: 385,
             child: WhiteMainButton(
-              title: signInStepCounter == 1 ? '"Finish"' : '"Next"',
+              titleWidget: Text(
+                signInStepCounter == 1 ? '"Finish"' : '"Next"',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontSize: 20,
+                      color: const Color(0xff343434),
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              //signInStepCounter == 1 ? '"Finish"' : '"Next"',
               // widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
               onPress: () {
                 HapticFeedback.mediumImpact();
