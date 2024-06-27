@@ -38,7 +38,7 @@ class RecordVoiceWithWaveController extends _$RecordVoiceWithWaveController {
     final directoryName = await getApplicationCacheDirectory();
     final filePath = '${directoryName.path}/${genRandomString(12)}.m4a';
 
-      await state.record(path: filePath);
+    await state.record(path: filePath);
   }
 
   Future<void> stopRecordingWithWave() async {

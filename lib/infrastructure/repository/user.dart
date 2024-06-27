@@ -20,7 +20,6 @@ class UserRepositoryImpl implements UserRepository {
       debugPrint(res.email);
       return Either.right(res);
     } on DioException catch (e) {
-      // debugPrint(e.toString());
       final res = e.response;
       debugPrint(res?.toString());
       return Either.left(

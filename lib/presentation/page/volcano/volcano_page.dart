@@ -1,7 +1,6 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:record/record.dart';
@@ -10,7 +9,6 @@ import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
@@ -52,13 +50,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
   @override
   Widget build(BuildContext context) {
     final speechToText = SpeechToText();
-    final _isListening =
+    final isListening =
         ref.watch(voiceRecognitionIsListeningControllerProvider);
     final recognizedText =
         ref.watch(voiceRecognitionControllerProvider(speechToText));
     final voiceRecognitionControllerNotifier =
         ref.watch(voiceRecognitionControllerProvider(speechToText).notifier);
-    final postTodoController = ref.watch(postTodoControllerProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -93,10 +90,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                             borderRadius: BorderRadius.circular(30),
                             gradient: LinearGradient(
                               colors: [
-                                _isListening
+                                isListening
                                     ? const Color.fromARGB(255, 124, 125, 141)
                                     : const Color(0xff9596AE),
-                                _isListening
+                                isListening
                                     ? const Color.fromARGB(255, 180, 166, 166)
                                     : const Color(0xffCDBFBF),
                               ],
@@ -109,7 +106,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                             children: [
                               SizedBox(
                                 height: 90,
-                                child: _isListening
+                                child: isListening
                                     ? AudioWaveforms(
                                         size: Size(
                                           MediaQuery.of(context).size.width / 2,
@@ -131,7 +128,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               ),
                               const SizedBox(height: 20),
                               Text(
-                                _isListening
+                                isListening
                                     ? '"Speak Details of TODO"'
                                     : '"Add TODO From Voice"',
                                 style: Theme.of(context)
@@ -150,7 +147,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               .watch(recordVoiceWithWaveControllerProvider)
                               .checkPermission();
 
-                          if (speechToText.isListening || _isListening) {
+                          if (speechToText.isListening || isListening) {
                             ref
                                 .read(
                                   recordVoiceWithWaveControllerProvider
@@ -226,62 +223,11 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         ),
                       ),
                       onPress: () {
-                        // TODO implement add todo from text feature! (go to AddTodoPage)
+                        // DONE implement add todo from text feature! (go to AddTodoPage)
                         showAddTodoDialog(context, isAddingFromText: true);
                       },
                     ),
                   ),
-
-                  // Text(recognizedText),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     debugPrint(recognizedText);
-                  //     if (recognizedText.isEmpty) {
-                  //       return;
-                  //     }
-                  //     ref
-                  //         .read(textToTodoControllerProvider.notifier)
-                  //         .executeTextToTodo(recognizedText);
-                  //   },
-                  //   child: const Row(
-                  //     children: [
-                  //       Icon(Icons.explore),
-                  //       Text('Convert text to todo'),
-                  //     ],
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 300,
-                  //   width: 300,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       ref
-                  //           .read(postTodoControllerProvider.notifier)
-                  //           .postTodo();
-                  //     },
-                  //     child: const Row(
-                  //       children: [
-                  //         Icon(Icons.add_shopping_cart),
-                  //         Text('Add Todo'),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // TextField(
-                  //   controller: postTodoController.titleTextController,
-                  //   style: const TextStyle(color: Colors.black),
-                  // ),
-                  // TextField(
-                  //   controller: postTodoController.descriptionTextController,
-                  //   style: const TextStyle(color: Colors.black),
-                  // ),
-                  // TextField(
-                  //   controller: postTodoController.typeTextController,
-                  //   style: const TextStyle(color: Colors.black),
-                  // ),
-                  // Text(postTodoController.period.toString()),
-                  // Text(postTodoController.priority.toString()),
                 ],
               ),
             ],

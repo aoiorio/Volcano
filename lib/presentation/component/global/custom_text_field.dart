@@ -28,47 +28,47 @@ class CustomTextField extends ConsumerWidget {
       children: [
         addTitle
             ? Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: Text(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Text(
                   '"$titleText"',
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall!
                       .copyWith(color: Colors.black),
                 ),
-            )
+              )
             : const SizedBox(),
-            SizedBox(
-                width: width,
-                height: height,
-                child: TextField(
-                  controller: textEditingController,
-                  onChanged: onChanged,
-                  cursorColor: Colors.grey,
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(left: 30, right: 30, top: 29, bottom: 29),
-                    filled: true,
-                    isDense: true,
-                    // contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-                    fillColor: const Color(0xff343434),
-                    hintText: hintString,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(
-                        color: Color(0xff343434),
-                      ),
-                    ),
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.white),
-                  ),
+        SizedBox(
+          width: width,
+          height: height,
+          child: TextField(
+            controller: textEditingController,
+            onChanged: onChanged,
+            cursorColor: Colors.grey,
+            style: const TextStyle(color: Colors.white, fontSize: 18),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 26, bottom: 26),
+              filled: true,
+              isDense: true,
+              fillColor: const Color(0xff343434),
+              hintText: hintString,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: const BorderSide(
+                  color: Color(0xff343434),
                 ),
               ),
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: Colors.white),
+            ),
+          ),
+        ),
       ],
     );
   }

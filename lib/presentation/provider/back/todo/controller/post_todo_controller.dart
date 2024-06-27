@@ -10,11 +10,13 @@ import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
+import 'package:volcano/presentation/provider/front/todo/reset_values.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
 part 'post_todo_controller.g.dart';
 
-final todoPeriodProvider = StateProvider<DateTime>((ref) => DateTime.now().toLocal());
+final todoPeriodProvider =
+    StateProvider<DateTime>((ref) => DateTime.now().toLocal());
 
 @riverpod
 class PostTodoController extends _$PostTodoController {
@@ -44,9 +46,10 @@ class PostTodoController extends _$PostTodoController {
     if (titleTextController.text.isEmpty || typeTextController.text.isEmpty) {
       showToastMessage(
         toast,
-        'Fill Title and Type',
+        '😵‍💫 Fill Title and Type',
         ToastWidgetKind.error,
       );
+      return;
     }
     final token = ref.read(authSharedPreferenceProvider);
     ref.read(progressControllerProvider.notifier).executeWithProgress(
@@ -68,11 +71,7 @@ class PostTodoController extends _$PostTodoController {
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
             showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
-            titleTextController.clear();
-            descriptionTextController.clear();
-            typeTextController.clear();
-            ref.read(todoPeriodProvider.notifier).state = DateTime.now().toLocal();
-            priority = 1;
+            ref.read(resetValuesProvider.notifier).resetValues();
             return value;
           }),
         );
@@ -80,11 +79,11 @@ class PostTodoController extends _$PostTodoController {
   }
 
   void postTodoFromText(FToast toast, BuildContext context) {
-    var period = ref.watch(todoPeriodProvider);
+    final period = ref.watch(todoPeriodProvider);
     if (titleTextController.text.isEmpty || typeTextController.text.isEmpty) {
       showToastMessage(
         toast,
-        '😵‍💫 Fill Title and Type',
+        '😵‍💫 Fill Title And Type',
         ToastWidgetKind.error,
       );
       return;
@@ -105,11 +104,8 @@ class PostTodoController extends _$PostTodoController {
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
             showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
-            titleTextController.clear();
-            descriptionTextController.clear();
-            typeTextController.clear();
-            period = DateTime.now().toLocal();
-            priority = 1;
+            // NOTE clear the values
+            ref.read(resetValuesProvider.notifier).resetValues();
             return value;
           }),
         );

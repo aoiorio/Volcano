@@ -1,7 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
-    as picker;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +10,7 @@ import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_text_field.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
+import 'package:volcano/presentation/provider/front/todo/reset_values.dart';
 import 'package:volcano/presentation/provider/front/todo/step_count.dart';
 
 class AddTodoDialog extends ConsumerWidget {
@@ -22,18 +23,13 @@ class AddTodoDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final toast = FToast();
     final postTodoControllerNotifier =
         ref.watch(postTodoControllerProvider.notifier);
     final addTodoStepCounter = ref.watch(addTodoStepCountProvider);
     final period = ref.watch(todoPeriodProvider);
-    // final todoPeriod =
-    //     ref.watch(postTodoControllerProvider.notifier).period;
     final todoPeriodSuffix = period.hour < 12 ? 'a.m.' : 'p.m.';
-    // TODO fix the bug of not changing dates because this widget won't refresh when I confirmed selecting dates.
-
-    // final testPeriod =  DateFormat.yMEd().add_jms().format(DateTime.now());
-
-    final toast = FToast();
+    final height = MediaQuery.of(context).size.height;
 
     final textWidgets = <Widget>[
       const Column(
@@ -71,12 +67,9 @@ class AddTodoDialog extends ConsumerWidget {
                   color: Color(0xff747474),
                 ),
                 onPress: () {
+                  ref.read(resetValuesProvider.notifier).resetValues();
+                  // showAboutDialog(context: context, );
                   context.pop();
-                  postTodoControllerNotifier.titleTextController.clear();
-                  postTodoControllerNotifier.descriptionTextController.clear();
-                  postTodoControllerNotifier.typeTextController.clear();
-                  postTodoControllerNotifier.priority = 1;
-                  ref.read(todoPeriodProvider.notifier).state = DateTime.now().toLocal();
                 },
               ),
             ),
@@ -91,22 +84,10 @@ class AddTodoDialog extends ConsumerWidget {
             height: 80,
             addTitle: true,
             titleText: 'Title',
-            onChanged: (value) {
-              debugPrint(value);
-            },
+            hintString: 'type title here...',
+            onChanged: (value) {},
           ),
-          const SizedBox(height: 30),
-          CustomTextField(
-            textEditingController:
-                postTodoControllerNotifier.descriptionTextController,
-            width: 280,
-            height: 80,
-            addTitle: true,
-            titleText: 'Description',
-            onChanged: (value) {
-              debugPrint(value);
-            },
-          ),
+
           const SizedBox(height: 30),
           CustomTextField(
             textEditingController:
@@ -115,9 +96,92 @@ class AddTodoDialog extends ConsumerWidget {
             height: 80,
             addTitle: true,
             titleText: 'Type',
-            onChanged: (value) {
-              debugPrint(value);
-            },
+            hintString: 'type type here...',
+            onChanged: (value) {},
+          ),
+          const SizedBox(height: 30),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '"Period"',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Colors.black,
+                    ),
+              ),
+              const SizedBox(height: 15),
+              GestureDetector(
+                onTap: () async {
+                  BottomPicker.dateTime(
+                    pickerTitle: const SizedBox(),
+                    dateOrder: DatePickerDateOrder.dmy,
+                    initialDateTime: period,
+                    onChange: (date) {
+                      ref.read(todoPeriodProvider.notifier).state =
+                          date as DateTime;
+                    },
+                    onSubmit: (date) {
+                      ref.read(todoPeriodProvider.notifier).state =
+                          date as DateTime;
+                    },
+                    use24hFormat: true,
+                    backgroundColor: const Color(0xffF1F1F1),
+                    closeIconSize: 30,
+                    titlePadding: const EdgeInsets.all(10),
+                    pickerTextStyle: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 18),
+                    height: height / 3,
+                    buttonStyle: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xffBBC6C9),
+                          Color(0xffA6A4AD),
+                        ],
+                      ),
+                    ),
+                    // NOTE if the user taps the outside of widget, it will disable
+                    dismissable: true,
+                    buttonContent: const SizedBox(
+                      width: 120,
+                      height: 40,
+                      child: Icon(Icons.check, color: Color(0xff434343)),
+                    ),
+                  ).show(context);
+                },
+                child: Container(
+                  width: 280,
+                  height: 80,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(left: 30),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff343434),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '${period.year}-${period.month}-${period.day} ${period.hour}.$todoPeriodSuffix',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      Container(
+                        width: 14,
+                        height: 14,
+                        margin: const EdgeInsets.only(left: 15),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 36),
           WhiteMainButton(
@@ -160,57 +224,51 @@ class AddTodoDialog extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '"Period"',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Colors.black,
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Text(
+                  '"Description"',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.black),
+                ),
               ),
-              const SizedBox(height: 15),
-              GestureDetector(
-                onTap: () {
-                  picker.DatePicker.showDateTimePicker(
-                    context,
-                    currentTime: period,
-                    onConfirm: (date) {
-                      ref.read(todoPeriodProvider.notifier).state =
-                          date.toLocal();
-                    },
-                    onChanged: (date) {
-                      ref.read(todoPeriodProvider.notifier).state =
-                          date.toLocal();
-                    },
-                  );
-                },
-                child: Container(
-                  width: 280,
-                  height: 80,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.only(left: 30),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff343434),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        // postTodoControllerNotifier.period.toIso8601String(),
-                        '${period.year}-${period.month}-${period.day} ${period.hour}.$todoPeriodSuffix',
-                        // postTodoControllerNotifier.period.day.toString(),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.white,
-                            ),
+              Container(
+                width: 280,
+                height: 224,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color(0xff343434),
+                ),
+                child: TextField(
+                  controller:
+                      postTodoControllerNotifier.descriptionTextController,
+                  maxLines: null,
+                  cursorColor: Colors.grey,
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(
+                      left: 30,
+                      right: 30,
+                      top: 26,
+                      bottom: 26,
+                    ),
+                    enabledBorder: InputBorder.none,
+                    hintText: 'type description\nhere...',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(
+                        color: Color(0xff343434),
                       ),
-                      Container(
-                        width: 14,
-                        height: 14,
-                        margin: const EdgeInsets.only(left: 15),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffD9D9D9),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                    ],
+                    ),
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
@@ -283,7 +341,6 @@ class AddTodoDialog extends ConsumerWidget {
           ),
           // const Spacer(),
           const SizedBox(height: 36),
-          // const SizedBox(height: 35),
           WhiteMainButton(
             titleWidget: Text(
               '"Add TODO"',
@@ -308,11 +365,11 @@ class AddTodoDialog extends ConsumerWidget {
       child: Container(
         height: 100,
         width: 100,
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           right: 30,
           left: 30,
-          top: addTodoStepCounter == 1 ? 90 : 20,
-          bottom: addTodoStepCounter == 1 ? 90 : 20,
+          top: 20,
+          bottom: 20,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -343,13 +400,15 @@ class AddTodoDialog extends ConsumerWidget {
 void showAddTodoDialog(BuildContext context, {bool isAddingFromText = false}) {
   showDialog<void>(
     context: context,
+    // NOTE to not disable the dialog with one tap
+    barrierDismissible: false,
     builder: (_) {
       return PopScope(
         child: AddTodoDialog(
           isAddingFromText: isAddingFromText,
         ),
         onPopInvoked: (didPop) {
-          // TODO return confirm page
+          // TODO? return confirm page
           debugPrint('Are you sure?');
         },
       );

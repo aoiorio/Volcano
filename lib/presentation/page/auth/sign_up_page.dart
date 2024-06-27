@@ -176,7 +176,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       ],
                     ),
                     onPress: () {
-                      // TODOGo to SignInPage
+                      // DONE Go to SignInPage
                       context.push('/sign-in');
                       debugPrint('Hi SignIn');
                     },
