@@ -4,11 +4,11 @@ import 'package:volcano/presentation/component/global/bounced_button.dart';
 class WhiteMainButton extends StatelessWidget {
   const WhiteMainButton({
     super.key,
-    required this.title,
+    required this.titleWidget,
     required this.onPress,
   });
 
-  final String title;
+  final Widget titleWidget;
   final void Function() onPress;
 
   @override
@@ -24,14 +24,7 @@ class WhiteMainButton extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
           ),
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontSize: 20,
-                  color: const Color(0xff343434),
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+          child: titleWidget,
         ),
       ),
     );

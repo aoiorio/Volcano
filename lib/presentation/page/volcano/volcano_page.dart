@@ -1,6 +1,7 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:record/record.dart';
@@ -8,6 +9,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
@@ -130,8 +132,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               const SizedBox(height: 20),
                               Text(
                                 _isListening
-                                    ? '"Speak Details of Todo"'
-                                    : '"Add Todo From Voice"',
+                                    ? '"Speak Details of TODO"'
+                                    : '"Add TODO From Voice"',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!
@@ -143,6 +145,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         onPress: () async {
                           HapticFeedback.mediumImpact();
                           await speechToText.initialize();
+
                           final hasPermission = await ref
                               .watch(recordVoiceWithWaveControllerProvider)
                               .checkPermission();
@@ -156,7 +159,25 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 .stopRecordingWithWave();
                             voiceRecognitionControllerNotifier
                                 .stopRecognizing(speechToText);
-                            // TODO add execute TextToTodo method here
+                            // DONE add execute TextToTodo method here
+                            if (recognizedText.isEmpty) {
+                              return showToastMessage(
+                                toast,
+                                'Please tell us your TODO',
+                                ToastWidgetKind.error,
+                              );
+                            }
+                            if (!context.mounted) {
+                              return;
+                            }
+                            // NOTE convert text that I recognized to todo
+                            ref
+                                .read(textToTodoControllerProvider.notifier)
+                                .executeTextToTodo(
+                                  recognizedText,
+                                  toast,
+                                  context,
+                                );
                           } else if (hasPermission) {
                             ref
                                 .read(
@@ -175,6 +196,39 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                           }
                         },
                       ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    width: 340,
+                    height: 80,
+                    child: BouncedButton(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xffAAAAAA),
+                              Color(0xffB9ACAC),
+                            ],
+                          ),
+                        ),
+                        child: Container(
+                          // NOTE to text be center, I am using Container
+                          alignment: Alignment.center,
+                          child: Text(
+                            '"Add TODO From Text"',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      onPress: () {
+                        // TODO implement add todo from text feature! (go to AddTodoPage)
+                        showAddTodoDialog(context, isAddingFromText: true);
+                      },
                     ),
                   ),
 

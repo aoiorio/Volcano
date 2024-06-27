@@ -131,8 +131,15 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
           Positioned(
             top: 385,
             child: WhiteMainButton(
-              title:
-                  widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
+              titleWidget: Text(
+                widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontSize: 20,
+                      color: const Color(0xff343434),
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              // widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
               onPress: () {
                 HapticFeedback.mediumImpact();
                 widget.hintString.contains('confirm')

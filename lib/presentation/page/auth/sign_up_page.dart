@@ -148,7 +148,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       authExecuteSignUpMethodsControllerNotifier
                           .executeSignUp(toast);
                     },
-                    title: '"Submit"',
+                    // title: '"Submit"',
+                    titleWidget: Text(
+                      '"Submit"',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 20,
+                            color: const Color(0xff343434),
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ),
                 Positioned(

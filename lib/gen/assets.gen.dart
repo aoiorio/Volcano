@@ -15,6 +15,10 @@ import 'package:vector_graphics/vector_graphics.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/arrow-black.svg
+  SvgGenImage get arrowBlack =>
+      const SvgGenImage('assets/images/arrow-black.svg');
+
   /// File path: assets/images/volcano-page-shape.svg
   SvgGenImage get volcanoPageShape =>
       const SvgGenImage('assets/images/volcano-page-shape.svg');
@@ -24,7 +28,7 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/volcano_logo.png');
 
   /// List of all assets
-  List<dynamic> get values => [volcanoPageShape, volcanoLogo];
+  List<dynamic> get values => [arrowBlack, volcanoPageShape, volcanoLogo];
 }
 
 class Assets {

@@ -25,45 +25,51 @@ class AuthExecuteSignInController extends _$AuthExecuteSignInController {
     final authSharedPreferenceNotifier =
         ref.watch(authSharedPreferenceProvider.notifier);
 
-    ref
-        .read(progressControllerProvider.notifier)
-        .executeWithProgress(
-          authUseCase.executeSignIn(
+    ref.read(progressControllerProvider.notifier).executeWithProgress(
+          authUseCase
+              .executeSignIn(
             email: ref.read(signInEmailTextControllerProvider).text,
             password: ref.read(signInPasswordTextControllerProvider).text,
-          ),
-        )
-        .then(
-      (value) {
-        if (value.isRight()) {
-          // NOTE users can't go back this page if they pushed this button
-          showToastMessage(
-            toast,
-            "💡 You've Signed In!",
-            ToastWidgetKind.success,
-          );
-          // NOTE set accessToken to Local Storage
-          value.foldRight(BackEndError, (acc, result) {
-            authSharedPreferenceNotifier
-              ..setAccessToken(result.accessToken ?? '')
-              // NOTE get Access Token so it'll set AccessToken.
-              ..getAccessToken();
-            return acc;
-          });
-          // NOTE go to VolcanoPage
-          context.pushReplacement('/volcano');
-        } else if (value.isLeft()) {
-          value.getLeft().fold(() => null, (error) {
-            final errorMessage =
-                error.message?.detail.toString() ?? 'Something went wrong';
-            showToastMessage(
-              toast,
-              '😵‍💫 $errorMessage',
-              ToastWidgetKind.error,
-            );
-          });
-        }
-      },
-    );
+          )
+              .then((value) {
+            if (value.isRight()) {
+              // NOTE users can't go back this page if they pushed this button
+              showToastMessage(
+                toast,
+                "💡 You've Signed In!",
+                ToastWidgetKind.success,
+              );
+              // NOTE set accessToken to Local Storage
+              value.getRight().fold(() => null, (token) {
+                authSharedPreferenceNotifier
+                  ..setAccessToken(token.accessToken ?? '')
+                  // NOTE get Access Token so it'll set AccessToken.
+                  ..getAccessToken();
+              });
+              // NOTE go to VolcanoPage
+              context.pushReplacement('/volcano');
+            } else if (value.isLeft()) {
+              value.getLeft().fold(() => null, (error) {
+                final errorMessage =
+                    error.message?.detail.toString() ?? 'Something went wrong';
+                showToastMessage(
+                  toast,
+                  '😵‍💫 $errorMessage',
+                  ToastWidgetKind.error,
+                );
+              });
+            } else {
+              showToastMessage(
+                toast,
+                'Something went wrong',
+                ToastWidgetKind.error,
+              );
+            }
+            return Either.right('DONE');
+          }),
+        );
+    // .then(
+    //   (value) {},
+    // );
   }
 }

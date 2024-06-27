@@ -1,9 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
+import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
+import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
 part 'text_to_todo_controller.g.dart';
 
@@ -14,24 +19,45 @@ class TextToTodoController extends _$TextToTodoController {
     return Either.left(BackEndError());
   }
 
-  void executeTextToTodo(String voiceText) {
+  void executeTextToTodo(String voiceText, FToast toast, BuildContext context) {
     final postTodoController = ref.read(postTodoControllerProvider.notifier);
-    ref
-        .read(todoUseCaseProvider)
-        .executeTextToTodo(voiceText: voiceText)
-        .then((value) {
-      if (value.isRight()) {
-        value.foldRight(BackEndError, (returnValue, todo) {
-          postTodoController.titleTextController.text = todo.title ?? '';
-          postTodoController.descriptionTextController.text =
-              todo.description ?? '';
-          postTodoController.typeTextController.text = todo.type ?? '';
-          postTodoController.priority = todo.priority ?? 3;
-          // ignore: cascade_invocations
-          postTodoController.period = todo.period ?? DateTime.now();
-          return returnValue;
-        });
-      }
-    });
+    ref.read(progressControllerProvider.notifier).executeWithProgress(
+          ref
+              .read(todoUseCaseProvider)
+              .executeTextToTodo(voiceText: voiceText)
+              .then((value) {
+            if (value.isRight()) {
+              value.getRight().fold(() => null, (todo) {
+                postTodoController.titleTextController.text = todo.title ?? '';
+                postTodoController.descriptionTextController.text =
+                    todo.description ?? '';
+                postTodoController.typeTextController.text = todo.type ?? '';
+                postTodoController.priority = todo.priority ?? 3;
+                final utcPeriod = todo.period ?? DateTime.now();
+                ref.read(todoPeriodProvider.notifier).state =
+                    utcPeriod.toLocal();
+              });
+              showAddTodoDialog(context);
+            } else if (value.isLeft()) {
+              value.getLeft().fold(() => null, (error) {
+                showToastMessage(
+                  toast,
+                  '😵‍💫 ${error.message}',
+                  ToastWidgetKind.error,
+                );
+                return Either.left(BackEndError());
+              });
+              // showToastMessage(toast, message, kind)
+            } else {
+              showToastMessage(
+                toast,
+                '😵‍💫 Something went wrong',
+                ToastWidgetKind.error,
+              );
+              return Either.left(BackEndError());
+            }
+            return Either.right('DONE');
+          }),
+        );
   }
 }
