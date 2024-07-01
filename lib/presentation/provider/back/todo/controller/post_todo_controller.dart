@@ -18,7 +18,8 @@ part 'post_todo_controller.g.dart';
 final todoPeriodProvider =
     StateProvider<DateTime>((ref) => DateTime.now().toLocal());
 
-@riverpod
+// NOTE you must change keepAlive to change to save TextEditingController texts such as titleTextController.text and so on
+@Riverpod(keepAlive: true)
 class PostTodoController extends _$PostTodoController {
   TextEditingController titleTextController = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
