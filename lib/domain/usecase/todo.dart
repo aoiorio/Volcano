@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
+import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
 
 abstract class TodoUseCase {
@@ -29,4 +30,7 @@ abstract class TodoUseCase {
   });
 
   // TODO create other methods
+  Future<Either<BackEndError, List<ReadTodo>>> executeReadTodo({
+    required String token,
+  });
 }

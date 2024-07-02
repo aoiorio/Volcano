@@ -9,6 +9,7 @@ import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
@@ -45,10 +46,14 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
   void initState() {
     super.initState();
     toast.init(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(todoControllerProvider.notifier).executeReadTodo();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final todos = ref.watch(todoControllerProvider);
     final speechToText = SpeechToText();
     final isListening =
         ref.watch(voiceRecognitionIsListeningControllerProvider);
@@ -62,9 +67,9 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
       ),
-      // extendBodyBehindAppBar: true,
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         child: Center(
           child: Stack(
             // alignment: Alignment.center,
@@ -74,7 +79,6 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
               Assets.images.volcanoPageShape.svg(),
               Column(
                 children: [
-                  // const SizedBox(height: 30,),
                   Padding(
                     padding: const EdgeInsets.only(top: 90),
                     child: Assets.images.volcanoLogo.image(width: 180),
@@ -228,6 +232,97 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                       },
                     ),
                   ),
+                  todos.isLeft()
+                      ? const Text('Something went wrong')
+                      : ListView.builder(
+                          itemCount: ref
+                              .watch(todoControllerProvider.notifier)
+                              .typeCount,
+                          // NOTE this shrinkWrap prevents the error of layout
+                          shrinkWrap: true,
+                          // NOTE this physics can allow to scroll the screen property
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, typeIndex) {
+                            final valueCount =
+                                todos.getRight().fold(() => null, (todo) {
+                              return todo[typeIndex].values!.length;
+                            });
+                            // print('type count is here');
+                            // print(ref
+                            // //     .watch(todoControllerProvider.notifier)
+                            //     .typeCount);
+                            final userTodo =
+                                todos.getRight().fold(() => null, (todo) {
+                              return todo;
+                            });
+                            return Container(
+                              padding: const EdgeInsets.all(25),
+                              margin: const EdgeInsets.only(
+                                  bottom: 60, right: 30, left: 30),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xffD9D9D9),
+                                    Color.fromARGB(255, 110, 105, 105),
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        userTodo![typeIndex].type.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(fontSize: 22),
+                                      ),
+                                      const Icon(
+                                        Icons.play_arrow,
+                                        size: 30,
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 40),
+                                  ListView.builder(
+                                    itemCount:
+                                        valueCount! >= 3 ? 3 : valueCount,
+                                    // NOTE this shrinkWrap prevents the error of layout
+                                    shrinkWrap: true,
+                                    // NOTE this physics can allow to scroll the screen property
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, valueIndex) {
+                                      final period = userTodo[typeIndex]
+                                          .values![valueIndex]
+                                          .period;
+                                      final widget = Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 10),
+                                        child: Text(
+                                          '{\n  "title": "${userTodo[typeIndex].values![valueIndex].title}",\n  "due date": "${period!.year}/${period.month}/${period.day}"\n}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: Colors.black),
+                                          // overflow: TextOverflow.ellipsis,
+                                        ),
+                                      );
+                                      return widget;
+                                    },
+                                  ),
+                                  const SizedBox(height: 40),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                 ],
               ),
             ],

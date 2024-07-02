@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
+import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
 
 abstract class TodoRepository {
@@ -31,5 +32,7 @@ abstract class TodoRepository {
 
   Future<Either<BackEndError, Todo>> deleteTodo({required String todoId});
 
-  Future<Either<BackEndError, List<Todo>>> readTodo({required String userId});
+  Future<Either<BackEndError, List<ReadTodo>>> readTodo({
+    required String token,
+  });
 }
