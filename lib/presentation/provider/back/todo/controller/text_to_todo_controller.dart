@@ -12,7 +12,7 @@ import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
 part 'text_to_todo_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TextToTodoController extends _$TextToTodoController {
   @override
   Either<BackEndError, TodoDTO> build() {

@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/reset_values.dart';
@@ -68,6 +69,15 @@ class PostTodoController extends _$PostTodoController {
               .then((value) {
             // NOTE delete the path
             File(path).delete();
+            ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
+                  TodoDTO(
+                    title: titleTextController.text,
+                    description: descriptionTextController.text,
+                    type: typeTextController.text,
+                    period: period.toLocal(),
+                    priority: priority,
+                  ),
+                );
 
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
@@ -81,10 +91,13 @@ class PostTodoController extends _$PostTodoController {
 
   void postTodoFromText(FToast toast, BuildContext context) {
     final period = ref.watch(todoPeriodProvider);
-    if (titleTextController.text.isEmpty || typeTextController.text.isEmpty) {
+    if (titleTextController.text.isEmpty ||
+        typeTextController.text.isEmpty ||
+        titleTextController.text.length <= 3 ||
+        typeTextController.text.length <= 3) {
       showToastMessage(
         toast,
-        '😵‍💫 Fill Title And Type',
+        '😵‍💫 Title And Type Must Have\nAt Least 3 Characters',
         ToastWidgetKind.error,
       );
       return;
@@ -109,6 +122,15 @@ class PostTodoController extends _$PostTodoController {
             ref.read(resetValuesProvider.notifier).resetValues();
             return value;
           }),
+        );
+    ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
+          TodoDTO(
+            title: titleTextController.text,
+            description: descriptionTextController.text,
+            type: typeTextController.text,
+            period: period.toLocal(),
+            priority: priority,
+          ),
         );
     context.pop();
   }
