@@ -69,15 +69,21 @@ class PostTodoController extends _$PostTodoController {
               .then((value) {
             // NOTE delete the path
             File(path).delete();
-            ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
-                  TodoDTO(
-                    title: titleTextController.text,
-                    description: descriptionTextController.text,
-                    type: typeTextController.text,
-                    period: period.toLocal(),
-                    priority: priority,
-                  ),
-                );
+            if (value.isRight()) {
+              value.getRight().fold(() => null, (todo) {
+                // NOTE add todo locally
+                ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
+                      TodoDTO(
+                        title: titleTextController.text,
+                        description: descriptionTextController.text,
+                        type: typeTextController.text,
+                        period: period.toLocal(),
+                        priority: priority,
+                        audioUrl: todo.audioUrl,
+                      ),
+                    );
+              });
+            }
 
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
@@ -115,6 +121,20 @@ class PostTodoController extends _$PostTodoController {
                 priority: priority,
               )
               .then((value) {
+            if (value.isRight()) {
+              value.getRight().fold(() => null, (todo) {
+                ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
+                      TodoDTO(
+                        title: titleTextController.text,
+                        description: descriptionTextController.text,
+                        type: typeTextController.text,
+                        period: period.toLocal(),
+                        priority: priority,
+                        audioUrl: todo.audioUrl,
+                      ),
+                    );
+              });
+            }
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
             showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
@@ -123,17 +143,6 @@ class PostTodoController extends _$PostTodoController {
             return value;
           }),
         );
-    ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
-          TodoDTO(
-            title: titleTextController.text,
-            description: descriptionTextController.text,
-            type: typeTextController.text,
-            period: period.toLocal(),
-            priority: priority,
-          ),
-        );
     context.pop();
   }
-
-  // TODO create post without voice method here
 }

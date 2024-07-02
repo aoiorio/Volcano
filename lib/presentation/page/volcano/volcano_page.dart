@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
+import 'package:volcano/presentation/provider/back/todo/is_playing_voice.dart';
+import 'package:volcano/presentation/provider/back/todo/play_list.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
@@ -33,6 +36,7 @@ class VolcanoPage extends ConsumerStatefulWidget {
 class _VolcanoPageState extends ConsumerState<VolcanoPage> {
   final recorder = AudioRecorder();
   final FToast toast = FToast();
+  final player = AudioPlayer();
   RecorderController controller = RecorderController();
 
   @override
@@ -40,6 +44,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
     super.dispose();
     recorder.dispose();
     controller.dispose();
+    player.dispose();
   }
 
   @override
@@ -54,6 +59,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
   @override
   Widget build(BuildContext context) {
     final todos = ref.watch(todoControllerProvider);
+    // final isPlayingMusicList = ref.watch(isPlayingMusicProvider);
+    // final isPlayingMusicNotifier = ref.read(isPlayingMusicProvider.notifier);
     final speechToText = SpeechToText();
     final isListening =
         ref.watch(voiceRecognitionIsListeningControllerProvider);
@@ -247,18 +254,49 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 todos.getRight().fold(() => null, (todo) {
                               return todo[typeIndex].values!.length;
                             });
-                            // print('type count is here');
-                            // print(ref
-                            // //     .watch(todoControllerProvider.notifier)
-                            //     .typeCount);
                             final userTodo =
                                 todos.getRight().fold(() => null, (todo) {
                               return todo;
                             });
+                            final isPlayingMusic = ref.watch(
+                              isPlayingVoiceProvider(
+                                userTodo![typeIndex].type ?? '',
+                              ),
+                            );
+                            final isPlayingMusicNotifier = ref.read(
+                              isPlayingVoiceProvider(
+                                userTodo[typeIndex].type ?? '',
+                              ).notifier,
+                            );
+
+                            final playList = ref.watch(
+                              playListProvider(
+                                userTodo[typeIndex].type ?? '',
+                              ),
+                            );
+
+                            final audioSource = ConcatenatingAudioSource(
+                              // useLazyPreparation: true,
+                              // shuffleOrder: DefaultShuffleOrder(),
+                              // Specify the playlist items
+                              children: playList
+                                  .map(
+                                    (e) => LockCachingAudioSource(
+                                      Uri.parse(
+                                        e,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            );
+
                             return Container(
                               padding: const EdgeInsets.all(25),
                               margin: const EdgeInsets.only(
-                                  bottom: 60, right: 30, left: 30),
+                                bottom: 60,
+                                right: 30,
+                                left: 30,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 gradient: const LinearGradient(
@@ -269,7 +307,6 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 ),
                               ),
                               child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
@@ -277,16 +314,54 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        userTodo![typeIndex].type.toString(),
+                                        userTodo[typeIndex].type.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
                                             .copyWith(fontSize: 22),
                                       ),
-                                      const Icon(
-                                        Icons.play_arrow,
-                                        size: 30,
-                                      )
+                                      // NOTE play audio button
+                                      BouncedButton(
+                                        child: Icon(
+                                          isPlayingMusic
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          size: 40,
+                                        ),
+                                        onPress: () async {
+                                          HapticFeedback.lightImpact();
+                                          // LINK - https://zenn.dev/r0227n/articles/085c234061235e
+                                          if (isPlayingMusic) {
+                                            isPlayingMusicNotifier
+                                                .updateIsPlaying(
+                                              type: userTodo[typeIndex].type ??
+                                                  '',
+                                              updatedBool: false,
+                                            );
+                                            await player.stop();
+                                          } else {
+                                            isPlayingMusicNotifier
+                                                .updateIsPlaying(
+                                              type: userTodo[typeIndex].type ??
+                                                  '',
+                                              updatedBool: true,
+                                            );
+                                            await player
+                                                .setAudioSource(audioSource);
+                                            await player.play();
+                                            // .then((value) {
+                                            // NOTE IT MIGHT CAUSE ERROR !!!! if the speaking finished, the icon will change
+                                            // isPlayingMusicNotifier
+                                            //     .updateIsPlaying(
+                                            //   type:
+                                            //       userTodo[typeIndex].type ??
+                                            //           '',
+                                            //   updatedBool: false,
+                                            // );
+                                            // });
+                                          }
+                                        },
+                                      ),
                                     ],
                                   ),
                                   const SizedBox(height: 40),
@@ -302,22 +377,56 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                       final period = userTodo[typeIndex]
                                           .values![valueIndex]
                                           .period;
-                                      final widget = Padding(
+
+                                      // NOTE displaying todo here
+                                      final todoWidget = Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 10, bottom: 10),
-                                        child: Text(
-                                          '{\n  "title": "${userTodo[typeIndex].values![valueIndex].title}",\n  "due date": "${period!.year}/${period.month}/${period.day}"\n}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(color: Colors.black),
-                                          // overflow: TextOverflow.ellipsis,
+                                          top: 10,
+                                          bottom: 10,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '{',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: Colors.black,
+                                                  ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 25,
+                                              ),
+                                              child: Text(
+                                                '"title": "${userTodo[typeIndex].values![valueIndex].title}",\n"due date": "${period!.year}/${period.month}/${period.day}"',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                      color: Colors.black,
+                                                    ),
+                                              ),
+                                            ),
+                                            Text(
+                                              '}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: Colors.black,
+                                                  ),
+                                            ),
+                                          ],
                                         ),
                                       );
-                                      return widget;
+                                      return todoWidget;
                                     },
                                   ),
-                                  const SizedBox(height: 40),
+                                  const SizedBox(height: 30),
                                 ],
                               ),
                             );

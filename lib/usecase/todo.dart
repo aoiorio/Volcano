@@ -64,8 +64,9 @@ class TodoUseCaseImpl implements TodoUseCase {
   }
 
   @override
-  Future<Either<BackEndError, List<ReadTodo>>> executeReadTodo(
-      {required String token}) {
+  Future<Either<BackEndError, List<ReadTodo>>> executeReadTodo({
+    required String token,
+  }) {
     final todos = _todoRepository.readTodo(token: token);
     return todos;
   }
