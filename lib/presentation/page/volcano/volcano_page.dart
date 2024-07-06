@@ -310,8 +310,16 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 borderRadius: BorderRadius.circular(30),
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color(int.parse(typeColorCodeObject.startColorCode)),
-                                    Color(int.parse(typeColorCodeObject.endColorCode)),
+                                    Color(
+                                      int.parse(
+                                        typeColorCodeObject.startColorCode,
+                                      ),
+                                    ),
+                                    Color(
+                                      int.parse(
+                                        typeColorCodeObject.endColorCode,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

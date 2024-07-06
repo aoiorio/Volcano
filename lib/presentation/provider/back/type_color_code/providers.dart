@@ -16,12 +16,16 @@ final typeColorCodeClientProvider = Provider<TypeColorCodeDataSource>(
 );
 
 final typeColorCodeRepositoryProvider = Provider<TypeColorCodeRepository>(
-  (ref) => TypeColorCodeRepositoryImpl(client: ref.read(typeColorCodeClientProvider)),
+  (ref) => TypeColorCodeRepositoryImpl(
+    client: ref.read(typeColorCodeClientProvider),
+  ),
 );
 
 // -----------------------------------------------------------------------------
 // UseCase
 // -----------------------------------------------------------------------------
 final typeColorCodeUseCaseProvider = Provider<TypeColorCodeUseCase>(
-  (ref) => TypeColorCodeUseCaseImpl(typeColorCodeRepository: ref.read(typeColorCodeRepositoryProvider)),
+  (ref) => TypeColorCodeUseCaseImpl(
+    typeColorCodeRepository: ref.read(typeColorCodeRepositoryProvider),
+  ),
 );
