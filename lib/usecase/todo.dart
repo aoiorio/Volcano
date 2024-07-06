@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
+import 'package:volcano/domain/entity/goal_percentage.dart';
 import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/domain/repository/todo.dart';
@@ -69,5 +70,13 @@ class TodoUseCaseImpl implements TodoUseCase {
   }) {
     final todos = _todoRepository.readTodo(token: token);
     return todos;
+  }
+
+  @override
+  Future<Either<BackEndError, GoalPercentage>> executeGetGoalPercentage({
+    required String token,
+  }) {
+    final goalPercentage = _todoRepository.getGoalPercentage(token: token);
+    return goalPercentage;
   }
 }

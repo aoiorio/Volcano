@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
+import 'package:volcano/domain/entity/goal_percentage.dart';
 import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
 
@@ -31,6 +32,10 @@ abstract class TodoUseCase {
 
   // TODO create other methods
   Future<Either<BackEndError, List<ReadTodo>>> executeReadTodo({
+    required String token,
+  });
+
+  Future<Either<BackEndError, GoalPercentage>> executeGetGoalPercentage({
     required String token,
   });
 }
