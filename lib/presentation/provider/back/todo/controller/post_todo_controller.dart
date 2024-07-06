@@ -69,6 +69,7 @@ class PostTodoController extends _$PostTodoController {
               .then((value) {
             // NOTE delete the path
             File(path).delete();
+
             if (value.isRight()) {
               value.getRight().fold(() => null, (todo) {
                 // NOTE add todo locally
@@ -121,6 +122,8 @@ class PostTodoController extends _$PostTodoController {
                 priority: priority,
               )
               .then((value) {
+            // NOTE get color code
+
             if (value.isRight()) {
               value.getRight().fold(() => null, (todo) {
                 ref.read(todoControllerProvider.notifier).executeLocalAddTodo(

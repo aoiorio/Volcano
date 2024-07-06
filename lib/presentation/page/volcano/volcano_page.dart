@@ -14,6 +14,7 @@ import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/is_playing_voice.dart';
 import 'package:volcano/presentation/provider/back/todo/play_list.dart';
+import 'package:volcano/presentation/provider/back/type_color_code/type_color_code_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
@@ -53,6 +54,11 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
     toast.init(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(todoControllerProvider.notifier).executeReadTodo();
+
+      // NOTE to get color codes of todo cards
+      ref
+          .read(typeColorCodeControllerProvider.notifier)
+          .executeReadTypeColorCode();
     });
   }
 
@@ -258,12 +264,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 todos.getRight().fold(() => null, (todo) {
                               return todo;
                             });
-                            final isPlayingMusic = ref.watch(
+                            final isPlayingVoice = ref.watch(
                               isPlayingVoiceProvider(
                                 userTodo![typeIndex].type ?? '',
                               ),
                             );
-                            final isPlayingMusicNotifier = ref.read(
+                            final isPlayingVoiceNotifier = ref.read(
                               isPlayingVoiceProvider(
                                 userTodo[typeIndex].type ?? '',
                               ).notifier,
@@ -276,8 +282,6 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                             );
 
                             final audioSource = ConcatenatingAudioSource(
-                              // useLazyPreparation: true,
-                              // shuffleOrder: DefaultShuffleOrder(),
                               // Specify the playlist items
                               children: playList
                                   .map(
@@ -289,7 +293,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   )
                                   .toList(),
                             );
-
+                            // NOTE this is how to create hex color code by using the value from db
+                            final typeColorCodeObject = ref
+                                .watch(typeColorCodeControllerProvider.notifier)
+                                .findTypeFromColorList(
+                                  userTodo[typeIndex].type ?? '',
+                                );
                             return Container(
                               padding: const EdgeInsets.all(25),
                               margin: const EdgeInsets.only(
@@ -299,10 +308,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
-                                gradient: const LinearGradient(
+                                gradient: LinearGradient(
                                   colors: [
-                                    Color(0xffD9D9D9),
-                                    Color.fromARGB(255, 110, 105, 105),
+                                    Color(int.parse(typeColorCodeObject.startColorCode)),
+                                    Color(int.parse(typeColorCodeObject.endColorCode)),
                                   ],
                                 ),
                               ),
@@ -323,7 +332,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                       // NOTE play audio button
                                       BouncedButton(
                                         child: Icon(
-                                          isPlayingMusic
+                                          isPlayingVoice
                                               ? Icons.pause
                                               : Icons.play_arrow,
                                           size: 40,
@@ -331,8 +340,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                         onPress: () async {
                                           HapticFeedback.lightImpact();
                                           // LINK - https://zenn.dev/r0227n/articles/085c234061235e
-                                          if (isPlayingMusic) {
-                                            isPlayingMusicNotifier
+                                          if (isPlayingVoice) {
+                                            isPlayingVoiceNotifier
                                                 .updateIsPlaying(
                                               type: userTodo[typeIndex].type ??
                                                   '',
@@ -340,7 +349,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                             );
                                             await player.stop();
                                           } else {
-                                            isPlayingMusicNotifier
+                                            isPlayingVoiceNotifier
                                                 .updateIsPlaying(
                                               type: userTodo[typeIndex].type ??
                                                   '',
