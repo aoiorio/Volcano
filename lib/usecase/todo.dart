@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
+import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/domain/usecase/todo.dart';
@@ -60,5 +61,13 @@ class TodoUseCaseImpl implements TodoUseCase {
       priority: priority,
     );
     return todo;
+  }
+
+  @override
+  Future<Either<BackEndError, List<ReadTodo>>> executeReadTodo({
+    required String token,
+  }) {
+    final todos = _todoRepository.readTodo(token: token);
+    return todos;
   }
 }

@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/reset_values.dart';
@@ -18,7 +19,8 @@ part 'post_todo_controller.g.dart';
 final todoPeriodProvider =
     StateProvider<DateTime>((ref) => DateTime.now().toLocal());
 
-@riverpod
+// NOTE you must change keepAlive to change to save TextEditingController texts such as titleTextController.text and so on
+@Riverpod(keepAlive: true)
 class PostTodoController extends _$PostTodoController {
   TextEditingController titleTextController = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
@@ -68,6 +70,22 @@ class PostTodoController extends _$PostTodoController {
             // NOTE delete the path
             File(path).delete();
 
+            if (value.isRight()) {
+              value.getRight().fold(() => null, (todo) {
+                // NOTE add todo locally
+                ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
+                      TodoDTO(
+                        title: titleTextController.text,
+                        description: descriptionTextController.text,
+                        type: typeTextController.text,
+                        period: period.toLocal(),
+                        priority: priority,
+                        audioUrl: todo.audioUrl,
+                      ),
+                    );
+              });
+            }
+
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
             showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
@@ -80,10 +98,13 @@ class PostTodoController extends _$PostTodoController {
 
   void postTodoFromText(FToast toast, BuildContext context) {
     final period = ref.watch(todoPeriodProvider);
-    if (titleTextController.text.isEmpty || typeTextController.text.isEmpty) {
+    if (titleTextController.text.isEmpty ||
+        typeTextController.text.isEmpty ||
+        titleTextController.text.length <= 3 ||
+        typeTextController.text.length <= 3) {
       showToastMessage(
         toast,
-        '😵‍💫 Fill Title And Type',
+        '😵‍💫 Title And Type Must Have\nAt Least 3 Characters',
         ToastWidgetKind.error,
       );
       return;
@@ -101,6 +122,22 @@ class PostTodoController extends _$PostTodoController {
                 priority: priority,
               )
               .then((value) {
+            // NOTE get color code
+
+            if (value.isRight()) {
+              value.getRight().fold(() => null, (todo) {
+                ref.read(todoControllerProvider.notifier).executeLocalAddTodo(
+                      TodoDTO(
+                        title: titleTextController.text,
+                        description: descriptionTextController.text,
+                        type: typeTextController.text,
+                        period: period.toLocal(),
+                        priority: priority,
+                        audioUrl: todo.audioUrl,
+                      ),
+                    );
+              });
+            }
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
             showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
@@ -111,6 +148,4 @@ class PostTodoController extends _$PostTodoController {
         );
     context.pop();
   }
-
-  // TODO create post without voice method here
 }

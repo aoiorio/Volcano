@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
+import 'package:volcano/infrastructure/dto/read_todo.dart';
 
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/infrastructure/model/todo/post_todo_model.dart';
@@ -33,5 +34,10 @@ abstract class TodoDataSource {
   Future<TodoDTO> postTodoFromText(
     @Query('token') String token,
     @Body() PostTodoModel postTodoModel,
+  );
+
+  @GET('/todo/user-todo/')
+  Future<List<ReadTodoDTO>> readTodo(
+    @Query('token') String token,
   );
 }

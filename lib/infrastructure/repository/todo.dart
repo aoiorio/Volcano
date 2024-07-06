@@ -8,6 +8,7 @@ import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/infrastructure/datasource/todo/todo_data_source.dart';
+import 'package:volcano/infrastructure/dto/read_todo.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/infrastructure/model/todo/post_todo_model.dart';
 
@@ -22,11 +23,27 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<BackEndError, List<TodoDTO>>> readTodo({
-    required String userId,
-  }) {
-    // TODO: implement readTodo
-    throw UnimplementedError();
+  Future<Either<BackEndError, List<ReadTodoDTO>>> readTodo({
+    required String token,
+  }) async {
+    try {
+      final res = await _client.readTodo(token).then((value) {
+        if (value[0].values != null) {
+          debugPrint(value[0].values![0].title);
+        }
+        return value;
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(res?.data),
+        ),
+      );
+    }
   }
 
   @override
