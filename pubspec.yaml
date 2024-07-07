@@ -52,6 +52,7 @@ dependencies:
   just_audio: ^0.9.38
   page_transition: ^2.1.0 # NOTE Navigation
   path_provider: ^2.1.3
+  percent_indicator: ^4.2.3
   record: ^5.1.1
   retrofit: ^4.1.0  # NOTE API Client
   riverpod: any
