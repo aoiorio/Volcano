@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
+import 'package:volcano/domain/entity/goal_percentage.dart';
 import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/infrastructure/datasource/todo/todo_data_source.dart';
@@ -130,6 +131,30 @@ class TodoRepositoryImpl implements TodoRepository {
       )
           .then((value) {
         debugPrint(value.audioUrl.toString());
+        return value;
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(e.toString());
+      debugPrint(res.toString());
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(res?.data),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<BackEndError, GoalPercentage>> getGoalPercentage({
+    required String token,
+  }) async {
+    try {
+      final res = await _client.getGoalPercentage(token).then((value) {
+        debugPrint(value.todayGoalPercentage.toString());
         return value;
       });
       return Either.right(res);
