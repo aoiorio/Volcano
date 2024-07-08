@@ -262,7 +262,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                             SingleChildScrollView(
                               controller: pageController,
                               padding: const EdgeInsets.only(
-                                  bottom: 20, right: 20, left: 20),
+                                bottom: 20,
+                                right: 20,
+                                left: 20,
+                              ),
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
@@ -355,7 +358,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               // NOTE this is how to create hex color code by using the value from db
                               final typeColorCodeObject = ref
                                   .watch(
-                                      typeColorCodeControllerProvider.notifier)
+                                    typeColorCodeControllerProvider.notifier,
+                                  )
                                   .findTypeFromColorList(
                                     userTodo[typeIndex].type ?? '',
                                   );
