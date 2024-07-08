@@ -10,11 +10,13 @@ class GoalPercentageCard extends ConsumerWidget {
     required this.goalString,
     required this.goalPercentage,
     required this.onPress,
+    required this.cardColorCode,
   });
 
   final String goalString;
   final double goalPercentage;
   final void Function() onPress;
+  final int cardColorCode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +27,8 @@ class GoalPercentageCard extends ConsumerWidget {
       height: 220,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: const Color(0xffAEADB9),
+        // color: const Color(0xffAEADB9),
+        color: Color(cardColorCode),
       ),
       child: Stack(
         alignment: AlignmentDirectional.topEnd,
@@ -102,13 +105,12 @@ class GoalPercentageCard extends ConsumerWidget {
               LinearPercentIndicator(
                 width: 230,
                 lineHeight: 28,
-                // animation: true,
                 padding: EdgeInsets.zero,
-                // animationDuration: 1500,
                 percent: goalPercentage / 100,
                 barRadius: const Radius.circular(10),
                 backgroundColor: const Color(0xffffffff),
                 progressColor: const Color(0xff4C4C4C),
+                center: const SizedBox(width: 10),
               ),
             ],
           ),

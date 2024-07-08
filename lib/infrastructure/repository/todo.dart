@@ -149,11 +149,11 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<BackEndError, GoalPercentage>> getGoalPercentage({required String token}) async {
+  Future<Either<BackEndError, GoalPercentage>> getGoalPercentage({
+    required String token,
+  }) async {
     try {
-      final res = await _client
-          .getGoalPercentage(token)
-          .then((value) {
+      final res = await _client.getGoalPercentage(token).then((value) {
         debugPrint(value.todayGoalPercentage.toString());
         return value;
       });
