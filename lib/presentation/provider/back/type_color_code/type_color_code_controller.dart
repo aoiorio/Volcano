@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/tyoe_color_object.dart';
 import 'package:volcano/presentation/provider/back/type_color_code/providers.dart';
+import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
 part 'type_color_code_controller.g.dart';
 
@@ -14,22 +15,25 @@ class TypeColorCodeController extends _$TypeColorCodeController {
   }
 
   void executeReadTypeColorCode() {
-    ref
-        .read(typeColorCodeUseCaseProvider)
-        .executeReadTypeColorCode()
-        .then((value) {
-      if (value.isRight()) {
-        value.getRight().fold(() => null, (typeColorObjectList) {
-          state = Either.right(typeColorObjectList);
-        });
-      } else if (value.isLeft()) {
-        value.getLeft().fold(() => null, (error) {
-          state = Either.left(error);
-          return Either.left(error);
-        });
-        return value;
-      }
-    });
+    ref.read(progressControllerProvider.notifier).executeWithProgress(
+          ref
+              .read(typeColorCodeUseCaseProvider)
+              .executeReadTypeColorCode()
+              .then((value) {
+            if (value.isRight()) {
+              value.getRight().fold(() => null, (typeColorObjectList) {
+                state = Either.right(typeColorObjectList);
+              });
+            } else if (value.isLeft()) {
+              value.getLeft().fold(() => null, (error) {
+                state = Either.left(error);
+                return Either.left(error);
+              });
+              // return value;
+            }
+            return value;
+          }),
+        );
   }
 
   TypeColorObject findTypeFromColorList(String type) {

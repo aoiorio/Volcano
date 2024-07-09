@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -11,7 +12,7 @@ import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/todo/goal_percentage_card.dart';
-import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
+import 'package:volcano/presentation/page/add_todo/add_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/goal_percentage_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
@@ -21,6 +22,7 @@ import 'package:volcano/presentation/provider/back/type_color_code/type_color_co
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
+import 'package:volcano/presentation/routes/routes_model/todo_details_route_model.dart';
 
 // ANCHOR - Use LockCachingAudioSource to set the URL
 // final audioSource = LockCachingAudioSource(
@@ -529,8 +531,19 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   Positioned(
                                     bottom: 40,
                                     child: BouncedButton(
-                                      // TODO create going to the todo page
-                                      onPress: HapticFeedback.lightImpact,
+                                      // DONE create going to the todo page
+                                      onPress: () {
+                                        HapticFeedback.lightImpact();
+                                        final todoDetailsRouteModel =
+                                            TodoDetailsRouteModel(
+                                          typeName: userTodo[typeIndex].type!,
+                                          userTodo: userTodo[typeIndex].values!,
+                                        );
+                                        context.push(
+                                          '/todo-details',
+                                          extra: todoDetailsRouteModel,
+                                        );
+                                      },
                                       child: Container(
                                         width: 100,
                                         height: 60,
