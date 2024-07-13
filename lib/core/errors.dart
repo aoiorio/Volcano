@@ -16,7 +16,7 @@ class BackEndErrorMessage {
 
   factory BackEndErrorMessage.fromJson(Map<String, dynamic> json) =>
       BackEndErrorMessage(
-        detail: json['detail'],
+        detail: json['detail'] ?? 'Something went wrong',
       );
   final String? detail;
 
