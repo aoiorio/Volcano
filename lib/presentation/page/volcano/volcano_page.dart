@@ -1,7 +1,6 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -322,7 +321,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                   todos.isLeft()
                       // TODO add shimmer effect here!!
                       ? const Text(
-                          'Something went wrong, please try to connect wifi')
+                          'Something went wrong, please try to connect wifi',
+                        )
                       : MediaQuery.removePadding(
                           context: context,
                           removeTop: true,

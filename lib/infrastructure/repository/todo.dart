@@ -43,7 +43,8 @@ class TodoRepositoryImpl implements TodoRepository {
         BackEndError(
           statusCode: res?.statusCode,
           message: BackEndErrorMessage.fromJson(
-              res?.data ?? {'detail': 'Something went wrong'}),
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
         ),
       );
     }
@@ -67,7 +68,8 @@ class TodoRepositoryImpl implements TodoRepository {
         BackEndError(
           statusCode: res?.statusCode,
           message: BackEndErrorMessage.fromJson(
-              res?.data ?? {'detail': 'Something went wrong'}),
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
         ),
       );
     }
@@ -147,7 +149,8 @@ class TodoRepositoryImpl implements TodoRepository {
         BackEndError(
           statusCode: res?.statusCode,
           message: BackEndErrorMessage.fromJson(
-              res?.data ?? {'detail': 'Something went wrong'}),
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
         ),
       );
     }
@@ -188,7 +191,8 @@ class TodoRepositoryImpl implements TodoRepository {
         BackEndError(
           statusCode: res?.statusCode,
           message: BackEndErrorMessage.fromJson(
-              res?.data ?? {'detail': 'Something went wrong'}),
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
         ),
       );
     }
@@ -213,7 +217,8 @@ class TodoRepositoryImpl implements TodoRepository {
         BackEndError(
           statusCode: res?.statusCode,
           message: BackEndErrorMessage.fromJson(
-              res?.data ?? {'detail': 'Something went wrong'}),
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
         ),
       );
     }

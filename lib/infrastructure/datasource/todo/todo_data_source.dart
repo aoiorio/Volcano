@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
 import 'package:volcano/infrastructure/dto/goal_percentage.dart';

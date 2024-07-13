@@ -20,7 +20,7 @@ class IsPlayingVoiceOfType extends _$IsPlayingVoiceOfType {
             if (typeList.contains(todo.type)) {
               continue;
             }
-            isPlayingMusicList.add({todo.type ?? '' : false});
+            isPlayingMusicList.add({todo.type ?? '': false});
             typeList.add(readTodo.type ?? '');
           }
         }

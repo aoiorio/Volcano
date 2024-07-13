@@ -3,7 +3,6 @@ import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 
 class TodoDetailsRouteModel {
-
   TodoDetailsRouteModel({
     this.key,
     required this.typeName,
