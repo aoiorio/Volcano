@@ -35,6 +35,17 @@ abstract class TodoUseCase {
     required String token,
   });
 
+  Future<Either<BackEndError, String>> executeUpdateTodo({
+    required String todoId,
+    required String title,
+    required String description,
+    required DateTime period,
+    required int priority,
+    required String type,
+    required String audioUrl,
+    required bool isCompleted,
+  });
+
   Future<Either<BackEndError, GoalPercentage>> executeGetGoalPercentage({
     required String token,
   });

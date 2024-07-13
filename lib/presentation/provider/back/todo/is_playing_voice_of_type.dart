@@ -1,14 +1,15 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 
-part 'is_playing_voice.g.dart';
+part 'is_playing_voice_of_type.g.dart';
 
 @riverpod
-class IsPlayingVoice extends _$IsPlayingVoice {
+class IsPlayingVoiceOfType extends _$IsPlayingVoiceOfType {
   final isPlayingMusicList = <Map<String, bool>>[];
 
   @override
   bool build(String type) {
+    // TODO get the value of todos as an argument
     final todos = ref.watch(todoControllerProvider);
     final typeList = <String>[];
     if (todos.isRight()) {
@@ -19,7 +20,7 @@ class IsPlayingVoice extends _$IsPlayingVoice {
             if (typeList.contains(todo.type)) {
               continue;
             }
-            isPlayingMusicList.add({todo.type ?? '': false});
+            isPlayingMusicList.add({todo.type ?? '' : false});
             typeList.add(readTodo.type ?? '');
           }
         }

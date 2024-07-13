@@ -79,4 +79,28 @@ class TodoUseCaseImpl implements TodoUseCase {
     final goalPercentage = _todoRepository.getGoalPercentage(token: token);
     return goalPercentage;
   }
+
+  @override
+  Future<Either<BackEndError, String>> executeUpdateTodo({
+    required String todoId,
+    required String title,
+    required String description,
+    required DateTime period,
+    required int priority,
+    required String type,
+    required String audioUrl,
+    required bool isCompleted,
+  }) {
+    final result = _todoRepository.updateTodo(
+      todoId: todoId,
+      title: title,
+      description: description,
+      period: period,
+      priority: priority,
+      type: type,
+      audioUrl: audioUrl,
+      isCompleted: isCompleted,
+    );
+    return result;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +17,7 @@ import 'package:volcano/presentation/page/add_todo/add_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/goal_percentage_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
-import 'package:volcano/presentation/provider/back/todo/is_playing_voice.dart';
+import 'package:volcano/presentation/provider/back/todo/is_playing_voice_of_type.dart';
 import 'package:volcano/presentation/provider/back/todo/play_list.dart';
 import 'package:volcano/presentation/provider/back/type_color_code/type_color_code_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
@@ -257,7 +258,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                     ),
                   ),
                   // TODO add shimmer effects
-                  goalPercentage.todayGoalPercentage == null
+                  goalPercentage.isLeft()
                       ? const SizedBox()
                       : Column(
                           children: [
@@ -274,7 +275,13 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   GoalPercentageCard(
                                     goalString: "Today's Goal",
                                     goalPercentage:
-                                        goalPercentage.todayGoalPercentage ?? 0,
+                                        goalPercentage.getRight().fold(
+                                              () => 0,
+                                              (goalPercentage) =>
+                                                  goalPercentage
+                                                      .todayGoalPercentage ??
+                                                  0,
+                                            ),
                                     onPress: () {
                                       // TODO go to today's todo page
                                     },
@@ -284,7 +291,13 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   GoalPercentageCard(
                                     goalString: "Month's Goal",
                                     goalPercentage:
-                                        goalPercentage.monthGoalPercentage ?? 0,
+                                        goalPercentage.getRight().fold(
+                                              () => 0.0,
+                                              (goalPercentage) =>
+                                                  goalPercentage
+                                                      .monthGoalPercentage ??
+                                                  0.0,
+                                            ),
                                     onPress: () {
                                       // TODO go to month's todo page
                                     },
@@ -307,7 +320,9 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         ),
                   const SizedBox(height: 40),
                   todos.isLeft()
-                      ? const Text('Something went wrong')
+                      // TODO add shimmer effect here!!
+                      ? const Text(
+                          'Something went wrong, please try to connect wifi')
                       : MediaQuery.removePadding(
                           context: context,
                           removeTop: true,
@@ -331,12 +346,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
 
                               // NOTE playing voice etc..
                               final isPlayingVoice = ref.watch(
-                                isPlayingVoiceProvider(
+                                isPlayingVoiceOfTypeProvider(
                                   userTodo![typeIndex].type ?? '',
                                 ),
                               );
                               final isPlayingVoiceNotifier = ref.read(
-                                isPlayingVoiceProvider(
+                                isPlayingVoiceOfTypeProvider(
                                   userTodo[typeIndex].type ?? '',
                                 ).notifier,
                               );
@@ -401,14 +416,18 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              userTodo[typeIndex]
-                                                  .type
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(fontSize: 22),
+                                            SizedBox(
+                                              width: 230,
+                                              child: Text(
+                                                userTodo[typeIndex]
+                                                    .type
+                                                    .toString(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(fontSize: 22),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                             // NOTE play audio button
                                             BouncedButton(

@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:volcano/core/config.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 
 part 'play_list.g.dart';
@@ -25,11 +26,11 @@ class PlayList extends _$PlayList {
               if (result[index][todo.type]!.length >= 3) {
                 continue;
               }
-              result[index][todo.type]!.add(todo.audioUrl ?? '');
+              result[index][todo.type]!.add(todo.audioUrl ?? dummyAudioURL);
               continue;
             }
             result.add({
-              todo.type ?? '': [todo.audioUrl ?? ''],
+              todo.type ?? '': [todo.audioUrl ?? dummyAudioURL],
             });
             typeList.add(todo.type ?? '');
           }

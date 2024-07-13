@@ -42,7 +42,7 @@ class TextToTodoController extends _$TextToTodoController {
               value.getLeft().fold(() => null, (error) {
                 showToastMessage(
                   toast,
-                  '😵‍💫 ${error.message}',
+                  '😵‍💫 Something went wrong with recognizing audio',
                   ToastWidgetKind.error,
                 );
                 return Either.left(BackEndError());

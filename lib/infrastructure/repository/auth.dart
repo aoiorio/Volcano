@@ -31,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }
@@ -70,7 +70,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }

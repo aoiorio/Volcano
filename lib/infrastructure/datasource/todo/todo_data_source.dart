@@ -9,6 +9,7 @@ import 'package:volcano/infrastructure/dto/read_todo.dart';
 
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/infrastructure/model/todo/post_todo_model.dart';
+import 'package:volcano/infrastructure/model/todo/update_todo_model.dart';
 
 part 'todo_data_source.g.dart';
 
@@ -40,6 +41,12 @@ abstract class TodoDataSource {
   @GET('/todo/user-todo/')
   Future<List<ReadTodoDTO>> readTodo(
     @Query('token') String token,
+  );
+
+  @PUT('/todo/')
+  Future<HttpResponse<void>> updateTodo(
+    @Query('todo_id') String todoId,
+    @Body() UpdateTodoModel updateTodoModel,
   );
 
   @GET('/todo/user-goals/')

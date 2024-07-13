@@ -12,6 +12,7 @@ import 'package:volcano/infrastructure/datasource/todo/todo_data_source.dart';
 import 'package:volcano/infrastructure/dto/read_todo.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/infrastructure/model/todo/post_todo_model.dart';
+import 'package:volcano/infrastructure/model/todo/update_todo_model.dart';
 
 class TodoRepositoryImpl implements TodoRepository {
   TodoRepositoryImpl({required TodoDataSource client}) : _client = client;
@@ -41,7 +42,8 @@ class TodoRepositoryImpl implements TodoRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(
+              res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }
@@ -64,16 +66,58 @@ class TodoRepositoryImpl implements TodoRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(
+              res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }
   }
 
+  // TODO!!! the arguments are here
   @override
-  Future<Either<BackEndError, TodoDTO>> updateTodo({required Todo todo}) {
-    // TODO: implement updateTodo
-    throw UnimplementedError();
+  Future<Either<BackEndError, String>> updateTodo({
+    required String todoId,
+    required String title,
+    required String description,
+    required DateTime period,
+    required int priority,
+    required String type,
+    required String audioUrl,
+    required bool isCompleted,
+  }) async {
+    try {
+      final res = await _client
+          .updateTodo(
+        todoId,
+        UpdateTodoModel(
+          title: title,
+          description: description,
+          period: period,
+          priority: priority,
+          type: type,
+          isCompleted: isCompleted,
+          audioUrl: audioUrl,
+        ),
+      )
+          .then((value) {
+        debugPrint(value.response.statusCode.toString());
+        return 'Updated';
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(e.toString());
+      debugPrint(res.toString());
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -102,7 +146,8 @@ class TodoRepositoryImpl implements TodoRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(
+              res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }
@@ -142,7 +187,8 @@ class TodoRepositoryImpl implements TodoRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(
+              res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }
@@ -166,7 +212,8 @@ class TodoRepositoryImpl implements TodoRepository {
       return Either.left(
         BackEndError(
           statusCode: res?.statusCode,
-          message: BackEndErrorMessage.fromJson(res?.data),
+          message: BackEndErrorMessage.fromJson(
+              res?.data ?? {'detail': 'Something went wrong'}),
         ),
       );
     }
