@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -11,16 +12,17 @@ import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/todo/goal_percentage_card.dart';
-import 'package:volcano/presentation/page/todo/add_todo_dialog.dart';
+import 'package:volcano/presentation/page/add_todo/add_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/goal_percentage_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
-import 'package:volcano/presentation/provider/back/todo/is_playing_voice.dart';
+import 'package:volcano/presentation/provider/back/todo/is_playing_voice_of_type.dart';
 import 'package:volcano/presentation/provider/back/todo/play_list.dart';
 import 'package:volcano/presentation/provider/back/type_color_code/type_color_code_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
+import 'package:volcano/presentation/routes/routes_model/todo_details_route_model.dart';
 
 // ANCHOR - Use LockCachingAudioSource to set the URL
 // final audioSource = LockCachingAudioSource(
@@ -255,7 +257,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                     ),
                   ),
                   // TODO add shimmer effects
-                  goalPercentage.todayGoalPercentage == null
+                  goalPercentage.isLeft()
                       ? const SizedBox()
                       : Column(
                           children: [
@@ -272,7 +274,13 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   GoalPercentageCard(
                                     goalString: "Today's Goal",
                                     goalPercentage:
-                                        goalPercentage.todayGoalPercentage ?? 0,
+                                        goalPercentage.getRight().fold(
+                                              () => 0,
+                                              (goalPercentage) =>
+                                                  goalPercentage
+                                                      .todayGoalPercentage ??
+                                                  0,
+                                            ),
                                     onPress: () {
                                       // TODO go to today's todo page
                                     },
@@ -282,7 +290,13 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   GoalPercentageCard(
                                     goalString: "Month's Goal",
                                     goalPercentage:
-                                        goalPercentage.monthGoalPercentage ?? 0,
+                                        goalPercentage.getRight().fold(
+                                              () => 0.0,
+                                              (goalPercentage) =>
+                                                  goalPercentage
+                                                      .monthGoalPercentage ??
+                                                  0.0,
+                                            ),
                                     onPress: () {
                                       // TODO go to month's todo page
                                     },
@@ -305,7 +319,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         ),
                   const SizedBox(height: 40),
                   todos.isLeft()
-                      ? const Text('Something went wrong')
+                      // TODO add shimmer effect here!!
+                      ? const Text(
+                          'Something went wrong, please try to connect wifi',
+                        )
                       : MediaQuery.removePadding(
                           context: context,
                           removeTop: true,
@@ -329,12 +346,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
 
                               // NOTE playing voice etc..
                               final isPlayingVoice = ref.watch(
-                                isPlayingVoiceProvider(
+                                isPlayingVoiceOfTypeProvider(
                                   userTodo![typeIndex].type ?? '',
                                 ),
                               );
                               final isPlayingVoiceNotifier = ref.read(
-                                isPlayingVoiceProvider(
+                                isPlayingVoiceOfTypeProvider(
                                   userTodo[typeIndex].type ?? '',
                                 ).notifier,
                               );
@@ -399,14 +416,18 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              userTodo[typeIndex]
-                                                  .type
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(fontSize: 22),
+                                            SizedBox(
+                                              width: 230,
+                                              child: Text(
+                                                userTodo[typeIndex]
+                                                    .type
+                                                    .toString(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(fontSize: 22),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                             // NOTE play audio button
                                             BouncedButton(
@@ -529,8 +550,19 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   Positioned(
                                     bottom: 40,
                                     child: BouncedButton(
-                                      // TODO create going to the todo page
-                                      onPress: HapticFeedback.lightImpact,
+                                      // DONE create going to the todo page
+                                      onPress: () {
+                                        HapticFeedback.lightImpact();
+                                        final todoDetailsRouteModel =
+                                            TodoDetailsRouteModel(
+                                          typeName: userTodo[typeIndex].type!,
+                                          userTodo: userTodo[typeIndex].values!,
+                                        );
+                                        context.push(
+                                          '/todo-details',
+                                          extra: todoDetailsRouteModel,
+                                        );
+                                      },
                                       child: Container(
                                         width: 100,
                                         height: 60,

@@ -43,19 +43,37 @@ class TodoController extends _$TodoController {
   }
 
   void executeLocalAddTodo(TodoDTO todo) {
-    state.getRight().fold(() => null, (todos) {
-      final index = todos.indexWhere((element) => element.type == todo.type);
-      state.getRight().fold(() => null, (readTodoList) {
-        // NOTE if the type is new
-        if (index == -1) {
-          readTodoList.add(ReadTodoDTO(type: todo.type, values: [todo]));
-          state = Either.right([...readTodoList]);
-          typeCount = readTodoList.length;
-        } else {
-          readTodoList[index].values!.add(todo);
-          state = Either.right(readTodoList);
-        }
-      });
+    state.getRight().fold(() => null, (readTodoList) {
+      final index =
+          readTodoList.indexWhere((element) => element.type == todo.type);
+      // NOTE if the type is new
+      if (index == -1) {
+        readTodoList.add(ReadTodoDTO(type: todo.type, values: [todo]));
+        state = Either.right([...readTodoList]);
+        typeCount = readTodoList.length;
+      } else {
+        readTodoList[index].values!.add(todo);
+        state = Either.right(readTodoList);
+      }
+    });
+  }
+
+  void executeLocalUpdateTodo(TodoDTO todo) {
+    state.getRight().fold(() => null, (readTodoList) {
+      final typeIndex =
+          readTodoList.indexWhere((element) => element.type == todo.type);
+      if (typeIndex == -1) {
+        return;
+      }
+      final todoIndex = readTodoList[typeIndex]
+          .values!
+          .indexWhere((element) => element.todoId == todo.todoId);
+
+      if (todoIndex == -1) {
+        return;
+      }
+      readTodoList[typeIndex].values![todoIndex] = todo;
+      state = Either.right(readTodoList);
     });
   }
 }

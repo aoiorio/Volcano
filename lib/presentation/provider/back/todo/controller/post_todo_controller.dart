@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:volcano/core/config.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
@@ -80,7 +81,7 @@ class PostTodoController extends _$PostTodoController {
                         type: typeTextController.text,
                         period: period.toLocal(),
                         priority: priority,
-                        audioUrl: todo.audioUrl,
+                        audioUrl: todo.audioUrl ?? dummyAudioURL,
                       ),
                     );
               });
@@ -133,14 +134,22 @@ class PostTodoController extends _$PostTodoController {
                         type: typeTextController.text,
                         period: period.toLocal(),
                         priority: priority,
-                        audioUrl: todo.audioUrl,
+                        audioUrl: todo.audioUrl ?? dummyAudioURL,
                       ),
                     );
+              });
+              showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
+            } else {
+              value.getLeft().fold(() => null, (error) {
+                showToastMessage(
+                  toast,
+                  error.message!.detail ?? '',
+                  ToastWidgetKind.error,
+                );
               });
             }
             // NOTE delete all of data
             ref.read(recordVoiceWithWaveControllerProvider.notifier).path = '';
-            showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
             // NOTE clear the values
             ref.read(resetValuesProvider.notifier).resetValues();
             return value;
