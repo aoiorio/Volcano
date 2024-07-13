@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 
 class TodoDetailsRouteModel {
