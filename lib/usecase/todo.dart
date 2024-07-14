@@ -103,4 +103,12 @@ class TodoUseCaseImpl implements TodoUseCase {
     );
     return result;
   }
+
+  @override
+  Future<Either<BackEndError, String>> executeDeleteTodo({
+    required String todoId,
+  }) {
+    final result = _todoRepository.deleteTodo(todoId: todoId);
+    return result;
+  }
 }

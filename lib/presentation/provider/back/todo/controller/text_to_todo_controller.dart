@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
-import 'package:volcano/presentation/page/add_todo/add_todo_dialog.dart';
+import 'package:volcano/presentation/page/dialogs/add_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';

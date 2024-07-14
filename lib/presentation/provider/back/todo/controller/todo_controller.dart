@@ -59,6 +59,10 @@ class TodoController extends _$TodoController {
   }
 
   void executeLocalUpdateTodo(TodoDTO todo) {
+    if (state.isLeft()) {
+      return;
+    }
+
     state.getRight().fold(() => null, (readTodoList) {
       final typeIndex =
           readTodoList.indexWhere((element) => element.type == todo.type);
@@ -75,5 +79,56 @@ class TodoController extends _$TodoController {
       readTodoList[typeIndex].values![todoIndex] = todo;
       state = Either.right(readTodoList);
     });
+  }
+
+  void executeLocalDeleteTodo(TodoDTO todo) {
+    if (state.isLeft()) {
+      return;
+    }
+
+    state.getRight().fold(() => null, (readTodoList) {
+      final typeIndex =
+          readTodoList.indexWhere((element) => element.type == todo.type);
+
+      if (typeIndex == -1) {
+        return;
+      }
+      final todoIndex = readTodoList[typeIndex]
+          .values!
+          .indexWhere((element) => element.todoId == todo.todoId);
+
+      if (todoIndex == -1) {
+        return;
+      }
+
+      // NOTE remove todo here
+      readTodoList[typeIndex].values!.removeAt(todoIndex);
+
+      // NOTE if readTodoList doesn't have any values, remove the type
+      if (readTodoList[typeIndex].values!.isEmpty) {
+        typeCount--;
+        readTodoList.removeAt(typeIndex);
+      }
+
+      state = Either.right(readTodoList);
+    });
+  }
+
+  int? executeGetTypeIndex(String type) {
+    if (state.isLeft()) {
+      return -1;
+    }
+
+    final typeIndex = state.getRight().fold(() => null, (readTodoList) {
+      final typeIndex =
+          readTodoList.indexWhere((element) => element.type == type);
+
+      if (typeIndex == -1) {
+        return -1;
+      }
+
+      return typeIndex;
+    });
+    return typeIndex;
   }
 }

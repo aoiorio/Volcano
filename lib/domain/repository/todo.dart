@@ -29,7 +29,6 @@ abstract class TodoRepository {
     required int priority,
   });
 
-  // TODO add todo_id as required
   Future<Either<BackEndError, String>> updateTodo({
     required String todoId,
     required String title,
@@ -41,7 +40,7 @@ abstract class TodoRepository {
     required bool isCompleted,
   });
 
-  Future<Either<BackEndError, Todo>> deleteTodo({required String todoId});
+  Future<Either<BackEndError, String>> deleteTodo({required String todoId});
 
   Future<Either<BackEndError, List<ReadTodo>>> readTodo({
     required String token,

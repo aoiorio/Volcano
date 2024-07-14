@@ -8,7 +8,6 @@ import 'package:volcano/presentation/page/auth/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/start/start_page.dart';
 import 'package:volcano/presentation/page/todo_details/todo_details_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
-import 'package:volcano/presentation/routes/routes_model/todo_details_route_model.dart';
 
 // ANCHOR -  if you use buildTransitionPage for three more times, you shouldn't use it. Because it'll cause flicking in it. So please try to use MaterialPage!
 /// The route configuration.
@@ -53,11 +52,11 @@ final GoRouter goRouter = GoRouter(
       path: '/todo-details',
       name: 'todoDetailsPage',
       pageBuilder: (context, state) {
-        final todoDetailsPageModel = state.extra! as TodoDetailsRouteModel;
+        final typeName = state.extra! as String;
 
         return MaterialPage(
           child: TodoDetailsPage(
-            todoDetailsRouteModel: todoDetailsPageModel,
+            typeName: typeName,
           ),
         );
       },
