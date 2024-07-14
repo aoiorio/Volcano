@@ -46,6 +46,10 @@ abstract class TodoUseCase {
     required bool isCompleted,
   });
 
+  Future<Either<BackEndError, String>> executeDeleteTodo({
+    required String todoId,
+  });
+
   Future<Either<BackEndError, GoalPercentage>> executeGetGoalPercentage({
     required String token,
   });

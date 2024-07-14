@@ -48,6 +48,11 @@ abstract class TodoDataSource {
     @Body() UpdateTodoModel updateTodoModel,
   );
 
+  @DELETE('/todo/')
+  Future<HttpResponse<void>> deleteTodo(
+    @Query('todo_id') String todoId,
+  );
+
   @GET('/todo/user-goals/')
   Future<GoalPercentageDTO> getGoalPercentage(
     @Query('token') String token,

@@ -38,6 +38,9 @@ class PlayList extends _$PlayList {
       });
     }
     final index = result.indexWhere((element) => element.containsKey(type));
+    if (index == -1) {
+      return [];
+    }
     return result[index][type] ?? [];
   }
 }

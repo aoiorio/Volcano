@@ -19,12 +19,6 @@ class TodoRepositoryImpl implements TodoRepository {
   final TodoDataSource _client;
 
   @override
-  Future<Either<BackEndError, TodoDTO>> deleteTodo({required String todoId}) {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<BackEndError, List<ReadTodoDTO>>> readTodo({
     required String token,
   }) async {
@@ -75,7 +69,6 @@ class TodoRepositoryImpl implements TodoRepository {
     }
   }
 
-  // TODO!!! the arguments are here
   @override
   Future<Either<BackEndError, String>> updateTodo({
     required String todoId,
@@ -186,6 +179,34 @@ class TodoRepositoryImpl implements TodoRepository {
       final res = e.response;
       debugPrint(e.toString());
       debugPrint(res.toString());
+      debugPrint(res?.statusCode.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<BackEndError, String>> deleteTodo({
+    required String todoId,
+  }) async {
+    try {
+      final res = await _client
+          .deleteTodo(
+        todoId,
+      )
+          .then((value) {
+        debugPrint(value.response.statusCode.toString());
+        return 'Deleted';
+      });
+      return Either.right(res);
+    } on DioException catch (e) {
+      final res = e.response;
       debugPrint(res?.statusCode.toString());
       return Either.left(
         BackEndError(

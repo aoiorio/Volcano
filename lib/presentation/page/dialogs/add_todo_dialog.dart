@@ -383,7 +383,6 @@ class AddTodoDialog extends ConsumerWidget {
           ),
         ),
         child: Scaffold(
-          // resizeToAvoidBottomInset: false,
           // NOTE to show gradient background, it must be transparent
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
