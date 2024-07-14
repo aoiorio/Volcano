@@ -111,6 +111,11 @@ class UpdateTodoController extends _$UpdateTodoController {
               value.getRight().fold(() => null, (str) {
                 state = Either.right(str);
               });
+              showToastMessage(
+                toast,
+                '💡 TODO Updated',
+                ToastWidgetKind.success,
+              );
             } else if (value.isLeft()) {
               value.getLeft().fold(() => null, (error) {
                 showToastMessage(
