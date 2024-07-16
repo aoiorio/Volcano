@@ -46,6 +46,8 @@ class AuthExecuteSignInController extends _$AuthExecuteSignInController {
                   // NOTE get Access Token so it'll set AccessToken.
                   ..getAccessToken();
               });
+              ref.read(signInEmailTextControllerProvider.notifier).state.text = '';
+              ref.read(signInPasswordTextControllerProvider.notifier).state.text = '';
               // NOTE go to VolcanoPage
               context.pushReplacement('/volcano');
             } else if (value.isLeft()) {
@@ -68,8 +70,5 @@ class AuthExecuteSignInController extends _$AuthExecuteSignInController {
             return Either.right('DONE');
           }),
         );
-    // .then(
-    //   (value) {},
-    // );
   }
 }

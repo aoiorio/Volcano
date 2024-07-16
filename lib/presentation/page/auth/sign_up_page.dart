@@ -8,6 +8,7 @@ import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_shape_button.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
 import 'package:volcano/presentation/provider/back/auth/controller/sign_up_controller.dart';
 import 'package:volcano/presentation/provider/front/auth/sign_up_providers.dart';
 
@@ -73,6 +74,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     gradientColorEnd: const Color(0xffBDAEAE),
                     // DONE Add status provider here like this {"Email": ${StatusProvider.read()}}
                     fieldString: '{"Email": "$emailStatus"}',
+                    textEditingControllerType:
+                          TextEditingControllerType.email,
                   ),
                 ),
                 Positioned(
@@ -91,6 +94,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       gradientColorEnd: const Color(0xffBDAEAE),
                       // DONE Add status provider here like this {"Email": ${signUpPasswordStatusProvider.read()}}
                       fieldString: '{"Password": "$passwordStatus"}',
+                      textEditingControllerType:
+                          TextEditingControllerType.password,
                     ),
                   ),
                 ),
@@ -110,6 +115,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       gradientColorEnd: const Color(0xffBDAEAE),
                       // DONE Add status provider here like this {"Email": ${signUpConfirmPasswordStatusProvider.read()}}
                       fieldString: '{"Confirm PW": "$confirmPasswordStatus"}',
+                      textEditingControllerType:
+                          TextEditingControllerType.confirmPassword,
                     ),
                   ),
                 ),
