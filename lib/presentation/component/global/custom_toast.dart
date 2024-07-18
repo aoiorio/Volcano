@@ -12,15 +12,20 @@ void showToastMessage(
   String message,
   ToastWidgetKind kind,
 ) {
-  final child = kind.name == 'error'
+  final child = kind == ToastWidgetKind.error
       ? toastErrorWidget(message)
       : toastSuccessWidget(message);
-  return toast.showToast(
-    child: child,
-    gravity: ToastGravity.CENTER,
-    // NOTE it means that if this toast is active and the user is trying to active it again, the old toast will be disable
-    isDismissable: true,
-  );
+  try {
+    return toast.showToast(
+      child: child,
+      gravity: ToastGravity.CENTER,
+      // NOTE it means that if this toast is active and the user is trying to active it again, the old toast will be disable
+      isDismissable: true,
+    );
+  // ignore: avoid_catches_without_on_clauses
+  } catch (e) {
+    debugPrint('showToast error occurred');
+  }
 }
 
 Widget toastSuccessWidget(String message) => Container(
