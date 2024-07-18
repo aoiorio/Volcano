@@ -19,6 +19,9 @@ class $AssetsImagesGen {
   SvgGenImage get arrowBlack =>
       const SvgGenImage('assets/images/arrow-black.svg');
 
+  /// File path: assets/images/pen-icon.svg
+  SvgGenImage get penIcon => const SvgGenImage('assets/images/pen-icon.svg');
+
   /// File path: assets/images/todo-details-rectangle.svg
   SvgGenImage get todoDetailsRectangle =>
       const SvgGenImage('assets/images/todo-details-rectangle.svg');
@@ -32,8 +35,13 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/volcano_logo.png');
 
   /// List of all assets
-  List<dynamic> get values =>
-      [arrowBlack, todoDetailsRectangle, volcanoPageShape, volcanoLogo];
+  List<dynamic> get values => [
+        arrowBlack,
+        penIcon,
+        todoDetailsRectangle,
+        volcanoPageShape,
+        volcanoLogo
+      ];
 }
 
 class Assets {
