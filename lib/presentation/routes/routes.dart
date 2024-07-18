@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/page/auth/sign_in_page.dart';
 import 'package:volcano/presentation/page/auth/sign_in_step_page.dart';
+import 'package:volcano/presentation/page/auth/sign_up_page.dart';
 import 'package:volcano/presentation/page/auth/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/start/start_page.dart';
 import 'package:volcano/presentation/page/todo_details/todo_details_page.dart';
@@ -24,6 +25,17 @@ final GoRouter goRouter = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: '/sign-up',
+      name: 'signUpPage',
+      pageBuilder: (context, state) {
+        return MaterialPage(
+          key: state.pageKey,
+          child: const SignUpPage(),
+        );
+      },
+    ),
     // NOTE SignUpPage router
     GoRoute(
       path: '/sign-up-step',
@@ -34,7 +46,8 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       path: '/sign-in',
       name: 'signInPage',
-      pageBuilder: (context, state) => const MaterialPage(child: SignInPage()),
+      pageBuilder: (context, state) =>
+          MaterialPage(key: state.pageKey, child: const SignInPage()),
     ),
     GoRoute(
       path: '/sign-in-step',
@@ -54,7 +67,8 @@ final GoRouter goRouter = GoRouter(
       pageBuilder: (context, state) {
         final typeName = state.extra! as String;
 
-        return MaterialPage(
+        return buildTransitionPage(
+          state: state,
           child: TodoDetailsPage(
             typeName: typeName,
           ),

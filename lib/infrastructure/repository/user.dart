@@ -7,16 +7,16 @@ import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/volcano_user.dart';
 import 'package:volcano/domain/repository/user.dart';
 import 'package:volcano/infrastructure/datasource/user/user_data_source.dart';
-import 'package:volcano/infrastructure/dto/volcano_user.dart';
+import 'package:volcano/infrastructure/dto/user_info.dart';
 
 class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl({required UserDataSource client}) : _client = client;
   final UserDataSource _client;
 
   @override
-  Future<Either<BackEndError, VolcanoUserDTO>> readUser(String token) async {
+  Future<Either<BackEndError, UserInfoDTO>> getUserInfo(String token) async {
     try {
-      final res = await _client.readUser(token);
+      final res = await _client.getUserInfo(token);
       debugPrint(res.email);
       return Either.right(res);
     } on DioException catch (e) {
@@ -31,12 +31,32 @@ class UserRepositoryImpl implements UserRepository {
         ),
       );
     }
-    // return;
   }
 
   @override
   Future<Either<BackEndError, VolcanoUser>> updateUser() {
     // TODO: implement updateUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<BackEndError, String>> deleteUser({
+    required String token,
+  }) async {
+    try {
+      await _client.deleteUser(token);
+      return Either.right('Deleted');
+    } on DioException catch (e) {
+      final res = e.response;
+      debugPrint(res?.toString());
+      return Either.left(
+        BackEndError(
+          statusCode: res?.statusCode,
+          message: BackEndErrorMessage.fromJson(
+            res?.data ?? {'detail': 'Something went wrong'},
+          ),
+        ),
+      );
+    }
   }
 }

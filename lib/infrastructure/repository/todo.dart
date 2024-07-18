@@ -24,9 +24,6 @@ class TodoRepositoryImpl implements TodoRepository {
   }) async {
     try {
       final res = await _client.readTodo(token).then((value) {
-        if (value[0].values != null) {
-          debugPrint(value[0].values![0].title);
-        }
         return value;
       });
       return Either.right(res);

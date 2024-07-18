@@ -15,10 +15,13 @@ class StartPage extends ConsumerWidget {
     //     ref.watch(authSharedPreferenceProvider.notifier);
     // // ignore: cascade_invocations
     // authSharedPreferenceNotifier.deleteAccessToken();
-    return Scaffold(
-      body: authSharedPreference.isEmpty
-          ? const SignUpPage()
-          : const VolcanoPage(),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: authSharedPreference.isEmpty
+            ? const SignUpPage()
+            : const VolcanoPage(),
+      ),
     );
   }
 }
