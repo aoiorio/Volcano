@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
 import 'package:volcano/presentation/provider/front/auth/sign_in_providers.dart';
 
 class SignInStepShape extends ConsumerStatefulWidget {
@@ -12,12 +13,14 @@ class SignInStepShape extends ConsumerStatefulWidget {
     required this.gradientColorEnd,
     required this.stepTitle,
     required this.hintString,
+    required this.textEditingControllerType,
   });
 
   final Color gradientColorBegin;
   final Color gradientColorEnd;
   final String stepTitle;
   final String hintString;
+  final TextEditingControllerType textEditingControllerType;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -30,7 +33,7 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textEditingController =
-        ref.watch(signInTextEditingControllerProvider(widget.hintString));
+        ref.watch(signInTextEditingControllerProvider(widget.textEditingControllerType));
 
     final signInStepCounter = ref.watch(signInStepCounterProvider);
 
