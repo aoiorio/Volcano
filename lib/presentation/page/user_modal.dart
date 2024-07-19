@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
+import 'package:volcano/presentation/component/global/confirm_dialog.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
 import 'package:volcano/presentation/provider/back/user/controller/delete_user_controller.dart';
@@ -142,20 +144,25 @@ class UserModal extends HookConsumerWidget {
                 const Gap(50),
                 BouncedButton(
                   onPress: () {
-                    // DONE create sign out feature here
-                    ref
-                        .read(authSharedPreferenceProvider.notifier)
-                        .deleteAccessToken();
-                    if (context.mounted) {
-                      context.pushReplacement(
-                        '/sign-up',
+                    HapticFeedback.lightImpact();
+                    showConfirmDialog(
+                        context, 'Do you really\nwant to SIGN OUT?', () {
+                      ref
+                          .read(authSharedPreferenceProvider.notifier)
+                          .deleteAccessToken();
+                      if (context.mounted) {
+                        context.pushReplacement(
+                          '/sign-up',
+                        );
+                      }
+                      showToastMessage(
+                        toast,
+                        "💡 You've Signed Out",
+                        ToastWidgetKind.success,
                       );
-                    }
-                    showToastMessage(
-                      toast,
-                      "💡 You've Signed Out",
-                      ToastWidgetKind.success,
-                    );
+                    }, () {
+                      context.pop();
+                    });
                   },
                   child: Container(
                     width: 190,
@@ -183,11 +190,16 @@ class UserModal extends HookConsumerWidget {
                 const Gap(30),
                 BouncedButton(
                   onPress: () {
-                    // TODO create delete feature here
-                    ref
-                        .read(deleteUserControllerProvider.notifier)
-                        .executeDeleteUser(toast);
-                    context.pushReplacement('/sign-up');
+                    HapticFeedback.lightImpact();
+                    showConfirmDialog(context, 'Do you really\nwant to DELETE?',
+                        () {
+                      ref
+                          .read(deleteUserControllerProvider.notifier)
+                          .executeDeleteUser(toast);
+                      context.pushReplacement('/sign-up');
+                    }, () {
+                      context.pop();
+                    });
                   },
                   child: Container(
                     width: 250,
