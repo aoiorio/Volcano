@@ -62,9 +62,11 @@ class UserModal extends HookConsumerWidget {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Container(
-            height: height / 2 + 90,
+            // height: height / 2 + 90,
+            constraints: BoxConstraints(minHeight: height / 2 + 90),
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(20),
+            padding:
+                const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
             child: userInfo == null
                 // DONE add shimmer effect
                 ? const Column(
@@ -176,6 +178,7 @@ class UserModal extends HookConsumerWidget {
                             width: 260,
                             child: isEditing
                                 ? TextField(
+                                    // NOTE focus automatically when pressed the button
                                     autofocus: true,
                                     controller: usernameTextEditingController,
                                     style: Theme.of(context)
