@@ -38,7 +38,8 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textEditingController = ref.watch(
-        signUpTextEditingControllerProvider(widget.textEditingControllerType));
+      signUpTextEditingControllerProvider(widget.textEditingControllerType),
+    );
 
     return Expanded(
       child: Stack(
