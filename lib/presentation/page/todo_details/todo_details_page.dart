@@ -165,7 +165,7 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
                       child: Stack(
                         alignment: AlignmentDirectional.topCenter,
                         children: [
-                          // TODO add Geodetecter to update or delete the todo
+                          // DONE add Geodetecter to update or delete the todo
                           GestureDetector(
                             onTap: () {
                               // TODO show dialog here

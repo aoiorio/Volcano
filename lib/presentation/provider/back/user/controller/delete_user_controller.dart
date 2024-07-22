@@ -41,8 +41,7 @@ class DeleteUserController extends _$DeleteUserController {
 
                 showToastMessage(
                   toast,
-                  error.message!.detail ??
-                      '😵‍💫 $errorMessage',
+                  error.message!.detail ?? '😵‍💫 $errorMessage',
                   ToastWidgetKind.error,
                 );
                 state = Either.left(BackEndError(statusCode: 404));

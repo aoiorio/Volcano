@@ -100,7 +100,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
             onPressed: () {
               // DONE show UserDialog
               showBarModalBottomSheet<void>(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                // isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 context: context,
                 builder: (context) {
                   return const UserModal();

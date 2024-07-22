@@ -22,7 +22,7 @@ void showToastMessage(
       // NOTE it means that if this toast is active and the user is trying to active it again, the old toast will be disable
       isDismissable: true,
     );
-  // ignore: avoid_catches_without_on_clauses
+    // ignore: avoid_catches_without_on_clauses
   } catch (e) {
     debugPrint('showToast error occurred');
   }

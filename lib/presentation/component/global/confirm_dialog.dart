@@ -8,7 +8,7 @@ class ConfirmDialog extends ConsumerWidget {
     super.key,
     required this.message,
     required this.onPressedYes,
-    required this.onPressedNo ,
+    required this.onPressedNo,
   });
 
   final String message;
@@ -60,7 +60,10 @@ class ConfirmDialog extends ConsumerWidget {
                   ),
                   child: Text(
                     '"NO"',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(fontSize: 16),
                   ),
                 ),
               ),
@@ -77,7 +80,10 @@ class ConfirmDialog extends ConsumerWidget {
                   ),
                   child: Text(
                     '"YES"',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(fontSize: 16),
                   ),
                 ),
               ),
