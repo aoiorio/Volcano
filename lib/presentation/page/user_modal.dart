@@ -62,7 +62,6 @@ class UserModal extends HookConsumerWidget {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Container(
-            // height: height / 2 + 90,
             constraints: BoxConstraints(minHeight: height / 2 + 90),
             alignment: Alignment.center,
             padding:
