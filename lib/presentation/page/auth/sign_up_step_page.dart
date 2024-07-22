@@ -21,6 +21,7 @@ class SignUpStepPage extends ConsumerWidget {
         gradientColorEnd: Color(0xffBDAEAE),
         stepTitle: '{\n   "1": \n   "type email"\n}',
         hintString: 'type email here...',
+        textEditingControllerType: TextEditingControllerType.email,
         // textEditingController: emailTextController,
       ),
       const SignUpStepShape(
@@ -28,6 +29,7 @@ class SignUpStepPage extends ConsumerWidget {
         gradientColorEnd: Color(0xffBDAEAE),
         stepTitle: '{\n   "2": \n   "type password"\n}',
         hintString: 'type password here...',
+        textEditingControllerType: TextEditingControllerType.password,
         // textEditingController: passwordTextController,
       ),
       const SignUpStepShape(
@@ -35,6 +37,7 @@ class SignUpStepPage extends ConsumerWidget {
         gradientColorEnd: Color(0xffBDAEAE),
         stepTitle: '{\n   "3": \n   "type confirm PW"\n}',
         hintString: 'type password again here...',
+        textEditingControllerType: TextEditingControllerType.confirmPassword,
         // textEditingController: confirmPasswordTextController,
       ),
     ];

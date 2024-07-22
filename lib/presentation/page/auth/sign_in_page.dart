@@ -19,6 +19,13 @@ class SignInPage extends ConsumerStatefulWidget {
 
 class _SignInPageState extends ConsumerState<SignInPage> {
   final toast = FToast();
+
+  @override
+  void initState() {
+    super.initState();
+    toast.init(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final signInEmailStatus = ref.watch(signInEmailStatusProvider) ? 'OK' : '';
@@ -29,6 +36,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         forceMaterialTransparency: true,
+        automaticallyImplyLeading: false,
         leadingWidth: 80,
         // NOTE Back button
         leading: SizedBox(

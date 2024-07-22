@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:record/record.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -13,6 +14,7 @@ import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/todo/goal_percentage_card.dart';
 import 'package:volcano/presentation/page/dialogs/add_todo_dialog.dart';
+import 'package:volcano/presentation/page/user_modal.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/goal_percentage_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
@@ -31,6 +33,7 @@ import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice
 // );
 // await player.setAudioSource(audioSource);
 // await player.play();
+
 class VolcanoPage extends ConsumerStatefulWidget {
   const VolcanoPage({super.key});
 
@@ -89,6 +92,26 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: IconButton(
+            highlightColor: Colors.transparent,
+            icon: const Icon(Icons.face, size: 35, color: Color(0xff4C4C4C)),
+            onPressed: () {
+              // DONE show UserDialog
+              showBarModalBottomSheet<void>(
+                // isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                context: context,
+                builder: (context) {
+                  return const UserModal();
+                },
+              );
+            },
+          ),
+        ),
       ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(

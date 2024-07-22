@@ -20,6 +20,7 @@ class AuthSharedPreference extends _$AuthSharedPreference {
 
     // ignore: cascade_invocations
     prefs.setString('accessToken', accessToken);
+    // state = accessToken;
   }
 
   void getAccessToken() {
@@ -33,5 +34,6 @@ class AuthSharedPreference extends _$AuthSharedPreference {
     final prefs = ref.watch(sharedPreferencesProvider);
     // ignore: cascade_invocations
     prefs.remove('accessToken');
+    state = '';
   }
 }

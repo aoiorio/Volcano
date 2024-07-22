@@ -13,6 +13,4 @@ abstract class AuthUseCase {
     required String email,
     required String password,
   });
-
-  Future<Either<BackEndError, Token>> executeSignOut();
 }

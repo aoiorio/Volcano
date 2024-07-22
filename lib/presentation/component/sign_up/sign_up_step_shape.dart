@@ -5,6 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/provider/front/auth/sign_up_providers.dart';
 
+enum TextEditingControllerType {
+  email,
+  password,
+  confirmPassword,
+}
+
 class SignUpStepShape extends ConsumerStatefulWidget {
   const SignUpStepShape({
     super.key,
@@ -12,12 +18,14 @@ class SignUpStepShape extends ConsumerStatefulWidget {
     required this.gradientColorEnd,
     required this.stepTitle,
     required this.hintString,
+    required this.textEditingControllerType,
   });
 
   final Color gradientColorBegin;
   final Color gradientColorEnd;
   final String stepTitle;
   final String hintString;
+  final TextEditingControllerType textEditingControllerType;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -29,8 +37,9 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final textEditingController =
-        ref.watch(signUpTextEditingControllerProvider(widget.hintString));
+    final textEditingController = ref.watch(
+      signUpTextEditingControllerProvider(widget.textEditingControllerType),
+    );
 
     return Expanded(
       child: Stack(
@@ -132,7 +141,9 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
             top: 385,
             child: WhiteMainButton(
               titleWidget: Text(
-                widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
+                ref.watch(signUpStepCounterProvider) == 2
+                    ? '"Finish"'
+                    : '"Next"',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 20,
                       color: const Color(0xff343434),
@@ -142,7 +153,7 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
               // widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
               onPress: () {
                 HapticFeedback.mediumImpact();
-                widget.hintString.contains('confirm')
+                ref.watch(signUpStepCounterProvider) == 2
                     ? context.pop()
                     : ref
                         .watch(signUpStepCounterProvider.notifier)

@@ -4,7 +4,6 @@ import 'package:volcano/core/errors.dart';
 import 'package:volcano/domain/entity/token.dart';
 import 'package:volcano/domain/repository/auth.dart';
 import 'package:volcano/domain/usecase/auth.dart';
-import 'package:volcano/infrastructure/dto/token.dart';
 
 class AuthUseCaseImpl implements AuthUseCase {
   /*
@@ -26,12 +25,6 @@ class AuthUseCaseImpl implements AuthUseCase {
   }) {
     // NOTE it will return access_token
     return _authRepository.signIn(email: email, password: password);
-  }
-
-  @override
-  Future<Either<BackEndError, TokenDTO>> executeSignOut() {
-    // TODO(new feature): executeSignOut
-    throw UnimplementedError();
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/sign_in/sign_in_step_shape.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
 
 import 'package:volcano/presentation/provider/front/auth/sign_in_providers.dart';
 
@@ -21,12 +22,14 @@ class SignInStepPage extends ConsumerWidget {
         gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "1": \n   "type email"\n}',
         hintString: 'type email here...',
+        textEditingControllerType: TextEditingControllerType.email,
       ),
       SignInStepShape(
         gradientColorBegin: const Color(0xff5E4A49).withOpacity(0.85),
         gradientColorEnd: const Color(0xffBDAEAE),
         stepTitle: '{\n   "2": \n   "type password"\n}',
         hintString: 'type password here...',
+        textEditingControllerType: TextEditingControllerType.password,
       ),
     ];
 

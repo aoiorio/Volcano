@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
 
 final signUpStepCounterProvider = StateProvider((ref) => 0);
 
@@ -14,10 +15,11 @@ final signUpConfirmPasswordTextControllerProvider =
 
 // NOTE family means that return TextEditingController value and get String value
 final signUpTextEditingControllerProvider =
-    StateProvider.family<TextEditingController, String>((ref, text) {
-  return text.contains('email')
+    StateProvider.family<TextEditingController, TextEditingControllerType>(
+        (ref, type) {
+  return type == TextEditingControllerType.email
       ? ref.watch(signUpEmailTextControllerProvider)
-      : text.contains('password')
+      : type == TextEditingControllerType.password
           ? ref.watch(signUpPasswordTextControllerProvider)
           : ref.watch(signUpConfirmPasswordTextControllerProvider);
 });

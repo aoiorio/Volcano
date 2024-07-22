@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
 import 'package:volcano/presentation/provider/front/auth/sign_up_providers.dart';
 
 // TODOadd provider and change the class to provider class for changing email, password texts
@@ -9,11 +10,13 @@ class SignUpShapeButton extends ConsumerStatefulWidget {
     required this.gradientColorBegin,
     required this.gradientColorEnd,
     required this.fieldString,
+    required this.textEditingControllerType,
   });
 
   final Color gradientColorBegin;
   final Color gradientColorEnd;
   final String fieldString;
+  final TextEditingControllerType textEditingControllerType;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -24,9 +27,10 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final textEditingControllerText = widget.fieldString.contains('Email')
+    final textEditingControllerText = widget.textEditingControllerType ==
+            TextEditingControllerType.email
         ? ref.watch(signUpEmailTextControllerProvider.notifier).state.text
-        : widget.fieldString.contains('Password')
+        : widget.textEditingControllerType == TextEditingControllerType.password
             ? ref
                 .watch(signUpPasswordTextControllerProvider.notifier)
                 .state
