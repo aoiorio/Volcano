@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:volcano/presentation/component/sign_up/sign_up_step_shape.dart';
 import 'package:volcano/presentation/provider/front/auth/sign_up_providers.dart';

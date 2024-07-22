@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,9 +22,6 @@ final usernameProvider = Provider<String>((ref) {
 
 @riverpod
 class UpdateUserController extends _$UpdateUserController {
-  // TextEditingController usernameTextEditingController =
-  //     TextEditingController();
-
   @override
   Either<BackEndError, String> build() {
     return Either.left(BackEndError(statusCode: 100));

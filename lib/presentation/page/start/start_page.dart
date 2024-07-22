@@ -11,10 +11,6 @@ class StartPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // NOTE confirm that the user is Signed in or not now
     final authSharedPreference = ref.watch(authSharedPreferenceProvider);
-    // final authSharedPreferenceNotifier =
-    //     ref.watch(authSharedPreferenceProvider.notifier);
-    // // ignore: cascade_invocations
-    // authSharedPreferenceNotifier.deleteAccessToken();
     return PopScope(
       canPop: false,
       child: Scaffold(

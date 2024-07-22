@@ -34,6 +34,10 @@ class DeleteUserController extends _$DeleteUserController {
                 '💡 User Deleted',
                 ToastWidgetKind.success,
               );
+              // NOTE delete token
+              ref
+                  .read(authSharedPreferenceProvider.notifier)
+                  .deleteAccessToken();
             } else if (value.isLeft()) {
               value.getLeft().fold(() => null, (error) {
                 final errorMessage = error.message!.detail ??
