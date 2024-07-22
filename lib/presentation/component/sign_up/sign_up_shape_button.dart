@@ -28,7 +28,8 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final textEditingControllerText = widget.textEditingControllerType == TextEditingControllerType.email
+    final textEditingControllerText = widget.textEditingControllerType ==
+            TextEditingControllerType.email
         ? ref.watch(signUpEmailTextControllerProvider.notifier).state.text
         : widget.textEditingControllerType == TextEditingControllerType.password
             ? ref

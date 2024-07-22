@@ -15,7 +15,8 @@ final signUpConfirmPasswordTextControllerProvider =
 
 // NOTE family means that return TextEditingController value and get String value
 final signUpTextEditingControllerProvider =
-    StateProvider.family<TextEditingController, TextEditingControllerType>((ref, type) {
+    StateProvider.family<TextEditingController, TextEditingControllerType>(
+        (ref, type) {
   return type == TextEditingControllerType.email
       ? ref.watch(signUpEmailTextControllerProvider)
       : type == TextEditingControllerType.password

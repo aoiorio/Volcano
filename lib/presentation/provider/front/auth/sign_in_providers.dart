@@ -11,7 +11,8 @@ final signInPasswordTextControllerProvider =
     StateProvider((ref) => TextEditingController());
 
 final signInTextEditingControllerProvider =
-    StateProvider.family<TextEditingController, TextEditingControllerType>((ref, type) {
+    StateProvider.family<TextEditingController, TextEditingControllerType>(
+        (ref, type) {
   return type == TextEditingControllerType.email
       ? ref.watch(signInEmailTextControllerProvider)
       : ref.watch(signInPasswordTextControllerProvider);
