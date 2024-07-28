@@ -6,6 +6,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/goal_info_getter.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
@@ -27,7 +28,7 @@ class UpdateTodoController extends _$UpdateTodoController {
 
   @override
   Either<BackEndError, String> build() {
-    return Either.right('');
+    return Either.left(BackEndError(statusCode: 100));
   }
 
   void executeUpdateIsCompleted({
@@ -59,6 +60,9 @@ class UpdateTodoController extends _$UpdateTodoController {
               value.getRight().fold(() => null, (str) {
                 state = Either.right(str);
               });
+              ref
+                  .read(goalInfoGetterProvider.notifier)
+                  .executeGetGoalInfo(toast: toast);
             } else if (value.isLeft()) {
               value.getLeft().fold(() => null, (error) {
                 showToastMessage(
@@ -116,6 +120,9 @@ class UpdateTodoController extends _$UpdateTodoController {
                 '💡 TODO Updated',
                 ToastWidgetKind.success,
               );
+              ref
+                  .read(goalInfoGetterProvider.notifier)
+                  .executeGetGoalInfo(toast: toast);
             } else if (value.isLeft()) {
               value.getLeft().fold(() => null, (error) {
                 showToastMessage(
