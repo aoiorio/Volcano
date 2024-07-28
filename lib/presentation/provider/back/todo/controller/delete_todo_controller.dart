@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/goal_info_getter.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
@@ -33,6 +34,10 @@ class DeleteTodoController extends _$DeleteTodoController {
                 '💡 TODO Deleted',
                 ToastWidgetKind.success,
               );
+              // NOTE get the latest todo again
+              ref
+                  .read(goalInfoGetterProvider.notifier)
+                  .executeGetGoalInfo(toast: toast);
             } else {
               value.getLeft().fold(() => null, (error) {
                 showToastMessage(

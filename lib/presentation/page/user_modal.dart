@@ -196,7 +196,7 @@ class UserModal extends HookConsumerWidget {
                                 : Text(
                                     userInfo.username == null
                                         ? '"Who you are"'
-                                        : '"${usernameTextEditingController.text}"',
+                                        : '"${usernameTextEditingController.text.isEmpty ? userInfo.username : usernameTextEditingController.text}"',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!

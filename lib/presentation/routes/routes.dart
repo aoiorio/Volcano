@@ -7,6 +7,7 @@ import 'package:volcano/presentation/page/auth/sign_in_step_page.dart';
 import 'package:volcano/presentation/page/auth/sign_up_page.dart';
 import 'package:volcano/presentation/page/auth/sign_up_step_page.dart';
 import 'package:volcano/presentation/page/start/start_page.dart';
+import 'package:volcano/presentation/page/todo_details/goal_todo_details_page.dart';
 import 'package:volcano/presentation/page/todo_details/todo_details_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
 
@@ -73,6 +74,15 @@ final GoRouter goRouter = GoRouter(
             typeName: typeName,
           ),
         );
+      },
+    ),
+    GoRoute(
+      path: '/goal-todo-details',
+      name: 'goalTodoDetailsPage',
+      pageBuilder: (context, state) {
+        final goalType = state.extra! as GoalType;
+
+        return MaterialPage(child: GoalTodoDetailsPage(goalType: goalType));
       },
     ),
   ],

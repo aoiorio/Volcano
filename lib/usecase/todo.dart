@@ -1,14 +1,13 @@
 // ignore_for_file: implementation_imports
-
 import 'dart:io';
 
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/goal_percentage.dart';
 import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/domain/usecase/todo.dart';
+import 'package:volcano/infrastructure/dto/goal_info.dart';
 
 class TodoUseCaseImpl implements TodoUseCase {
   TodoUseCaseImpl({required TodoRepository todoRepository})
@@ -73,10 +72,10 @@ class TodoUseCaseImpl implements TodoUseCase {
   }
 
   @override
-  Future<Either<BackEndError, GoalPercentage>> executeGetGoalPercentage({
+  Future<Either<BackEndError, GoalInfo>> executeGetGoalInfo({
     required String token,
   }) {
-    final goalPercentage = _todoRepository.getGoalPercentage(token: token);
+    final goalPercentage = _todoRepository.getGoalInfo(token: token);
     return goalPercentage;
   }
 

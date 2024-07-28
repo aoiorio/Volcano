@@ -1,67 +1,35 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/todo/todo_details_card.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
-import 'package:volcano/presentation/provider/back/type_color_code/type_color_code_controller.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/goal_info_getter.dart';
 
-class TodoDetailsPage extends ConsumerStatefulWidget {
-  const TodoDetailsPage({
-    super.key,
-    required this.typeName,
-  });
-
-  final String typeName;
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _TodoDetailsPageState();
+enum GoalType {
+  today,
+  month,
 }
 
-class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
-  final player = AudioPlayer();
-  final FToast toast = FToast();
-  int typeIndex = 0;
+class GoalTodoDetailsPage extends HookConsumerWidget {
+  const GoalTodoDetailsPage({
+    super.key,
+    required this.goalType,
+  });
+
+  final GoalType goalType;
 
   @override
-  void dispose() {
-    super.dispose();
-    player.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    toast.init(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final typeIndex = ref
-        .watch(todoControllerProvider.notifier)
-        .executeGetTypeIndex(widget.typeName);
-    final userTodo = ref
-        .watch(todoControllerProvider)
-        .getRight()
-        .fold(() => <TodoDTO>[], (readTodoList) {
-      if (typeIndex == -1) {
-        return <TodoDTO>[];
-      }
-      return readTodoList[typeIndex!].values ?? [];
-    });
-
-    final typeColorCodeObject = ref
-        .read(
-          typeColorCodeControllerProvider.notifier,
-        )
-        .findTypeFromColorList(
-          widget.typeName,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final titleName =
+        goalType == GoalType.today ? "Today's TODO" : "Month's TODO";
+    final todoList = ref.watch(goalInfoGetterProvider).getRight().fold(
+          () => <TodoDTO>[],
+          (goalInfo) => goalType == GoalType.today
+              ? goalInfo.todayGoal!.todayTodo ?? []
+              : goalInfo.monthGoal!.monthTodo ?? [],
         );
 
     return Scaffold(
@@ -71,7 +39,7 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
         forceMaterialTransparency: true,
         centerTitle: false,
         title: Text(
-          '"${widget.typeName}"',
+          '"$titleName"',
           style: Theme.of(context)
               .textTheme
               .bodyMedium!
@@ -116,21 +84,21 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
       body: Stack(
         children: [
           Positioned(top: 0, child: Assets.images.todoDetailsRectangle.svg()),
-          userTodo.isEmpty
+          todoList.isEmpty
               ? const Center(
                   child: Text(
                     '"No Todo Found"',
                   ),
                 )
               : ListView.builder(
-                  itemCount: userTodo.length,
+                  itemCount: todoList.length,
                   itemBuilder: (context, index) {
                     // NOTE run rebuild when todo changed
                     return TodoDetailsCard(
-                      todo: userTodo[index],
+                      todo: todoList[index],
                       startColorCode:
-                          int.parse(typeColorCodeObject.startColorCode),
-                      endColorCode: int.parse(typeColorCodeObject.endColorCode),
+                          goalType == GoalType.today ? 0xffAEADB9 : 0xffBCBCB4,
+                      endColorCode: 0xffBABBBA,
                     );
                   },
                 ),

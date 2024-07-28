@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ThemeData createTheme() {
@@ -15,6 +16,16 @@ ThemeData createTheme() {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
+    ),
+    // NOTE change text field's cursor color to grey
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.grey,
+      selectionColor: Colors.grey,
+      selectionHandleColor: Colors.black,
+    ),
+    // NOTE for iphone users, the selectionHandleColor will change to grey
+    cupertinoOverrideTheme: const CupertinoThemeData(
+      primaryColor: Colors.grey,
     ),
     fontFamily: 'SourceCodePro',
     textTheme: const TextTheme(

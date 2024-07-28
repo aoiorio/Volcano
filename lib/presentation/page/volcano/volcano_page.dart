@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -12,27 +13,20 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
-import 'package:volcano/presentation/component/todo/goal_percentage_card.dart';
+import 'package:volcano/presentation/component/global/shimmer_widget.dart';
+import 'package:volcano/presentation/component/todo/goal_info_card.dart';
+import 'package:volcano/presentation/component/todo/todo_list_card.dart';
 import 'package:volcano/presentation/page/dialogs/add_todo_dialog.dart';
+import 'package:volcano/presentation/page/todo_details/goal_todo_details_page.dart';
 import 'package:volcano/presentation/page/user_modal.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/goal_percentage_controller.dart';
+import 'package:volcano/presentation/provider/back/todo/controller/goal_info_getter.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
-import 'package:volcano/presentation/provider/back/todo/is_playing_voice_of_type.dart';
 import 'package:volcano/presentation/provider/back/todo/play_list.dart';
 import 'package:volcano/presentation/provider/back/type_color_code/type_color_code_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
-
-// ANCHOR - Use LockCachingAudioSource to set the URL
-// final audioSource = LockCachingAudioSource(
-//   Uri.parse(
-//     'https://s3.tebi.io/volcano-bucket/Caffeine-36-50.m4a',
-//   ),
-// );
-// await player.setAudioSource(audioSource);
-// await player.play();
 
 class VolcanoPage extends ConsumerStatefulWidget {
   const VolcanoPage({super.key});
@@ -71,8 +65,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
 
       // NOTE getting goal percentage such as 29.2, 98.9
       ref
-          .read(goalPercentageControllerProvider.notifier)
-          .executeGetGoalPercentage();
+          .read(goalInfoGetterProvider.notifier)
+          .executeGetGoalInfo(toast: toast);
     });
   }
 
@@ -86,7 +80,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
         ref.watch(voiceRecognitionControllerProvider(speechToText));
     final voiceRecognitionControllerNotifier =
         ref.watch(voiceRecognitionControllerProvider(speechToText).notifier);
-    final goalPercentage = ref.watch(goalPercentageControllerProvider);
+    final goalInfo = ref.watch(goalInfoGetterProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -278,9 +272,37 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                       },
                     ),
                   ),
-                  // TODO add shimmer effects
-                  goalPercentage.isLeft()
-                      ? const SizedBox()
+                  // DONE add shimmer effects
+                  goalInfo.isLeft()
+                      ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(
+                            bottom: 20,
+                            right: 20,
+                            left: 20,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 50),
+                                child: const ShimmerWidget(
+                                  width: 340,
+                                  height: 220,
+                                  radius: 30,
+                                ),
+                              ),
+                              const Gap(20),
+                              Container(
+                                margin: const EdgeInsets.only(top: 50),
+                                child: const ShimmerWidget(
+                                  width: 340,
+                                  height: 220,
+                                  radius: 30,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       : Column(
                           children: [
                             SingleChildScrollView(
@@ -293,34 +315,46 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
-                                  GoalPercentageCard(
+                                  GoalInfoCard(
                                     goalString: "Today's Goal",
-                                    goalPercentage:
-                                        goalPercentage.getRight().fold(
-                                              () => 0,
-                                              (goalPercentage) =>
-                                                  goalPercentage
-                                                      .todayGoalPercentage ??
-                                                  0,
-                                            ),
-                                    onPress: () {
-                                      // TODO go to today's todo page
+                                    goalPercentage: goalInfo.getRight().fold(
+                                          () => 0.0,
+                                          (goalInfoObject) =>
+                                              goalInfoObject.todayGoal!
+                                                  .todayGoalPercentage ??
+                                              0.0,
+                                        ),
+                                    onPressed: () {
+                                      // DONE go to today's todo page
+                                      goalInfo.getRight().fold(() => null,
+                                          (goalInfoObject) {
+                                        context.push(
+                                          '/goal-todo-details',
+                                          extra: GoalType.today,
+                                        );
+                                      });
                                     },
                                     cardColorCode: 0xffAEADB9,
                                   ),
                                   const SizedBox(width: 20),
-                                  GoalPercentageCard(
+                                  GoalInfoCard(
                                     goalString: "Month's Goal",
-                                    goalPercentage:
-                                        goalPercentage.getRight().fold(
-                                              () => 0.0,
-                                              (goalPercentage) =>
-                                                  goalPercentage
-                                                      .monthGoalPercentage ??
-                                                  0.0,
-                                            ),
-                                    onPress: () {
+                                    goalPercentage: goalInfo.getRight().fold(
+                                          () => 0.0,
+                                          (goalInfoObject) =>
+                                              goalInfoObject.monthGoal!
+                                                  .monthGoalPercentage ??
+                                              0.0,
+                                        ),
+                                    onPressed: () {
                                       // TODO go to month's todo page
+                                      goalInfo.getRight().fold(() => null,
+                                          (goalInfoObject) {
+                                        context.push(
+                                          '/goal-todo-details',
+                                          extra: GoalType.month,
+                                        );
+                                      });
                                     },
                                     cardColorCode: 0xffBCBCB4,
                                   ),
@@ -340,10 +374,29 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                           ],
                         ),
                   const SizedBox(height: 40),
-                  todos.isLeft()
-                      // TODO add shimmer effect here!!
-                      ? const Text(
-                          'Something went wrong, please try to connect wifi',
+                  todos.isLeft() ||
+                          ref.watch(typeColorCodeControllerProvider).isLeft()
+                      // DONE add shimmer effect here!!
+                      ? Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(30),
+                              child: ShimmerWidget(
+                                width: MediaQuery.of(context).size.width,
+                                height: 500,
+                                radius: 30,
+                              ),
+                            ),
+                            const Gap(30),
+                            Container(
+                              padding: const EdgeInsets.all(30),
+                              child: ShimmerWidget(
+                                width: MediaQuery.of(context).size.width,
+                                height: 500,
+                                radius: 30,
+                              ),
+                            ),
+                          ],
                         )
                       : MediaQuery.removePadding(
                           context: context,
@@ -357,33 +410,17 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                             // NOTE this physics can allow to scroll the screen property
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, typeIndex) {
-                              final valueCount =
-                                  todos.getRight().fold(() => null, (todo) {
-                                return todo[typeIndex].values!.length;
-                              });
                               final userTodo =
                                   todos.getRight().fold(() => null, (todo) {
                                 return todo;
                               });
-
-                              // NOTE playing voice etc..
-                              final isPlayingVoice = ref.watch(
-                                isPlayingVoiceOfTypeProvider(
+                              final playList = ref.watch(
+                                playListProvider(
                                   userTodo![typeIndex].type ?? '',
                                 ),
                               );
-                              final isPlayingVoiceNotifier = ref.read(
-                                isPlayingVoiceOfTypeProvider(
-                                  userTodo[typeIndex].type ?? '',
-                                ).notifier,
-                              );
-                              final playList = ref.watch(
-                                playListProvider(
-                                  userTodo[typeIndex].type ?? '',
-                                ),
-                              );
                               final audioSource = ConcatenatingAudioSource(
-                                // Specify the playlist items
+                                // NOTE Specify the playlist items
                                 children: playList
                                     .map(
                                       (e) => LockCachingAudioSource(
@@ -402,220 +439,14 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   .findTypeFromColorList(
                                     userTodo[typeIndex].type ?? '',
                                   );
-                              return Stack(
-                                alignment: AlignmentDirectional.bottomCenter,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(30),
-                                    margin: const EdgeInsets.only(
-                                      bottom: 70,
-                                      right: 30,
-                                      left: 30,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(
-                                            int.parse(
-                                              typeColorCodeObject
-                                                  .startColorCode,
-                                            ),
-                                          ),
-                                          Color(
-                                            int.parse(
-                                              typeColorCodeObject.endColorCode,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              width: 230,
-                                              child: Text(
-                                                userTodo[typeIndex]
-                                                    .type
-                                                    .toString(),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(fontSize: 22),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            // NOTE play audio button
-                                            BouncedButton(
-                                              child: Icon(
-                                                isPlayingVoice
-                                                    ? Icons.pause
-                                                    : Icons.play_arrow,
-                                                size: 40,
-                                              ),
-                                              onPress: () async {
-                                                HapticFeedback.lightImpact();
-                                                // LINK - https://zenn.dev/r0227n/articles/085c234061235e
-                                                if (isPlayingVoice) {
-                                                  isPlayingVoiceNotifier
-                                                      .updateIsPlaying(
-                                                    type: userTodo[typeIndex]
-                                                            .type ??
-                                                        '',
-                                                    updatedBool: false,
-                                                  );
-                                                  await player.stop();
-                                                } else {
-                                                  isPlayingVoiceNotifier
-                                                      .updateIsPlaying(
-                                                    type: userTodo[typeIndex]
-                                                            .type ??
-                                                        '',
-                                                    updatedBool: true,
-                                                  );
-                                                  await player.setAudioSource(
-                                                    audioSource,
-                                                  );
-                                                  await player.play();
-                                                  // .then((value) {
-                                                  // NOTE IT MIGHT CAUSE ERROR !!!! if the speaking finished, the icon will change
-                                                  // isPlayingVoiceNotifier
-                                                  //     .updateIsPlaying(
-                                                  //   type: userTodo[typeIndex]
-                                                  //           .type ??
-                                                  //       '',
-                                                  //   updatedBool: false,
-                                                  // );
-                                                  // });
-                                                }
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 40),
-                                        ListView.builder(
-                                          itemCount:
-                                              valueCount! >= 3 ? 3 : valueCount,
-                                          // NOTE this shrinkWrap prevents the error of layout
-                                          shrinkWrap: true,
-                                          // NOTE this physics can allow to scroll the screen property
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, valueIndex) {
-                                            final period = userTodo[typeIndex]
-                                                .values![valueIndex]
-                                                .period;
-
-                                            // NOTE displaying todo here
-                                            final todoWidget = Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 10,
-                                                bottom: 10,
-                                              ),
-
-                                              // NOTE the todo of type
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '{',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall!
-                                                        .copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 25,
-                                                    ),
-                                                    child: Text(
-                                                      '"title": "${userTodo[typeIndex].values![valueIndex].title}",\n\n"due date": "${period!.year}/${period.month}/${period.day}"',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall!
-                                                          .copyWith(
-                                                            color: Colors.black,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall!
-                                                        .copyWith(
-                                                          color: Colors.black,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                            return todoWidget;
-                                          },
-                                        ),
-                                        const SizedBox(height: 30),
-                                      ],
-                                    ),
-                                  ),
-
-                                  // NOTE Next Button
-                                  Positioned(
-                                    bottom: 40,
-                                    child: BouncedButton(
-                                      // DONE create going to the todo page
-                                      onPress: () {
-                                        HapticFeedback.lightImpact();
-                                        context.push(
-                                          '/todo-details',
-                                          extra: userTodo[typeIndex].type,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 100,
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xffE1E1E1),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '"',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color(0xff4D3769),
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_outlined,
-                                              color: Color(0xff4D3769),
-                                            ),
-                                            Text(
-                                              '"',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color(0xff4D3769),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              return TodoListCard(
+                                startColorCode: int.parse(
+                                  typeColorCodeObject.startColorCode,
+                                ),
+                                endColorCode:
+                                    int.parse(typeColorCodeObject.endColorCode),
+                                readTodoList: userTodo[typeIndex],
+                                audioSource: audioSource,
                               );
                             },
                           ),
