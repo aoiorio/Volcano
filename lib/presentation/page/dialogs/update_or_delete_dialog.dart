@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
+import 'package:volcano/presentation/component/global/confirm_dialog.dart';
 import 'package:volcano/presentation/page/dialogs/update_todo_dialog.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/delete_todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
@@ -94,16 +95,27 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
                     ),
                     onPress: () {
                       HapticFeedback.lightImpact();
-                      ref
-                          .read(todoControllerProvider.notifier)
-                          .executeLocalDeleteTodo(todo);
-                      ref
-                          .read(deleteTodoControllerProvider.notifier)
-                          .executeDeleteTodo(
-                            todoId: todo.todoId ?? '',
-                            toast: toast,
-                          );
-                      context.pop();
+                      showConfirmDialog(
+                        context,
+                        'Are you really \n thinking about DELETING TODO?',
+                        () {
+                          ref
+                              .read(todoControllerProvider.notifier)
+                              .executeLocalDeleteTodo(todo);
+                          ref
+                              .read(deleteTodoControllerProvider.notifier)
+                              .executeDeleteTodo(
+                                todoId: todo.todoId ?? '',
+                                toast: toast,
+                              );
+                          context
+                            ..pop()
+                            ..pop();
+                        },
+                        () {
+                          context.pop();
+                        },
+                      );
                     },
                   ),
                   const SizedBox(width: 20),
