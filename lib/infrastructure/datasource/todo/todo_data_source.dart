@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:volcano/core/config.dart';
-import 'package:volcano/infrastructure/dto/goal_percentage.dart';
+import 'package:volcano/infrastructure/dto/goal_info.dart';
 import 'package:volcano/infrastructure/dto/read_todo.dart';
 
 import 'package:volcano/infrastructure/dto/todo.dart';
@@ -54,7 +54,7 @@ abstract class TodoDataSource {
   );
 
   @GET('/todo/user-goals/')
-  Future<GoalPercentageDTO> getGoalPercentage(
+  Future<GoalInfo> getGoalInfo(
     @Query('token') String token,
   );
 }

@@ -4,18 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 
-class GoalPercentageCard extends ConsumerWidget {
-  const GoalPercentageCard({
+class GoalInfoCard extends ConsumerWidget {
+  const GoalInfoCard({
     super.key,
     required this.goalString,
     required this.goalPercentage,
-    required this.onPress,
+    required this.onPressed,
     required this.cardColorCode,
   });
 
   final String goalString;
   final double goalPercentage;
-  final void Function() onPress;
+  final void Function() onPressed;
   final int cardColorCode;
 
   @override
@@ -27,15 +27,16 @@ class GoalPercentageCard extends ConsumerWidget {
       height: 220,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        // color: const Color(0xffAEADB9),
         color: Color(cardColorCode),
       ),
       child: Stack(
         alignment: AlignmentDirectional.topEnd,
         children: [
           BouncedButton(
-            // TODO go to today's todo page!
-            onPress: HapticFeedback.lightImpact,
+            onPress: () {
+              HapticFeedback.lightImpact();
+              onPressed();
+            },
             child: Container(
               width: 80,
               height: 70,

@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/goal_percentage.dart';
 import 'package:volcano/domain/entity/read_todo.dart';
 import 'package:volcano/domain/entity/todo.dart';
+import 'package:volcano/infrastructure/dto/goal_info.dart';
 
 // NOTE I think that I can change arguments to model
 abstract class TodoRepository {
@@ -46,7 +46,7 @@ abstract class TodoRepository {
     required String token,
   });
 
-  Future<Either<BackEndError, GoalPercentage>> getGoalPercentage({
+  Future<Either<BackEndError, GoalInfo>> getGoalInfo({
     required String token,
   });
 }

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
 import 'package:volcano/core/errors.dart';
-import 'package:volcano/domain/entity/goal_percentage.dart';
 import 'package:volcano/domain/entity/todo.dart';
 import 'package:volcano/domain/repository/todo.dart';
 import 'package:volcano/infrastructure/datasource/todo/todo_data_source.dart';
+import 'package:volcano/infrastructure/dto/goal_info.dart';
 import 'package:volcano/infrastructure/dto/read_todo.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/infrastructure/model/todo/post_todo_model.dart';
@@ -217,12 +217,12 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<BackEndError, GoalPercentage>> getGoalPercentage({
+  Future<Either<BackEndError, GoalInfo>> getGoalInfo({
     required String token,
   }) async {
     try {
-      final res = await _client.getGoalPercentage(token).then((value) {
-        debugPrint(value.todayGoalPercentage.toString());
+      final res = await _client.getGoalInfo(token).then((value) {
+        debugPrint(value.monthGoal!.monthGoalPercentage.toString());
         return value;
       });
       return Either.right(res);
