@@ -30,6 +30,10 @@ class $AssetsImagesGen {
   SvgGenImage get volcanoPageShape =>
       const SvgGenImage('assets/images/volcano-page-shape.svg');
 
+  /// File path: assets/images/volcano-person.PNG
+  AssetGenImage get volcanoPerson =>
+      const AssetGenImage('assets/images/volcano-person.PNG');
+
   /// File path: assets/images/volcano_logo.png
   AssetGenImage get volcanoLogo =>
       const AssetGenImage('assets/images/volcano_logo.png');
@@ -40,6 +44,7 @@ class $AssetsImagesGen {
         penIcon,
         todoDetailsRectangle,
         volcanoPageShape,
+        volcanoPerson,
         volcanoLogo
       ];
 }

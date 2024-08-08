@@ -47,3 +47,4 @@ app.*.map.json
 
 /lib/core/config.dart
 *.g.dart
+assets
