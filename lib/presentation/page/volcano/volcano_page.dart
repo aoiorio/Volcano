@@ -10,23 +10,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:record/record.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:volcano/gen/assets.gen.dart';
-import 'package:volcano/presentation/component/global/bounced_button.dart';
-import 'package:volcano/presentation/component/global/custom_toast.dart';
-import 'package:volcano/presentation/component/global/shimmer_widget.dart';
-import 'package:volcano/presentation/component/todo/goal_info_card.dart';
-import 'package:volcano/presentation/component/todo/todo_list_card.dart';
-import 'package:volcano/presentation/page/dialogs/add_todo_dialog.dart';
-import 'package:volcano/presentation/page/todo_details/goal_todo_details_page.dart';
-import 'package:volcano/presentation/page/user_modal.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/goal_info_getter.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
-import 'package:volcano/presentation/provider/back/todo/play_list.dart';
-import 'package:volcano/presentation/provider/back/type_color_code/type_color_code_controller.dart';
-import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
-import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
-import 'package:volcano/presentation/provider/front/todo/voice_recognition/voice_recognition_controller.dart';
+import 'package:volcano/presentation/importer/volcano_page_importer.dart';
 
 class VolcanoPage extends ConsumerStatefulWidget {
   const VolcanoPage({super.key});
@@ -347,7 +331,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                               0.0,
                                         ),
                                     onPressed: () {
-                                      // TODO go to month's todo page
+                                      // DONE go to month's todo page
                                       goalInfo.getRight().fold(() => null,
                                           (goalInfoObject) {
                                         context.push(
