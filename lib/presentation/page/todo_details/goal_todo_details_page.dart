@@ -99,6 +99,7 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
                       startColorCode:
                           goalType == GoalType.today ? 0xffAEADB9 : 0xffBCBCB4,
                       endColorCode: 0xffBABBBA,
+                      isGoalInfo: true,
                     );
                   },
                 ),
