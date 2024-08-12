@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:volcano/presentation/component/global/loading_widget.dart';
@@ -10,6 +11,9 @@ import 'package:volcano/presentation/theme/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, //上向きを許可
+  ]);
   runApp(
     ProviderScope(
       overrides: [
