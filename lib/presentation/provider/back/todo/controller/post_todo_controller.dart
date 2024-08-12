@@ -85,6 +85,8 @@ class PostTodoController extends _$PostTodoController {
                       ),
                     );
               });
+              // NOTE get the latest info of todo
+              ref.read(todoControllerProvider.notifier).executeReadTodo();
             }
 
             // NOTE delete all of data
@@ -137,6 +139,8 @@ class PostTodoController extends _$PostTodoController {
                         audioUrl: todo.audioUrl ?? dummyAudioURL,
                       ),
                     );
+                // NOTE get the latest info of todo
+                ref.read(todoControllerProvider.notifier).executeReadTodo();
               });
               showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
             } else {

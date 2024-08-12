@@ -17,11 +17,13 @@ class TodoDetailsCard extends StatefulHookConsumerWidget {
     required this.todo,
     required this.startColorCode,
     required this.endColorCode,
+    this.isGoalInfo = false,
   });
 
   final TodoDTO todo;
   final int startColorCode;
   final int endColorCode;
+  final bool isGoalInfo;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -90,7 +92,9 @@ class _TodoDetailsCardState extends ConsumerState<TodoDetailsCard> {
                   Padding(
                     padding: const EdgeInsets.only(left: 25),
                     child: Text(
-                      '"title": "${widget.todo.title}",\n\n"due date": "${widget.todo.period!.year}/${widget.todo.period!.month}/${widget.todo.period!.day}",\n\n"priority": ${widget.todo.priority},\n\n"description": "${widget.todo.description}"',
+                      widget.isGoalInfo
+                          ? '"title": "${widget.todo.title}",\n\n"type": "${widget.todo.type}",\n\n"due date": ${widget.todo.period!.year}/${widget.todo.period!.month}/${widget.todo.period!.day},\n\n"priority": ${widget.todo.priority},\n\n"description": "${widget.todo.description}"'
+                          : '"title": "${widget.todo.title}",\n\n"due date": "${widget.todo.period!.year}/${widget.todo.period!.month}/${widget.todo.period!.day}",\n\n"priority": ${widget.todo.priority},\n\n"description": "${widget.todo.description}"',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
@@ -198,7 +202,7 @@ class _TodoDetailsCardState extends ConsumerState<TodoDetailsCard> {
                           priority: widget.todo.priority ?? 3,
                           audioUrl: widget.todo.audioUrl ?? '',
                           isCompleted: isCompleted.value,
-                          type: widget.todo.type ?? 'other',
+                          type: widget.todo.type ?? 'others',
                           toast: toast,
                         );
                   },

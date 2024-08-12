@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:volcano/core/config.dart';
 import 'package:volcano/presentation/provider/front/todo/voice_recognition/is_listening_controller.dart';
 
 part 'voice_recognition_controller.g.dart';
@@ -20,7 +21,16 @@ class VoiceRecognitionController extends _$VoiceRecognitionController {
           .changeToTrue();
       speechToText.listen(
         onResult: (result) {
-          state = result.recognizedWords;
+          var recognizedWords =
+              result.recognizedWords.replaceAll('.', ' period');
+
+          // NOTE change text numbers like one, two to 1, 2
+          for (final i in voiceToNumbersDic.keys.toList()) {
+            recognizedWords = recognizedWords
+                .toLowerCase()
+                .replaceAll(i, voiceToNumbersDic[i].toString());
+          }
+          state = recognizedWords;
         },
       );
     } else {

@@ -29,13 +29,11 @@ class UpdateUserController extends _$UpdateUserController {
 
   void executeUpdateUser({
     required String email,
-    // required String username,
     required String username,
     required String icon,
     required FToast toast,
   }) {
     final token = ref.read(authSharedPreferenceProvider);
-    // print(usernameTextEditingController.text);
     if (username.isEmpty || email.isEmpty) {
       showToastMessage(
         toast,
