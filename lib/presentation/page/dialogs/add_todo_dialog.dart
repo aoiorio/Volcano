@@ -12,6 +12,7 @@ import 'package:volcano/presentation/component/global/white_main_button.dart';
 import 'package:volcano/presentation/provider/back/todo/controller/post_todo_controller.dart';
 import 'package:volcano/presentation/provider/front/todo/reset_values.dart';
 import 'package:volcano/presentation/provider/front/todo/step_count.dart';
+import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
 
 class AddTodoDialog extends ConsumerWidget {
   const AddTodoDialog({
@@ -55,7 +56,6 @@ class AddTodoDialog extends ConsumerWidget {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // const Spacer(),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 5),
@@ -68,7 +68,11 @@ class AddTodoDialog extends ConsumerWidget {
                 ),
                 onPress: () {
                   ref.read(resetValuesProvider.notifier).resetValues();
-                  // showAboutDialog(context: context, );
+                  if (!ref.watch(isDoneTutorialProvider)) {
+                    ref
+                        .read(isDoneTutorialProvider.notifier)
+                        .changeIsDoneTutorial();
+                  }
                   context.pop();
                 },
               ),
@@ -87,7 +91,6 @@ class AddTodoDialog extends ConsumerWidget {
             hintString: 'type title here...',
             onChanged: (value) {},
           ),
-
           const SizedBox(height: 30),
           CustomTextField(
             textEditingController:
@@ -354,6 +357,11 @@ class AddTodoDialog extends ConsumerWidget {
               isAddingFromText
                   ? postTodoControllerNotifier.postTodoFromText(toast, context)
                   : postTodoControllerNotifier.postTodo(toast, context);
+              if (!ref.watch(isDoneTutorialProvider)) {
+                ref
+                    .read(isDoneTutorialProvider.notifier)
+                    .changeIsDoneTutorial();
+              }
             },
           ),
         ],
