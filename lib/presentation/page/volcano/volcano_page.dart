@@ -100,7 +100,9 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
       ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
-        physics: !ref.watch(isDoneTutorialProvider) ? const NeverScrollableScrollPhysics(): const ScrollPhysics(),
+        physics: !ref.watch(isDoneTutorialProvider)
+            ? const NeverScrollableScrollPhysics()
+            : const ScrollPhysics(),
         child: Center(
           child: Stack(
             alignment: Alignment.topCenter,
@@ -112,7 +114,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         : ref.watch(isDoneTutorialProvider)
                             ? 1
                             : 0.6,
-              // TODO create svg for ipad (change the size and so on)!!
+                // TODO create svg for ipad (change the size and so on)!!
                 child: Assets.images.volcanoPageShape.svg(),
               ),
               Opacity(

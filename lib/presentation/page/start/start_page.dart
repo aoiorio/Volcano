@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:volcano/presentation/page/auth/sign_up_page.dart';
 import 'package:volcano/presentation/page/volcano/volcano_page.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
-import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
+// import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
 
 class StartPage extends HookConsumerWidget {
   const StartPage({super.key});
