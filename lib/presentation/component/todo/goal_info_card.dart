@@ -20,10 +20,12 @@ class GoalInfoCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
+
     return Container(
       padding: const EdgeInsets.all(30),
       margin: const EdgeInsets.only(top: 50),
-      width: 340,
+      width: width >= 850 ? width / 2 : width * 0.86, // 340
       height: 220,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -104,7 +106,7 @@ class GoalInfoCard extends ConsumerWidget {
               ),
               const SizedBox(height: 15),
               LinearPercentIndicator(
-                width: 230,
+                width: width >= 850 ? width / 2.5 : width * 0.6, // 230
                 lineHeight: 28,
                 padding: EdgeInsets.zero,
                 percent: goalPercentage / 100,

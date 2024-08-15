@@ -6,7 +6,7 @@ export 'package:volcano/presentation/component/todo/goal_info_card.dart';
 export 'package:volcano/presentation/component/todo/todo_list_card.dart';
 export 'package:volcano/presentation/page/dialogs/add_todo_dialog.dart';
 export 'package:volcano/presentation/page/todo_details/goal_todo_details_page.dart';
-export 'package:volcano/presentation/page/user_modal.dart';
+export 'package:volcano/presentation/component/modal/user_modal.dart';
 export 'package:volcano/presentation/provider/back/todo/controller/goal_info_getter.dart';
 export 'package:volcano/presentation/provider/back/todo/controller/text_to_todo_controller.dart';
 export 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';

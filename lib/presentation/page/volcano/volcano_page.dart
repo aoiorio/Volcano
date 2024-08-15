@@ -1,6 +1,7 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -72,6 +73,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
         ref.watch(voiceRecognitionControllerProvider(speechToText).notifier);
     final goalInfo = ref.watch(goalInfoGetterProvider);
     final isPushedVoiceButton = ref.watch(isPushedVoiceButtonProvider);
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +87,6 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
             onPressed: () {
               // DONE show UserDialog
               showBarModalBottomSheet<void>(
-                // isScrollControlled: true,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -100,7 +101,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
       ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
-        physics: !ref.watch(isDoneTutorialProvider)
+        // NOTE if the user pushed the add-todo-from-voice button for the first time and hasn't done with the tutorial, we will show tutorial page
+        physics: !ref.watch(isDoneTutorialProvider) && isPushedVoiceButton
             ? const NeverScrollableScrollPhysics()
             : const ScrollPhysics(),
         child: Center(
@@ -114,8 +116,19 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         : ref.watch(isDoneTutorialProvider)
                             ? 1
                             : 0.6,
-                // TODO create svg for ipad (change the size and so on)!!
-                child: Assets.images.volcanoPageShape.svg(),
+                child: width >= 850
+                    ? ClipPath(
+                        clipper: OvalBottomBorderClipper(),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 2,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xffEEE3E1), Color(0xffC6C3C3)],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Assets.images.volcanoPageShape.svg(),
               ),
               Opacity(
                 opacity:
@@ -133,7 +146,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 50),
                       child: SizedBox(
-                        width: 320,
+                        width: width >= 850 ? width / 2 : width * 0.8, // 320,
                         height: 300,
                         child: BouncedButton(
                           child: DecoratedBox(
@@ -160,8 +173,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   child: isListening
                                       ? AudioWaveforms(
                                           size: Size(
-                                            MediaQuery.of(context).size.width /
-                                                2,
+                                            width / 2,
                                             80,
                                           ),
                                           recorderController: ref.watch(
@@ -253,9 +265,9 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    const Gap(50),
                     SizedBox(
-                      width: 340,
+                      width: width >= 850 ? width / 2 : width * 0.85, // 340
                       height: 80,
                       child: BouncedButton(
                         child: DecoratedBox(
@@ -375,19 +387,21 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                   ],
                                 ),
                               ),
-                              SmoothPageIndicator(
-                                controller: pageController,
-                                count: 2,
-                                effect: const WormEffect(
-                                  dotHeight: 8,
-                                  dotWidth: 30,
-                                  dotColor: Color(0xffD9D9d9),
-                                  activeDotColor: Colors.black,
-                                ),
-                              ),
+                              width >= 850
+                                  ? const SizedBox()
+                                  : SmoothPageIndicator(
+                                      controller: pageController,
+                                      count: 2,
+                                      effect: const WormEffect(
+                                        dotHeight: 8,
+                                        dotWidth: 30,
+                                        dotColor: Color(0xffD9D9d9),
+                                        activeDotColor: Colors.black,
+                                      ),
+                                    ),
                             ],
                           ),
-                    const SizedBox(height: 40),
+                    const Gap(40),
                     todos.isLeft() ||
                             ref.watch(typeColorCodeControllerProvider).isLeft()
                         // DONE add shimmer effect here!!
@@ -396,7 +410,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               Container(
                                 padding: const EdgeInsets.all(30),
                                 child: ShimmerWidget(
-                                  width: MediaQuery.of(context).size.width,
+                                  width: width,
                                   height: 500,
                                   radius: 30,
                                 ),
@@ -405,7 +419,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                               Container(
                                 padding: const EdgeInsets.all(30),
                                 child: ShimmerWidget(
-                                  width: MediaQuery.of(context).size.width,
+                                  width: width,
                                   height: 500,
                                   radius: 30,
                                 ),

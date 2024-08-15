@@ -266,69 +266,68 @@ class UpdateTodoDialog extends ConsumerWidget {
           ),
 
           const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '"Priority"',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.black),
-                  ),
-                  const SizedBox(height: 15),
-                  SizedBox(
-                    width: 130,
-                    height: 80,
-                    child: CustomDropdown(
-                      closedHeaderPadding: const EdgeInsets.all(30),
-                      expandedHeaderPadding: const EdgeInsets.all(30),
-                      listItemPadding: const EdgeInsets.all(30),
-                      items: const [1, 2, 3, 4, 5],
-                      initialItem: updateTodoControllerNotifier.priority,
-                      decoration: CustomDropdownDecoration(
-                        expandedFillColor: const Color(0xff343434),
-                        closedFillColor: const Color(0xff343434),
-                        closedBorderRadius: BorderRadius.circular(30),
-                        expandedBorderRadius: BorderRadius.circular(30),
-                        listItemStyle: Theme.of(context).textTheme.bodySmall,
-                        headerStyle: Theme.of(context).textTheme.bodySmall,
-                        closedSuffixIcon: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffD9D9D9),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        expandedSuffixIcon: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffD9D9D9),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        listItemDecoration: const ListItemDecoration(
-                          highlightColor: Color(0xff504F4F),
+          Container(
+            alignment: AlignmentDirectional.center,
+            width: 400,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '"Priority"',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.black),
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: 280,
+                  height: 80,
+                  child: CustomDropdown(
+                    closedHeaderPadding: const EdgeInsets.all(30),
+                    expandedHeaderPadding: const EdgeInsets.all(30),
+                    listItemPadding: const EdgeInsets.all(30),
+                    items: const [1, 2, 3, 4, 5],
+                    initialItem: updateTodoControllerNotifier.priority,
+                    decoration: CustomDropdownDecoration(
+                      expandedFillColor: const Color(0xff343434),
+                      closedFillColor: const Color(0xff343434),
+                      closedBorderRadius: BorderRadius.circular(30),
+                      expandedBorderRadius: BorderRadius.circular(30),
+                      listItemStyle: Theme.of(context).textTheme.bodySmall,
+                      headerStyle: Theme.of(context).textTheme.bodySmall,
+                      closedSuffixIcon: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        updateTodoControllerNotifier.priority = value;
-                      },
+                      expandedSuffixIcon: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      listItemDecoration: const ListItemDecoration(
+                        highlightColor: Color(0xff504F4F),
+                      ),
                     ),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      updateTodoControllerNotifier.priority = value;
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+
           // const Spacer(),
           const SizedBox(height: 55),
           WhiteMainButton(

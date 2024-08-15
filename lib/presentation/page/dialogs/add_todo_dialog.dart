@@ -224,122 +224,124 @@ class AddTodoDialog extends ConsumerWidget {
           const SizedBox(height: 20),
           isAddingFromText ? textWidgets[1] : textWidgets[0],
           const SizedBox(height: 30),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: Text(
-                  '"Description"',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: Colors.black),
-                ),
-              ),
-              Container(
-                width: 280,
-                height: 224,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: const Color(0xff343434),
-                ),
-                child: TextField(
-                  controller:
-                      postTodoControllerNotifier.descriptionTextController,
-                  maxLines: null,
-                  cursorColor: Colors.grey,
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(
-                      left: 30,
-                      right: 30,
-                      top: 26,
-                      bottom: 26,
-                    ),
-                    enabledBorder: InputBorder.none,
-                    hintText: 'type description\nhere...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(
-                        color: Color(0xff343434),
-                      ),
-                    ),
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.white, fontSize: 18),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '"Priority"',
+          Container(
+            alignment: Alignment.center,
+            width: 400,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Text(
+                    '"Description"',
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall!
                         .copyWith(color: Colors.black),
                   ),
-                  const SizedBox(height: 15),
-                  SizedBox(
-                    width: 130,
-                    height: 80,
-                    child: CustomDropdown(
-                      closedHeaderPadding: const EdgeInsets.all(30),
-                      expandedHeaderPadding: const EdgeInsets.all(30),
-                      listItemPadding: const EdgeInsets.all(30),
-                      items: const [1, 2, 3, 4, 5],
-                      initialItem: postTodoControllerNotifier.priority,
-                      decoration: CustomDropdownDecoration(
-                        expandedFillColor: const Color(0xff343434),
-                        closedFillColor: const Color(0xff343434),
-                        closedBorderRadius: BorderRadius.circular(30),
-                        expandedBorderRadius: BorderRadius.circular(30),
-                        listItemStyle: Theme.of(context).textTheme.bodySmall,
-                        headerStyle: Theme.of(context).textTheme.bodySmall,
-                        closedSuffixIcon: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffD9D9D9),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        expandedSuffixIcon: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffD9D9D9),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        listItemDecoration: const ListItemDecoration(
-                          highlightColor: Color(0xff504F4F),
+                ),
+                Container(
+                  width: 280,
+                  height: 224,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color(0xff343434),
+                  ),
+                  child: TextField(
+                    controller:
+                        postTodoControllerNotifier.descriptionTextController,
+                    maxLines: null,
+                    cursorColor: Colors.grey,
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(
+                        left: 30,
+                        right: 30,
+                        top: 26,
+                        bottom: 26,
+                      ),
+                      enabledBorder: InputBorder.none,
+                      hintText: 'type description\nhere...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
+                          color: Color(0xff343434),
                         ),
                       ),
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        postTodoControllerNotifier.priority = value;
-                      },
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.white, fontSize: 18),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 30),
+          Container(
+            alignment: AlignmentDirectional.center,
+            width: 400,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '"Priority"',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.black),
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: 280,
+                  height: 80,
+                  child: CustomDropdown(
+                    closedHeaderPadding: const EdgeInsets.all(30),
+                    expandedHeaderPadding: const EdgeInsets.all(30),
+                    listItemPadding: const EdgeInsets.all(30),
+                    items: const [1, 2, 3, 4, 5],
+                    initialItem: postTodoControllerNotifier.priority,
+                    decoration: CustomDropdownDecoration(
+                      expandedFillColor: const Color(0xff343434),
+                      closedFillColor: const Color(0xff343434),
+                      closedBorderRadius: BorderRadius.circular(30),
+                      expandedBorderRadius: BorderRadius.circular(30),
+                      listItemStyle: Theme.of(context).textTheme.bodySmall,
+                      headerStyle: Theme.of(context).textTheme.bodySmall,
+                      closedSuffixIcon: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      expandedSuffixIcon: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      listItemDecoration: const ListItemDecoration(
+                        highlightColor: Color(0xff504F4F),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      postTodoControllerNotifier.priority = value;
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
           // const Spacer(),
