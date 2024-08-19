@@ -40,12 +40,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<BackEndError, String>> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<BackEndError, TokenDTO>> signUp({
     required String email,
     required String password,

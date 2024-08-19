@@ -14,6 +14,4 @@ abstract class AuthRepository {
     required String email,
     required String password,
   });
-
-  Future<Either<BackEndError, String>> signOut();
 }

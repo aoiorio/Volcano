@@ -32,13 +32,13 @@ class UpdateTodoDialog extends ConsumerWidget {
     final updateTodoStepCount = ref.watch(updateTodoStepCounterProvider);
     final period = ref.watch(updateTodoPeriodProvider);
     final todoPeriodSuffix = period.hour < 12 ? 'a.m.' : 'p.m.';
+    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
     final stepWidgets = <Widget>[
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // const Spacer(),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 5),
@@ -66,19 +66,18 @@ class UpdateTodoDialog extends ConsumerWidget {
           CustomTextField(
             textEditingController:
                 updateTodoControllerNotifier.titleTextController,
-            width: 280,
+            width: width * 0.72, // 280,
             height: 80,
             addTitle: true,
             titleText: 'Title',
             hintString: 'type title here...',
             onChanged: (value) {},
           ),
-
           const SizedBox(height: 30),
           CustomTextField(
             textEditingController:
                 updateTodoControllerNotifier.typeTextController,
-            width: 280,
+            width: width * 0.72,
             height: 80,
             addTitle: true,
             titleText: 'Type',
@@ -138,10 +137,10 @@ class UpdateTodoDialog extends ConsumerWidget {
                   ).show(context);
                 },
                 child: Container(
-                  width: 280,
+                  width: width * 0.72,
                   height: 80,
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   decoration: BoxDecoration(
                     color: const Color(0xff343434),
                     borderRadius: BorderRadius.circular(30),
@@ -154,6 +153,7 @@ class UpdateTodoDialog extends ConsumerWidget {
                               color: Colors.white,
                             ),
                       ),
+                      const Spacer(),
                       Container(
                         width: 14,
                         height: 14,
@@ -225,7 +225,7 @@ class UpdateTodoDialog extends ConsumerWidget {
                 ),
               ),
               Container(
-                width: 280,
+                width: width * 0.72, // 280
                 height: 224,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -266,69 +266,68 @@ class UpdateTodoDialog extends ConsumerWidget {
           ),
 
           const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '"Priority"',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.black),
-                  ),
-                  const SizedBox(height: 15),
-                  SizedBox(
-                    width: 130,
-                    height: 80,
-                    child: CustomDropdown(
-                      closedHeaderPadding: const EdgeInsets.all(30),
-                      expandedHeaderPadding: const EdgeInsets.all(30),
-                      listItemPadding: const EdgeInsets.all(30),
-                      items: const [1, 2, 3, 4, 5],
-                      initialItem: updateTodoControllerNotifier.priority,
-                      decoration: CustomDropdownDecoration(
-                        expandedFillColor: const Color(0xff343434),
-                        closedFillColor: const Color(0xff343434),
-                        closedBorderRadius: BorderRadius.circular(30),
-                        expandedBorderRadius: BorderRadius.circular(30),
-                        listItemStyle: Theme.of(context).textTheme.bodySmall,
-                        headerStyle: Theme.of(context).textTheme.bodySmall,
-                        closedSuffixIcon: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffD9D9D9),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        expandedSuffixIcon: Container(
-                          width: 14,
-                          height: 14,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffD9D9D9),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        listItemDecoration: const ListItemDecoration(
-                          highlightColor: Color(0xff504F4F),
+          Container(
+            alignment: AlignmentDirectional.center,
+            width: width * 0.72,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '"Priority"',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.black),
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: width * 0.72,
+                  height: 80,
+                  child: CustomDropdown(
+                    closedHeaderPadding: const EdgeInsets.all(30),
+                    expandedHeaderPadding: const EdgeInsets.all(30),
+                    listItemPadding: const EdgeInsets.all(30),
+                    items: const [1, 2, 3, 4, 5],
+                    initialItem: updateTodoControllerNotifier.priority,
+                    decoration: CustomDropdownDecoration(
+                      expandedFillColor: const Color(0xff343434),
+                      closedFillColor: const Color(0xff343434),
+                      closedBorderRadius: BorderRadius.circular(30),
+                      expandedBorderRadius: BorderRadius.circular(30),
+                      listItemStyle: Theme.of(context).textTheme.bodySmall,
+                      headerStyle: Theme.of(context).textTheme.bodySmall,
+                      closedSuffixIcon: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        updateTodoControllerNotifier.priority = value;
-                      },
+                      expandedSuffixIcon: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffD9D9D9),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      listItemDecoration: const ListItemDecoration(
+                        highlightColor: Color(0xff504F4F),
+                      ),
                     ),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      updateTodoControllerNotifier.priority = value;
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+
           // const Spacer(),
           const SizedBox(height: 55),
           WhiteMainButton(

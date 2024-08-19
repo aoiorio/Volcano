@@ -66,10 +66,14 @@ class _TodoDetailsCardState extends ConsumerState<TodoDetailsCard> {
               );
             },
             child: Container(
-              width: 336,
-              margin: const EdgeInsets.only(top: 40, bottom: 30),
+              margin: const EdgeInsets.only(
+                top: 40,
+                bottom: 30,
+                right: 30,
+                left: 30,
+              ),
               padding: const EdgeInsets.all(30),
-              alignment: AlignmentDirectional.center,
+              alignment: AlignmentDirectional.centerStart,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 gradient: LinearGradient(

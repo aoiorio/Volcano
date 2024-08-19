@@ -27,6 +27,8 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
+    // NOTE find the correct type such as password field, email field or confirm password field
     final textEditingControllerText = widget.textEditingControllerType ==
             TextEditingControllerType.email
         ? ref.watch(signUpEmailTextControllerProvider.notifier).state.text
@@ -62,12 +64,16 @@ class _SignUpShapeButtonState extends ConsumerState<SignUpShapeButton> {
             ),
             const SizedBox(height: 10),
             // TODOChange this text by using provider, so I'll create three providers which save strings of user input
-            Text(
-              // NOTE hide password values
-              widget.fieldString.contains('Email')
-                  ? textEditingControllerText
-                  : textEditingControllerText.replaceAll(RegExp(r'.'), '*'),
-              style: Theme.of(context).textTheme.bodySmall,
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Text(
+                // NOTE hide password values
+                widget.fieldString.contains('Email')
+                    ? textEditingControllerText
+                    : textEditingControllerText.replaceAll(RegExp(r'.'), '*'),
+                style: Theme.of(context).textTheme.bodySmall,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

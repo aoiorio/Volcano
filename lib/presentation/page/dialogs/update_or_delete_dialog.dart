@@ -23,12 +23,14 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final toast = FToast();
+    final width = MediaQuery.of(context).size.width;
+
     return Container(
       width: 340,
-      height: 340,
-      margin: const EdgeInsets.only(
-        right: 30,
-        left: 30,
+      height: 34,
+      margin: EdgeInsets.only(
+        right: width >= 850 ? width * 0.3 : 30,
+        left: width >= 850 ? width * 0.3 : 30,
         top: 210,
         bottom: 210,
       ),

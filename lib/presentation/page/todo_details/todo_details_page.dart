@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -115,7 +116,24 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
       ),
       body: Stack(
         children: [
-          Positioned(top: 0, child: Assets.images.todoDetailsRectangle.svg()),
+          MediaQuery.of(context).size.width >= 850
+              ? ClipPath(
+                  clipper: OvalBottomBorderClipper(),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 3,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xffBABBC8), Color(0xffC6C3C3)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                )
+              : Positioned(
+                  top: 0,
+                  child: Assets.images.todoDetailsRectangle.svg(),
+                ),
           userTodo.isEmpty
               ? const Center(
                   child: Text(
