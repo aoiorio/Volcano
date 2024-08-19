@@ -133,7 +133,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   onTap: () {
                     HapticFeedback.lightImpact();
                     ref.watch(signInStepCounterProvider.notifier).state = 0;
-                    // context.go('/sign-in-step');
                     context.push('/sign-in-step').then((value) {
                       setState(() {});
                     });
