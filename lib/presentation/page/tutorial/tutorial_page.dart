@@ -71,7 +71,7 @@ class TutorialPage extends HookConsumerWidget {
               ),
             ),
             Center(
-              // TODO I think I can separate it with two patterns like ipad or pc and iphone
+              // DONE I think I can separate it with two patterns like ipad or pc and iphone
               child: Container(
                 height: MediaQuery.of(context).size.height / 2 + 50,
                 width: width >= 850 ? width - 100 : width / 2 + 130,

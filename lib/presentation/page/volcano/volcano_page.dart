@@ -312,7 +312,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 Container(
                                   margin: const EdgeInsets.only(top: 50),
                                   child: ShimmerWidget(
-                                    width: width >= 850 ? width / 2 : width * 0.86,
+                                    width:
+                                        width >= 850 ? width / 2 : width * 0.86,
                                     height: 220,
                                     radius: 30,
                                   ),
@@ -320,8 +321,9 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 const Gap(20),
                                 Container(
                                   margin: const EdgeInsets.only(top: 50),
-                                  child:  ShimmerWidget(
-                                    width: width >= 850 ? width / 2 : width * 0.86,
+                                  child: ShimmerWidget(
+                                    width:
+                                        width >= 850 ? width / 2 : width * 0.86,
                                     height: 220,
                                     radius: 30,
                                   ),

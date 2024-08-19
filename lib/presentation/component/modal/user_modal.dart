@@ -127,7 +127,7 @@ class UserModal extends HookConsumerWidget {
                                   ],
                                 )
                               : const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Gap(10),
                                     ShimmerWidget(width: 200, height: 30),
@@ -242,7 +242,7 @@ class UserModal extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width:  260,
+                                width: 260,
                                 child: isEditing.value
                                     ? TextField(
                                         // NOTE focus automatically when pressed the button

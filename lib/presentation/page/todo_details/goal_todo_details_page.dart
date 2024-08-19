@@ -98,7 +98,10 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
                     ),
                   ),
                 )
-              : Positioned(top: 0, child: Assets.images.todoDetailsRectangle.svg()),
+              : Positioned(
+                  top: 0,
+                  child: Assets.images.todoDetailsRectangle.svg(),
+                ),
           todoList.isEmpty
               ? const Center(
                   child: Text(

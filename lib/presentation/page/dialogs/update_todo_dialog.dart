@@ -73,7 +73,6 @@ class UpdateTodoDialog extends ConsumerWidget {
             hintString: 'type title here...',
             onChanged: (value) {},
           ),
-
           const SizedBox(height: 30),
           CustomTextField(
             textEditingController:
