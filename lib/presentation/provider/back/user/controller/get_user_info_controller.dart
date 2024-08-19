@@ -26,6 +26,7 @@ class GetUserInfoController extends _$GetUserInfoController {
       } else {
         value.getLeft().fold(() => null, (error) {
           state = Either.left(error);
+          // TODO make a dialog to move to sign in page and show it here
           showToastMessage(
             toast,
             error.message!.detail ?? '😵‍💫 Something went wrong',
