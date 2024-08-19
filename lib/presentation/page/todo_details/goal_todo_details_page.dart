@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:volcano/gen/assets.gen.dart';
@@ -83,7 +84,21 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          Positioned(top: 0, child: Assets.images.todoDetailsRectangle.svg()),
+          MediaQuery.of(context).size.width >= 850
+              ? ClipPath(
+                  clipper: OvalBottomBorderClipper(),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 3,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xffBABBC8), Color(0xffC6C3C3)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                )
+              : Positioned(top: 0, child: Assets.images.todoDetailsRectangle.svg()),
           todoList.isEmpty
               ? const Center(
                   child: Text(

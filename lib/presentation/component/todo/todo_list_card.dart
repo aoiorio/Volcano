@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -48,117 +49,130 @@ class _TodoListCardState extends ConsumerState<TodoListCard> {
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
-        Container(
-          padding: const EdgeInsets.all(30),
-          margin: const EdgeInsets.only(
-            bottom: 70,
-            right: 30,
-            left: 30,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            gradient: LinearGradient(
-              colors: [
-                Color(widget.startColorCode),
-                Color(widget.endColorCode),
-              ],
+        GestureDetector(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            // NOTE go to todo details page here
+            context.push(
+              '/todo-details',
+              extra: widget.readTodoList.type,
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            margin: const EdgeInsets.only(
+              bottom: 70,
+              right: 30,
+              left: 30,
             ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 230,
-                    child: Text(
-                      widget.readTodoList.type.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(fontSize: 22),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  // NOTE play audio button
-                  BouncedButton(
-                    child: Icon(
-                      isListening.value ? Icons.pause : Icons.play_arrow,
-                      size: 40,
-                    ),
-                    onPress: () async {
-                      HapticFeedback.lightImpact();
-                      // LINK - https://zenn.dev/r0227n/articles/085c234061235e
-                      if (isListening.value) {
-                        isListening.value = false;
-                        await player.stop();
-                      } else {
-                        isListening.value = true;
-                        await player.setAudioSource(
-                          widget.audioSource,
-                        );
-                        await player.play();
-                      }
-                    },
-                  ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              gradient: LinearGradient(
+                colors: [
+                  Color(widget.startColorCode),
+                  Color(widget.endColorCode),
                 ],
               ),
-              const SizedBox(height: 40),
-              ListView.builder(
-                itemCount: valueCount! >= 3 ? 3 : valueCount,
-                // NOTE this shrinkWrap prevents the error of layout
-                shrinkWrap: true,
-                // NOTE this physics can allow to scroll the screen property
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, valueIndex) {
-                  final period = widget.readTodoList.values![valueIndex].period;
-
-                  // NOTE displaying todo here
-                  final todoWidget = Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      bottom: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 230,
+                      child: Text(
+                        widget.readTodoList.type.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontSize: 22),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
+                    // NOTE play audio button
+                    BouncedButton(
+                      child: Icon(
+                        isListening.value ? Icons.pause : Icons.play_arrow,
+                        size: 40,
+                      ),
+                      onPress: () async {
+                        HapticFeedback.lightImpact();
+                        // LINK - https://zenn.dev/r0227n/articles/085c234061235e
+                        if (isListening.value) {
+                          isListening.value = false;
+                          await player.stop();
+                        } else {
+                          isListening.value = true;
+                          await player.setAudioSource(
+                            widget.audioSource,
+                          );
+                          await player.play();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                ListView.builder(
+                  itemCount: valueCount! >= 3 ? 3 : valueCount,
+                  // NOTE this shrinkWrap prevents the error of layout
+                  shrinkWrap: true,
+                  // NOTE this physics can allow to scroll the screen property
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, valueIndex) {
+                    final period =
+                        widget.readTodoList.values![valueIndex].period;
 
-                    // NOTE the todo of type
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '{',
-                          style:
-                              Theme.of(context).textTheme.bodySmall!.copyWith(
-                                    color: Colors.black,
-                                  ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25,
-                          ),
-                          child: Text(
-                            '"title": "${widget.readTodoList.values![valueIndex].title}",\n\n"due date": "${period!.year}/${period.month}/${period.day}"',
+                    // NOTE displaying todo here
+                    final todoWidget = Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                      ),
+
+                      // NOTE the todo of type
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '{',
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       color: Colors.black,
                                     ),
                           ),
-                        ),
-                        Text(
-                          '}',
-                          style:
-                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 25,
+                            ),
+                            child: Text(
+                              '"title": "${widget.readTodoList.values![valueIndex].title}",\n\n"due date": "${period!.year}/${period.month}/${period.day}"',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
                                     color: Colors.black,
                                   ),
-                        ),
-                      ],
-                    ),
-                  );
-                  return todoWidget;
-                },
-              ),
-              const SizedBox(height: 30),
-            ],
+                            ),
+                          ),
+                          Text(
+                            '}',
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: Colors.black,
+                                    ),
+                          ),
+                        ],
+                      ),
+                    );
+                    return todoWidget;
+                  },
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
 

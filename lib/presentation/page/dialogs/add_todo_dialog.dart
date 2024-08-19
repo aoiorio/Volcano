@@ -30,6 +30,7 @@ class AddTodoDialog extends ConsumerWidget {
     final addTodoStepCounter = ref.watch(addTodoStepCountProvider);
     final period = ref.watch(todoPeriodProvider);
     final todoPeriodSuffix = period.hour < 12 ? 'a.m.' : 'p.m.';
+    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
     final textWidgets = <Widget>[
@@ -84,7 +85,7 @@ class AddTodoDialog extends ConsumerWidget {
           CustomTextField(
             textEditingController:
                 postTodoControllerNotifier.titleTextController,
-            width: 280,
+            width: width * 0.72, // 280
             height: 80,
             addTitle: true,
             titleText: 'Title',
@@ -95,7 +96,7 @@ class AddTodoDialog extends ConsumerWidget {
           CustomTextField(
             textEditingController:
                 postTodoControllerNotifier.typeTextController,
-            width: 280,
+            width: width * 0.72, // 280
             height: 80,
             addTitle: true,
             titleText: 'Type',
@@ -155,10 +156,10 @@ class AddTodoDialog extends ConsumerWidget {
                   ).show(context);
                 },
                 child: Container(
-                  width: 280,
+                  width: width * 0.72,
                   height: 80,
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   decoration: BoxDecoration(
                     color: const Color(0xff343434),
                     borderRadius: BorderRadius.circular(30),
@@ -171,6 +172,7 @@ class AddTodoDialog extends ConsumerWidget {
                               color: Colors.white,
                             ),
                       ),
+                      const Spacer(),
                       Container(
                         width: 14,
                         height: 14,
@@ -226,7 +228,7 @@ class AddTodoDialog extends ConsumerWidget {
           const SizedBox(height: 30),
           Container(
             alignment: Alignment.center,
-            width: 400,
+            width: width * 0.72,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -241,7 +243,7 @@ class AddTodoDialog extends ConsumerWidget {
                   ),
                 ),
                 Container(
-                  width: 280,
+                  width: width * 0.72, // 280
                   height: 224,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -261,7 +263,7 @@ class AddTodoDialog extends ConsumerWidget {
                         bottom: 26,
                       ),
                       enabledBorder: InputBorder.none,
-                      hintText: 'type description\nhere...',
+                      hintText: 'type description here...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -285,7 +287,7 @@ class AddTodoDialog extends ConsumerWidget {
           const SizedBox(height: 30),
           Container(
             alignment: AlignmentDirectional.center,
-            width: 400,
+            width: width * 0.72,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -298,7 +300,7 @@ class AddTodoDialog extends ConsumerWidget {
                 ),
                 const SizedBox(height: 15),
                 SizedBox(
-                  width: 280,
+                  width: width * 0.72, // 280
                   height: 80,
                   child: CustomDropdown(
                     closedHeaderPadding: const EdgeInsets.all(30),

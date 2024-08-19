@@ -22,7 +22,12 @@ class ConfirmDialog extends ConsumerWidget {
     return Container(
       width: width / 1.5,
       height: height / 2,
-      margin: const EdgeInsets.only(right: 20, left: 20, top: 250, bottom: 250),
+      margin: EdgeInsets.only(
+        right: width >= 850 ? width * 0.3 : 20,
+        left: width >= 850 ? width * 0.3 : 20,
+        top: 250,
+        bottom: 250,
+      ),
       padding: const EdgeInsets.all(30),
       decoration: const BoxDecoration(
         color: Colors.white,

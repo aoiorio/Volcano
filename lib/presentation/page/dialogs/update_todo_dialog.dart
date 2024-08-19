@@ -32,13 +32,13 @@ class UpdateTodoDialog extends ConsumerWidget {
     final updateTodoStepCount = ref.watch(updateTodoStepCounterProvider);
     final period = ref.watch(updateTodoPeriodProvider);
     final todoPeriodSuffix = period.hour < 12 ? 'a.m.' : 'p.m.';
+    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
     final stepWidgets = <Widget>[
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // const Spacer(),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 5),
@@ -66,7 +66,7 @@ class UpdateTodoDialog extends ConsumerWidget {
           CustomTextField(
             textEditingController:
                 updateTodoControllerNotifier.titleTextController,
-            width: 280,
+            width: width * 0.72, // 280,
             height: 80,
             addTitle: true,
             titleText: 'Title',
@@ -78,7 +78,7 @@ class UpdateTodoDialog extends ConsumerWidget {
           CustomTextField(
             textEditingController:
                 updateTodoControllerNotifier.typeTextController,
-            width: 280,
+            width: width * 0.72,
             height: 80,
             addTitle: true,
             titleText: 'Type',
@@ -138,10 +138,10 @@ class UpdateTodoDialog extends ConsumerWidget {
                   ).show(context);
                 },
                 child: Container(
-                  width: 280,
+                  width: width * 0.72,
                   height: 80,
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   decoration: BoxDecoration(
                     color: const Color(0xff343434),
                     borderRadius: BorderRadius.circular(30),
@@ -154,6 +154,7 @@ class UpdateTodoDialog extends ConsumerWidget {
                               color: Colors.white,
                             ),
                       ),
+                      const Spacer(),
                       Container(
                         width: 14,
                         height: 14,
@@ -225,7 +226,7 @@ class UpdateTodoDialog extends ConsumerWidget {
                 ),
               ),
               Container(
-                width: 280,
+                width: width * 0.72, // 280
                 height: 224,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -268,7 +269,7 @@ class UpdateTodoDialog extends ConsumerWidget {
           const SizedBox(height: 30),
           Container(
             alignment: AlignmentDirectional.center,
-            width: 400,
+            width: width * 0.72,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -281,7 +282,7 @@ class UpdateTodoDialog extends ConsumerWidget {
                 ),
                 const SizedBox(height: 15),
                 SizedBox(
-                  width: 280,
+                  width: width * 0.72,
                   height: 80,
                   child: CustomDropdown(
                     closedHeaderPadding: const EdgeInsets.all(30),

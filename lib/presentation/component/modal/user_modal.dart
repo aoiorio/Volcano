@@ -131,7 +131,7 @@ class UserModal extends HookConsumerWidget {
                                   children: [
                                     Gap(10),
                                     ShimmerWidget(width: 200, height: 30),
-                                    Gap(50),
+                                    Gap(40),
                                     ShimmerWidget(
                                       width: 250,
                                       height: 55,
@@ -242,7 +242,7 @@ class UserModal extends HookConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: 260,
+                                width:  260,
                                 child: isEditing.value
                                     ? TextField(
                                         // NOTE focus automatically when pressed the button
@@ -332,7 +332,7 @@ class UserModal extends HookConsumerWidget {
                               ? const SizedBox()
                               : Column(
                                   children: [
-                                    const Gap(50),
+                                    const Gap(40),
                                     BouncedButton(
                                       onPress: () {
                                         HapticFeedback.lightImpact();
