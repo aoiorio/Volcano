@@ -97,21 +97,22 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
             ),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              highlightColor: Colors.transparent,
-              onPressed: () {
+        actions: const [
+          // NOTE filter feature
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 10),
+          //   child: IconButton(
+          //     highlightColor: Colors.transparent,
+          //     onPressed: () {
                 // TODO create filter feature here (pop up)
-                debugPrint('Click filter');
-              },
-              icon: const Icon(
-                Icons.tune,
-                size: 24,
-              ),
-            ),
-          ),
+          //       debugPrint('Click filter');
+          //     },
+          //     icon: const Icon(
+          //       Icons.tune,
+          //       size: 24,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       body: Stack(
