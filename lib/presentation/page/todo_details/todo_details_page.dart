@@ -104,7 +104,7 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
           //   child: IconButton(
           //     highlightColor: Colors.transparent,
           //     onPressed: () {
-                // TODO create filter feature here (pop up)
+          // TODO create filter feature here (pop up)
           //       debugPrint('Click filter');
           //     },
           //     icon: const Icon(
