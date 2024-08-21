@@ -12,7 +12,7 @@ import 'package:volcano/presentation/theme/theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp, //上向きを許可
+    DeviceOrientation.portraitUp, // NOTE allow orientation to up
   ]);
   runApp(
     ProviderScope(
