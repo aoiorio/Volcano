@@ -167,10 +167,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 gradient: LinearGradient(
                                   colors: [
                                     isListening
-                                        ? const Color.fromARGB(255, 124, 125, 141)
+                                        ? const Color.fromARGB(
+                                            255, 124, 125, 141)
                                         : const Color(0xff9596AE),
                                     isListening
-                                        ? const Color.fromARGB(255, 180, 166, 166)
+                                        ? const Color.fromARGB(
+                                            255, 180, 166, 166)
                                         : const Color(0xffCDBFBF),
                                   ],
                                   begin: Alignment.topLeft,
@@ -228,11 +230,11 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 return;
                               }
                               await speechToText.initialize();
-        
+
                               final hasPermission = await ref
                                   .watch(recordVoiceWithWaveControllerProvider)
                                   .checkPermission();
-        
+
                               if (speechToText.isListening || isListening) {
                                 ref
                                     .read(
@@ -380,8 +382,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                                     ),
                                             onPressed: () {
                                               // DONE go to today's todo page
-                                              goalInfo.getRight().fold(() => null,
-                                                  (goalInfoObject) {
+                                              goalInfo.getRight().fold(
+                                                  () => null, (goalInfoObject) {
                                                 context.push(
                                                   '/goal-todo-details',
                                                   extra: GoalType.today,
@@ -404,8 +406,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                                     ),
                                             onPressed: () {
                                               // DONE go to month's todo page
-                                              goalInfo.getRight().fold(() => null,
-                                                  (goalInfoObject) {
+                                              goalInfo.getRight().fold(
+                                                  () => null, (goalInfoObject) {
                                                 context.push(
                                                   '/goal-todo-details',
                                                   extra: GoalType.month,
@@ -470,7 +472,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                     // NOTE this shrinkWrap prevents the error of layout
                                     shrinkWrap: true,
                                     // NOTE this physics can allow to scroll the screen property
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, typeIndex) {
                                       final userTodo = todos
                                           .getRight()
