@@ -167,12 +167,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                 gradient: LinearGradient(
                                   colors: [
                                     isListening
-                                        ? const Color.fromARGB(
-                                            255, 124, 125, 141)
+                                        ? const Color(0xff7C7D8D)
                                         : const Color(0xff9596AE),
                                     isListening
-                                        ? const Color.fromARGB(
-                                            255, 180, 166, 166)
+                                        ? const Color(0xffB5A6A6)
                                         : const Color(0xffCDBFBF),
                                   ],
                                   begin: Alignment.topLeft,
