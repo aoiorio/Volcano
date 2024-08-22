@@ -70,6 +70,7 @@ dependencies:
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.0
+  flutter_native_splash: ^2.4.0
   flutter_test:
     sdk: flutter
   pedantic_mono: any
@@ -79,8 +80,23 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: 'assets/icon/volcano-icon-black.png'
+  image_path: 'assets/icon/volcano-icon-white.png'
   remove_alpha_ios: true
+
+# LINK - https://zenn.dev/susatthi/articles/20220406-061305-flutter-native-splash
+flutter_native_splash:
+  color: '#F1F1F1'
+  image: 'assets/splash/volcano-splash-picture.png'
+  color_dark: '#F1F1F1'
+  image_dark: 'assets/splash/volcano-splash-picture.png'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#F1F1F1'
+    image: 'assets/splash/volcano-splash-picture.png'
+    icon_background_color_dark: '#F1F1F1'
+    image_dark: 'assets/splash/volcano-splash-picture.png'
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
