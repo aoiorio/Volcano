@@ -346,9 +346,7 @@ class UserModal extends HookConsumerWidget {
                                               )
                                               .deleteAccessToken();
                                           if (context.mounted) {
-                                            context.pushReplacement(
-                                              '/sign-up',
-                                            );
+                                            context.pushReplacement('/sign-up');
                                           }
                                           showToastMessage(
                                             toast,
@@ -455,9 +453,7 @@ class UserModal extends HookConsumerWidget {
                                               )
                                               .deleteAccessToken();
                                           if (context.mounted) {
-                                            context.pushReplacement(
-                                              '/sign-up',
-                                            );
+                                            context.pushReplacement('/sign-up');
                                           }
                                           showToastMessage(
                                             toast,

@@ -72,7 +72,7 @@ class AuthExecuteSignInController extends _$AuthExecuteSignInController {
               ref.read(signUpConfirmPasswordStatusProvider.notifier).state =
                   false;
               // NOTE go to VolcanoPage
-              context.pushReplacement('/volcano');
+              context.pushReplacement('/');
             } else if (value.isLeft()) {
               value.getLeft().fold(() => null, (error) {
                 final errorMessage =
