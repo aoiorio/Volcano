@@ -263,7 +263,9 @@ class AddTodoDialog extends ConsumerWidget {
                         bottom: 26,
                       ),
                       enabledBorder: InputBorder.none,
-                      hintText: 'type description here...',
+                      hintText: MediaQuery.of(context).size.width >= 850
+                          ? 'type description here...'
+                          : 'type description\nhere...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),

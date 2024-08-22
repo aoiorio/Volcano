@@ -12,7 +12,9 @@ import 'package:record/record.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:volcano/presentation/importer/volcano_page_importer.dart';
+import 'package:volcano/presentation/page/dialogs/to_sign_in_dialog.dart';
 import 'package:volcano/presentation/page/tutorial/tutorial_page.dart';
+import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
 import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
 
 final isPushedVoiceButtonProvider = StateProvider<bool>((ref) {
@@ -63,8 +65,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final todos = ref.watch(todoControllerProvider);
     final speechToText = SpeechToText();
+
+    // NOTE riverpod providers
+    final todos = ref.watch(todoControllerProvider);
     final isListening =
         ref.watch(voiceRecognitionIsListeningControllerProvider);
     final recognizedText =
@@ -73,6 +77,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
         ref.watch(voiceRecognitionControllerProvider(speechToText).notifier);
     final goalInfo = ref.watch(goalInfoGetterProvider);
     final isPushedVoiceButton = ref.watch(isPushedVoiceButtonProvider);
+    final accessToken = ref.watch(authSharedPreferenceProvider);
+
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -85,6 +91,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
             highlightColor: Colors.transparent,
             icon: const Icon(Icons.face, size: 35, color: Color(0xff4C4C4C)),
             onPressed: () {
+              if (accessToken.isEmpty) {
+                showToSignInDialog(context);
+                return;
+              }
               // DONE show UserDialog
               showBarModalBottomSheet<void>(
                 shape: RoundedRectangleBorder(
@@ -205,6 +215,10 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                           ),
                           onPress: () async {
                             HapticFeedback.mediumImpact();
+                            if (accessToken.isEmpty) {
+                              showToSignInDialog(context);
+                              return;
+                            }
                             if (!isPushedVoiceButton) {
                               ref
                                   .read(isPushedVoiceButtonProvider.notifier)
@@ -293,195 +307,214 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                           ),
                         ),
                         onPress: () {
+                          if (accessToken.isEmpty) {
+                            showToSignInDialog(context);
+                            return;
+                          }
                           // DONE implement add todo from text feature! (go to AddTodoPage)
                           showAddTodoDialog(context, isAddingFromText: true);
                         },
                       ),
                     ),
                     // DONE add shimmer effects
-                    goalInfo.isLeft()
-                        ? SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.only(
-                              bottom: 20,
-                              right: 20,
-                              left: 20,
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 50),
-                                  child: ShimmerWidget(
-                                    width:
-                                        width >= 850 ? width / 2 : width * 0.86,
-                                    height: 220,
-                                    radius: 30,
-                                  ),
-                                ),
-                                const Gap(20),
-                                Container(
-                                  margin: const EdgeInsets.only(top: 50),
-                                  child: ShimmerWidget(
-                                    width:
-                                        width >= 850 ? width / 2 : width * 0.86,
-                                    height: 220,
-                                    radius: 30,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Column(
-                            children: [
-                              SingleChildScrollView(
-                                controller: pageController,
+                    accessToken.isEmpty
+                        ? const SizedBox()
+                        : goalInfo.isLeft()
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
                                 padding: const EdgeInsets.only(
                                   bottom: 20,
                                   right: 20,
                                   left: 20,
                                 ),
-                                scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children: [
-                                    GoalInfoCard(
-                                      goalString: "Today's Goal",
-                                      goalPercentage: goalInfo.getRight().fold(
-                                            () => 0.0,
-                                            (goalInfoObject) =>
-                                                goalInfoObject.todayGoal!
-                                                    .todayGoalPercentage ??
-                                                0.0,
-                                          ),
-                                      onPressed: () {
-                                        // DONE go to today's todo page
-                                        goalInfo.getRight().fold(() => null,
-                                            (goalInfoObject) {
-                                          context.push(
-                                            '/goal-todo-details',
-                                            extra: GoalType.today,
-                                          );
-                                        });
-                                      },
-                                      cardColorCode: 0xffAEADB9,
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 50),
+                                      child: ShimmerWidget(
+                                        width: width >= 850
+                                            ? width / 2
+                                            : width * 0.86,
+                                        height: 220,
+                                        radius: 30,
+                                      ),
                                     ),
-                                    const SizedBox(width: 20),
-                                    GoalInfoCard(
-                                      goalString: "Month's Goal",
-                                      goalPercentage: goalInfo.getRight().fold(
-                                            () => 0.0,
-                                            (goalInfoObject) =>
-                                                goalInfoObject.monthGoal!
-                                                    .monthGoalPercentage ??
-                                                0.0,
-                                          ),
-                                      onPressed: () {
-                                        // DONE go to month's todo page
-                                        goalInfo.getRight().fold(() => null,
-                                            (goalInfoObject) {
-                                          context.push(
-                                            '/goal-todo-details',
-                                            extra: GoalType.month,
-                                          );
-                                        });
-                                      },
-                                      cardColorCode: 0xffBCBCB4,
+                                    const Gap(20),
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 50),
+                                      child: ShimmerWidget(
+                                        width: width >= 850
+                                            ? width / 2
+                                            : width * 0.86,
+                                        height: 220,
+                                        radius: 30,
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              width >= 850
-                                  ? const SizedBox()
-                                  : SmoothPageIndicator(
-                                      controller: pageController,
-                                      count: 2,
-                                      effect: const WormEffect(
-                                        dotHeight: 8,
-                                        dotWidth: 30,
-                                        dotColor: Color(0xffD9D9d9),
-                                        activeDotColor: Colors.black,
-                                      ),
+                              )
+                            : Column(
+                                children: [
+                                  SingleChildScrollView(
+                                    controller: pageController,
+                                    padding: const EdgeInsets.only(
+                                      bottom: 20,
+                                      right: 20,
+                                      left: 20,
                                     ),
-                            ],
-                          ),
-                    const Gap(40),
-                    todos.isLeft() ||
-                            ref.watch(typeColorCodeControllerProvider).isLeft()
-                        // DONE add shimmer effect here!!
-                        ? Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(30),
-                                child: ShimmerWidget(
-                                  width: width,
-                                  height: 500,
-                                  radius: 30,
-                                ),
-                              ),
-                              const Gap(30),
-                              Container(
-                                padding: const EdgeInsets.all(30),
-                                child: ShimmerWidget(
-                                  width: width,
-                                  height: 500,
-                                  radius: 30,
-                                ),
-                              ),
-                            ],
-                          )
-                        : MediaQuery.removePadding(
-                            context: context,
-                            removeTop: true,
-                            child: ListView.builder(
-                              itemCount: ref
-                                  .watch(todoControllerProvider.notifier)
-                                  .typeCount,
-                              // NOTE this shrinkWrap prevents the error of layout
-                              shrinkWrap: true,
-                              // NOTE this physics can allow to scroll the screen property
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, typeIndex) {
-                                final userTodo =
-                                    todos.getRight().fold(() => null, (todo) {
-                                  return todo;
-                                });
-                                final playList = ref.watch(
-                                  playListProvider(
-                                    userTodo![typeIndex].type ?? '',
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        GoalInfoCard(
+                                          goalString: "Today's Goal",
+                                          goalPercentage:
+                                              goalInfo.getRight().fold(
+                                                    () => 0.0,
+                                                    (goalInfoObject) =>
+                                                        goalInfoObject
+                                                            .todayGoal!
+                                                            .todayGoalPercentage ??
+                                                        0.0,
+                                                  ),
+                                          onPressed: () {
+                                            // DONE go to today's todo page
+                                            goalInfo.getRight().fold(() => null,
+                                                (goalInfoObject) {
+                                              context.push(
+                                                '/goal-todo-details',
+                                                extra: GoalType.today,
+                                              );
+                                            });
+                                          },
+                                          cardColorCode: 0xffAEADB9,
+                                        ),
+                                        const SizedBox(width: 20),
+                                        GoalInfoCard(
+                                          goalString: "Month's Goal",
+                                          goalPercentage:
+                                              goalInfo.getRight().fold(
+                                                    () => 0.0,
+                                                    (goalInfoObject) =>
+                                                        goalInfoObject
+                                                            .monthGoal!
+                                                            .monthGoalPercentage ??
+                                                        0.0,
+                                                  ),
+                                          onPressed: () {
+                                            // DONE go to month's todo page
+                                            goalInfo.getRight().fold(() => null,
+                                                (goalInfoObject) {
+                                              context.push(
+                                                '/goal-todo-details',
+                                                extra: GoalType.month,
+                                              );
+                                            });
+                                          },
+                                          cardColorCode: 0xffBCBCB4,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                );
-                                final audioSource = ConcatenatingAudioSource(
-                                  // NOTE Specify the playlist items
-                                  children: playList
-                                      .map(
-                                        (e) => LockCachingAudioSource(
-                                          Uri.parse(
-                                            e,
+                                  width >= 850
+                                      ? const SizedBox()
+                                      : SmoothPageIndicator(
+                                          controller: pageController,
+                                          count: 2,
+                                          effect: const WormEffect(
+                                            dotHeight: 8,
+                                            dotWidth: 30,
+                                            dotColor: Color(0xffD9D9d9),
+                                            activeDotColor: Colors.black,
                                           ),
                                         ),
-                                      )
-                                      .toList(),
-                                );
-                                // NOTE this is how to create hex color code by using the value from db
-                                final typeColorCodeObject = ref
-                                    .watch(
-                                      typeColorCodeControllerProvider.notifier,
-                                    )
-                                    .findTypeFromColorList(
-                                      userTodo[typeIndex].type ?? '',
+                                ],
+                              ),
+                    const Gap(40),
+                    accessToken.isEmpty
+                        ? const SizedBox()
+                        : todos.isLeft() ||
+                                ref
+                                    .watch(typeColorCodeControllerProvider)
+                                    .isLeft()
+                            // DONE add shimmer effect here!!
+                            ? Column(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(30),
+                                    child: ShimmerWidget(
+                                      width: width,
+                                      height: 500,
+                                      radius: 30,
+                                    ),
+                                  ),
+                                  const Gap(30),
+                                  Container(
+                                    padding: const EdgeInsets.all(30),
+                                    child: ShimmerWidget(
+                                      width: width,
+                                      height: 500,
+                                      radius: 30,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : MediaQuery.removePadding(
+                                context: context,
+                                removeTop: true,
+                                child: ListView.builder(
+                                  itemCount: ref
+                                      .watch(todoControllerProvider.notifier)
+                                      .typeCount,
+                                  // NOTE this shrinkWrap prevents the error of layout
+                                  shrinkWrap: true,
+                                  // NOTE this physics can allow to scroll the screen property
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, typeIndex) {
+                                    final userTodo = todos
+                                        .getRight()
+                                        .fold(() => null, (todo) {
+                                      return todo;
+                                    });
+                                    final playList = ref.watch(
+                                      playListProvider(
+                                        userTodo![typeIndex].type ?? '',
+                                      ),
                                     );
-                                return TodoListCard(
-                                  startColorCode: int.parse(
-                                    typeColorCodeObject.startColorCode,
-                                  ),
-                                  endColorCode: int.parse(
-                                    typeColorCodeObject.endColorCode,
-                                  ),
-                                  readTodoList: userTodo[typeIndex],
-                                  audioSource: audioSource,
-                                );
-                              },
-                            ),
-                          ),
+                                    final audioSource =
+                                        ConcatenatingAudioSource(
+                                      // NOTE Specify the playlist items
+                                      children: playList
+                                          .map(
+                                            (e) => LockCachingAudioSource(
+                                              Uri.parse(
+                                                e,
+                                              ),
+                                            ),
+                                          )
+                                          .toList(),
+                                    );
+                                    // NOTE this is how to create hex color code by using the value from db
+                                    final typeColorCodeObject = ref
+                                        .watch(
+                                          typeColorCodeControllerProvider
+                                              .notifier,
+                                        )
+                                        .findTypeFromColorList(
+                                          userTodo[typeIndex].type ?? '',
+                                        );
+                                    return TodoListCard(
+                                      startColorCode: int.parse(
+                                        typeColorCodeObject.startColorCode,
+                                      ),
+                                      endColorCode: int.parse(
+                                        typeColorCodeObject.endColorCode,
+                                      ),
+                                      readTodoList: userTodo[typeIndex],
+                                      audioSource: audioSource,
+                                    );
+                                  },
+                                ),
+                              ),
                   ],
                 ),
               ),

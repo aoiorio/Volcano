@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/errors.dart';
@@ -60,16 +61,21 @@ class TodoController extends _$TodoController {
     }
 
     state.getRight().fold(() => null, (readTodoList) {
-      final typeIndex =
+      var typeIndex =
           readTodoList.indexWhere((element) => element.type == todo.type);
+      // TODO fix the bug of changing type, I can add previous type before changing
       if (typeIndex == -1) {
-        return;
+        // NOTE if the type doesn't exist
+        readTodoList.add(ReadTodoDTO(type: todo.type, values: [todo]));
+        typeIndex = readTodoList.length - 1;
       }
       final todoIndex = readTodoList[typeIndex]
           .values!
           .indexWhere((element) => element.todoId == todo.todoId);
 
       if (todoIndex == -1) {
+        debugPrint('todo index is -1');
+        // NOTE miss match
         return;
       }
       readTodoList[typeIndex].values![todoIndex] = todo;

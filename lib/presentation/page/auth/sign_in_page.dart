@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
 import 'package:volcano/presentation/component/global/white_main_button.dart';
@@ -63,12 +64,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 120),
-          const Center(
-            child: Image(
-              image: AssetImage('assets/images/volcano_logo.png'),
-              width: 250,
-              fit: BoxFit.cover,
-            ),
+          Center(
+            child: Assets.images.volcanoLogo.image(width: 250),
           ),
           Padding(
             padding: const EdgeInsets.all(70),

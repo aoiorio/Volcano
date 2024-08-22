@@ -26,6 +26,14 @@ class $AssetsImagesGen {
   SvgGenImage get todoDetailsRectangle =>
       const SvgGenImage('assets/images/todo-details-rectangle.svg');
 
+  /// File path: assets/images/unlock-picture.png
+  AssetGenImage get unlockPicture =>
+      const AssetGenImage('assets/images/unlock-picture.png');
+
+  /// File path: assets/images/volcano-logo.png
+  AssetGenImage get volcanoLogo =>
+      const AssetGenImage('assets/images/volcano-logo.png');
+
   /// File path: assets/images/volcano-page-shape.svg
   SvgGenImage get volcanoPageShape =>
       const SvgGenImage('assets/images/volcano-page-shape.svg');
@@ -34,18 +42,15 @@ class $AssetsImagesGen {
   AssetGenImage get volcanoPerson =>
       const AssetGenImage('assets/images/volcano-person.PNG');
 
-  /// File path: assets/images/volcano_logo.png
-  AssetGenImage get volcanoLogo =>
-      const AssetGenImage('assets/images/volcano_logo.png');
-
   /// List of all assets
   List<dynamic> get values => [
         arrowBlack,
         penIcon,
         todoDetailsRectangle,
+        unlockPicture,
+        volcanoLogo,
         volcanoPageShape,
-        volcanoPerson,
-        volcanoLogo
+        volcanoPerson
       ];
 }
 

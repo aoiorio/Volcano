@@ -28,6 +28,10 @@ class GoalInfoGetter extends _$GoalInfoGetter {
         });
       } else if (value.isLeft()) {
         state = Either.left(BackEndError(statusCode: 404));
+        // NOTE for avoiding the message, if the token is empty
+        if (ref.read(authSharedPreferenceProvider).isEmpty) {
+          return;
+        }
         // do something here
         showToastMessage(
           toast,
