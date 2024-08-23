@@ -6,21 +6,25 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 
-class ToSignInDialog extends HookConsumerWidget {
-  const ToSignInDialog({super.key});
+class ToSignUpDialog extends HookConsumerWidget {
+  const ToSignUpDialog({
+    super.key,
+    required this.messageToShow,
+  });
+
+  final String messageToShow;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
     return Container(
-      width: width / 1.5,
-      height: height / 2,
+      constraints: BoxConstraints(minWidth: width / 1.5, minHeight: height / 2),
       margin: EdgeInsets.only(
         right: width >= 850 ? width * 0.3 : 20,
         left: width >= 850 ? width * 0.3 : 20,
-        top: 200,
-        bottom: 200,
+        top: 190,
+        bottom: 190,
       ),
       padding: const EdgeInsets.all(30),
       decoration: const BoxDecoration(
@@ -36,7 +40,7 @@ class ToSignInDialog extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '"You have to SIGN IN to unlock all features!"',
+            '"$messageToShow"',
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -74,13 +78,17 @@ class ToSignInDialog extends HookConsumerWidget {
   }
 }
 
-void showToSignInDialog(
-  BuildContext context,
-) {
+void showToSignUpDialog(
+  BuildContext context, {
+  // NOTE optional parameter of this function messageToShow
+  String messageToShow = 'You have to SIGN IN to unlock all features!',
+}) {
   showDialog<void>(
     context: context,
     builder: (_) {
-      return const ToSignInDialog();
+      return ToSignUpDialog(
+        messageToShow: messageToShow,
+      );
     },
   );
 }

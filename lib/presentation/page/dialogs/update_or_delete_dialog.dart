@@ -1,8 +1,9 @@
-// TODO create the dialog of choosing delete todo or updating todo here
+// DONE create the dialog of choosing delete todo or updating todo here
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
@@ -60,7 +61,7 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
                   icon: const Icon(Icons.close),
                 ),
               ),
-              const SizedBox(height: 15),
+              Gap(width >= 850 ? 40 : 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
