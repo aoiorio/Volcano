@@ -214,7 +214,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           ),
                           onPressed: () {
                             final url = Uri.parse(
-                                'https://docs.google.com/document/d/1uKpCKA9RL0uzrGP-rYF73r-5aEzHC5CwDuHY6lPz6HI/edit?usp=sharing');
+                              'https://docs.google.com/document/d/1uKpCKA9RL0uzrGP-rYF73r-5aEzHC5CwDuHY6lPz6HI/edit?usp=sharing',
+                            );
                             launchUrl(url);
                           },
                         ),
@@ -237,7 +238,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           ),
                           onPressed: () {
                             final url = Uri.parse(
-                                'https://docs.google.com/document/d/1rk6X3S28Ipwg5WGq69ESrUicFqL2biR0fcqXglfgcX0/edit?usp=sharing');
+                              'https://docs.google.com/document/d/1rk6X3S28Ipwg5WGq69ESrUicFqL2biR0fcqXglfgcX0/edit?usp=sharing',
+                            );
                             launchUrl(url);
                           },
                         ),

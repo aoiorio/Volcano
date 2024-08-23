@@ -34,9 +34,11 @@ class GetUserInfoController extends _$GetUserInfoController {
           // done make a dialog to move to sign in page and show it here
           if (error.statusCode == null || error.statusCode == 404) {
             // NOTE if the user access token is expired or something went wrong, I'll show you this dialog to go to sign up page
-            showToSignUpDialog(context,
-                messageToShow:
-                    'Something went wrong, please connect the wifi or sign in again.');
+            showToSignUpDialog(
+              context,
+              messageToShow:
+                  'Something went wrong, please connect the wifi or sign in again.',
+            );
             return;
           }
           showToastMessage(

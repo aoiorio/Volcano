@@ -61,7 +61,7 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
                   icon: const Icon(Icons.close),
                 ),
               ),
-              Gap(width >= 850 ? 40: 15),
+              Gap(width >= 850 ? 40 : 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
