@@ -2,6 +2,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -188,7 +189,7 @@ class AddTodoDialog extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 36),
+          SizedBox(height: width >= 850 ? height * 0.08 : 36),
           WhiteMainButton(
             titleWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -285,7 +286,6 @@ class AddTodoDialog extends ConsumerWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 30),
           Container(
             alignment: AlignmentDirectional.center,
@@ -348,8 +348,7 @@ class AddTodoDialog extends ConsumerWidget {
               ],
             ),
           ),
-          // const Spacer(),
-          const SizedBox(height: 36),
+          SizedBox(height: width >= 850 ? height * 0.08 : 36),
           WhiteMainButton(
             titleWidget: Text(
               '"Add TODO"',
