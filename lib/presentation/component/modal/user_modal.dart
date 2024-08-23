@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/confirm_dialog.dart';
@@ -49,7 +50,7 @@ class UserModal extends HookConsumerWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ref
               .read(getUserInfoControllerProvider.notifier)
-              .executeGetUserInfo(toast: toast);
+              .executeGetUserInfo(toast: toast, context: context);
         });
         toast.init(context);
         return;
@@ -112,10 +113,14 @@ class UserModal extends HookConsumerWidget {
                                 height: 40,
                               ),
                               Gap(30),
-                              ShimmerWidget(
-                                width: 50,
-                                height: 50,
-                                radius: 15,
+                              Row(
+                                children: [
+                                  ShimmerWidget(
+                                    width: 50,
+                                    height: 50,
+                                    radius: 15,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -126,22 +131,32 @@ class UserModal extends HookConsumerWidget {
                                     ShimmerWidget(width: 200, height: 30),
                                   ],
                                 )
-                              : const Column(
+                              : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Gap(10),
-                                    ShimmerWidget(width: 200, height: 30),
-                                    Gap(40),
-                                    ShimmerWidget(
+                                    const Gap(10),
+                                    const ShimmerWidget(width: 200, height: 30),
+                                    const Gap(40),
+                                    const ShimmerWidget(
                                       width: 250,
                                       height: 55,
                                       radius: 20,
                                     ),
-                                    Gap(30),
-                                    ShimmerWidget(
-                                      width: 250,
-                                      height: 55,
-                                      radius: 20,
+                                    const Gap(30),
+                                    Row(
+                                      children: [
+                                        const ShimmerWidget(
+                                          width: 250,
+                                          height: 55,
+                                          radius: 20,
+                                        ),
+                                        Gap(width * 0.1),
+                                        const ShimmerWidget(
+                                          width: 50,
+                                          height: 50,
+                                          radius: 15,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -152,6 +167,7 @@ class UserModal extends HookConsumerWidget {
                               children: [
                                 Gap(100),
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Gap(50),
                                     ShimmerWidget(
@@ -160,10 +176,20 @@ class UserModal extends HookConsumerWidget {
                                       radius: 20,
                                     ),
                                     Gap(30),
-                                    ShimmerWidget(
-                                      width: 250,
-                                      height: 55,
-                                      radius: 20,
+                                    Row(
+                                      children: [
+                                        ShimmerWidget(
+                                          width: 250,
+                                          height: 55,
+                                          radius: 20,
+                                        ),
+                                        Gap(30),
+                                        ShimmerWidget(
+                                          width: 50,
+                                          height: 50,
+                                          radius: 15,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -331,6 +357,7 @@ class UserModal extends HookConsumerWidget {
                           MediaQuery.of(context).size.width >= 850
                               ? const SizedBox()
                               : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Gap(40),
                                     BouncedButton(
@@ -385,49 +412,74 @@ class UserModal extends HookConsumerWidget {
                                       ),
                                     ),
                                     const Gap(30),
-                                    BouncedButton(
-                                      onPress: () {
-                                        HapticFeedback.lightImpact();
-                                        showConfirmDialog(context,
-                                            'Do you really\nwant to DELETE?',
-                                            () {
-                                          ref
-                                              .read(
-                                                deleteUserControllerProvider
-                                                    .notifier,
-                                              )
-                                              .executeDeleteUser(toast);
-                                          context.pushReplacement('/sign-up');
-                                        }, () {
-                                          context.pop();
-                                        });
-                                      },
-                                      child: Container(
-                                        width: 250,
-                                        height: 55,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Colors.black,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '"Delete Account"',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
+                                    Row(
+                                      children: [
+                                        BouncedButton(
+                                          onPress: () {
+                                            HapticFeedback.lightImpact();
+                                            showConfirmDialog(context,
+                                                'Do you really\nwant to DELETE?',
+                                                () {
+                                              ref
+                                                  .read(
+                                                    deleteUserControllerProvider
+                                                        .notifier,
+                                                  )
+                                                  .executeDeleteUser(toast);
+                                              context
+                                                  .pushReplacement('/sign-up');
+                                            }, () {
+                                              context.pop();
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 250,
+                                            height: 55,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.black,
                                             ),
-                                            const Gap(10),
-                                            const Icon(
-                                              Icons.delete,
-                                              color: Colors.white,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '"Delete Account"',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                                const Gap(10),
+                                                const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                        Gap(width * 0.1),
+                                        BouncedButton(
+                                          child: Container(
+                                            width: 50,
+                                            height: 50,
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              color: const Color(0xff68686D),
+                                            ),
+                                            child: Assets.images.flagIcon.svg(),
+                                          ),
+                                          onPress: () {
+                                            final url = Uri.parse(
+                                              'https://forms.gle/dTYbKZqEWT5k8Bpk8',
+                                            );
+                                            launchUrl(url);
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -438,6 +490,7 @@ class UserModal extends HookConsumerWidget {
                               children: [
                                 const Gap(100),
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Gap(50),
                                     BouncedButton(
@@ -492,49 +545,74 @@ class UserModal extends HookConsumerWidget {
                                       ),
                                     ),
                                     const Gap(30),
-                                    BouncedButton(
-                                      onPress: () {
-                                        HapticFeedback.lightImpact();
-                                        showConfirmDialog(context,
-                                            'Do you really\nwant to DELETE?',
-                                            () {
-                                          ref
-                                              .read(
-                                                deleteUserControllerProvider
-                                                    .notifier,
-                                              )
-                                              .executeDeleteUser(toast);
-                                          context.pushReplacement('/sign-up');
-                                        }, () {
-                                          context.pop();
-                                        });
-                                      },
-                                      child: Container(
-                                        width: 250,
-                                        height: 55,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Colors.black,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '"Delete Account"',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
+                                    Row(
+                                      children: [
+                                        BouncedButton(
+                                          onPress: () {
+                                            HapticFeedback.lightImpact();
+                                            showConfirmDialog(context,
+                                                'Do you really\nwant to DELETE?',
+                                                () {
+                                              ref
+                                                  .read(
+                                                    deleteUserControllerProvider
+                                                        .notifier,
+                                                  )
+                                                  .executeDeleteUser(toast);
+                                              context
+                                                  .pushReplacement('/sign-up');
+                                            }, () {
+                                              context.pop();
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 250,
+                                            height: 55,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.black,
                                             ),
-                                            const Gap(10),
-                                            const Icon(
-                                              Icons.delete,
-                                              color: Colors.white,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '"Delete Account"',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                                const Gap(10),
+                                                const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                        const Gap(30),
+                                        BouncedButton(
+                                          child: Container(
+                                            width: 50,
+                                            height: 50,
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              color: const Color(0xff68686D),
+                                            ),
+                                            child: Assets.images.flagIcon.svg(),
+                                          ),
+                                          onPress: () {
+                                            final url = Uri.parse(
+                                              'https://forms.gle/dTYbKZqEWT5k8Bpk8',
+                                            );
+                                            launchUrl(url);
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

@@ -188,7 +188,7 @@ class AddTodoDialog extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 36),
+          SizedBox(height: width >= 850 ? height * 0.08 : 36),
           WhiteMainButton(
             titleWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -285,7 +285,6 @@ class AddTodoDialog extends ConsumerWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 30),
           Container(
             alignment: AlignmentDirectional.center,
@@ -348,8 +347,7 @@ class AddTodoDialog extends ConsumerWidget {
               ],
             ),
           ),
-          // const Spacer(),
-          const SizedBox(height: 36),
+          SizedBox(height: width >= 850 ? height * 0.08 : 36),
           WhiteMainButton(
             titleWidget: Text(
               '"Add TODO"',

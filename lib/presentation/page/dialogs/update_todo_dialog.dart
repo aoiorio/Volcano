@@ -169,7 +169,7 @@ class UpdateTodoDialog extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 50),
+          SizedBox(height: width >= 850 ? height * 0.08 : 50),
           WhiteMainButton(
             titleWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -264,7 +264,6 @@ class UpdateTodoDialog extends ConsumerWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 30),
           Container(
             alignment: AlignmentDirectional.center,
@@ -327,9 +326,7 @@ class UpdateTodoDialog extends ConsumerWidget {
               ],
             ),
           ),
-
-          // const Spacer(),
-          const SizedBox(height: 55),
+          SizedBox(height: width >= 850 ? height * 0.08 : 55),
           WhiteMainButton(
             titleWidget: Text(
               '"Update TODO"',

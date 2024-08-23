@@ -12,7 +12,7 @@ import 'package:record/record.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:volcano/presentation/importer/volcano_page_importer.dart';
-import 'package:volcano/presentation/page/dialogs/to_sign_in_dialog.dart';
+import 'package:volcano/presentation/page/dialogs/to_sign_up_dialog.dart';
 import 'package:volcano/presentation/page/tutorial/tutorial_page.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
 import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
@@ -92,7 +92,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
             icon: const Icon(Icons.face, size: 35, color: Color(0xff4C4C4C)),
             onPressed: () {
               if (accessToken.isEmpty) {
-                showToSignInDialog(context);
+                showToSignUpDialog(context);
                 return;
               }
               // DONE show UserDialog
@@ -218,10 +218,12 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                             onPress: () async {
                               HapticFeedback.mediumImpact();
                               if (accessToken.isEmpty) {
-                                showToSignInDialog(context);
+                                showToSignUpDialog(context);
                                 return;
                               }
-                              if (!isPushedVoiceButton) {
+                              // NOTE if user is not done with tutorial and has never pushed voice button, I'll show you tutorial dialog
+                              if (!isPushedVoiceButton &&
+                                  !ref.read(isDoneTutorialProvider)) {
                                 ref
                                     .read(isPushedVoiceButtonProvider.notifier)
                                     .state = true;
@@ -310,7 +312,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                           ),
                           onPress: () {
                             if (accessToken.isEmpty) {
-                              showToSignInDialog(context);
+                              showToSignUpDialog(context);
                               return;
                             }
                             // DONE implement add todo from text feature! (go to AddTodoPage)
