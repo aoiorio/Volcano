@@ -66,6 +66,7 @@ dependencies:
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
   speech_to_text: ^6.6.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
