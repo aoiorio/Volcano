@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
 import 'package:volcano/presentation/component/global/custom_toast.dart';
@@ -188,6 +189,59 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         context.push('/sign-in');
                         debugPrint('Hi SignIn');
                       },
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    child: Row(
+                      children: [
+                        TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            elevation: MaterialStateProperty.all(0),
+                            splashFactory: NoSplash.splashFactory,
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          child: const Text(
+                            'Privacy Policy',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {
+                            final url = Uri.parse(
+                                'https://docs.google.com/document/d/1uKpCKA9RL0uzrGP-rYF73r-5aEzHC5CwDuHY6lPz6HI/edit?usp=sharing');
+                            launchUrl(url);
+                          },
+                        ),
+                        TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            elevation: MaterialStateProperty.all(0),
+                            splashFactory: NoSplash.splashFactory,
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          child: const Text(
+                            'Terms of Service',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {
+                            final url = Uri.parse(
+                                'https://docs.google.com/document/d/1rk6X3S28Ipwg5WGq69ESrUicFqL2biR0fcqXglfgcX0/edit?usp=sharing');
+                            launchUrl(url);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
