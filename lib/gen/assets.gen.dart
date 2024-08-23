@@ -19,6 +19,9 @@ class $AssetsImagesGen {
   SvgGenImage get arrowBlack =>
       const SvgGenImage('assets/images/arrow-black.svg');
 
+  /// File path: assets/images/flag-icon.svg
+  SvgGenImage get flagIcon => const SvgGenImage('assets/images/flag-icon.svg');
+
   /// File path: assets/images/pen-icon.svg
   SvgGenImage get penIcon => const SvgGenImage('assets/images/pen-icon.svg');
 
@@ -45,6 +48,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
         arrowBlack,
+        flagIcon,
         penIcon,
         todoDetailsRectangle,
         unlockPicture,
