@@ -7,11 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/config.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
-import 'package:volcano/presentation/component/global/custom_toast.dart';
+import 'package:volcano/presentation/importer/volcano_page_importer.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
-import 'package:volcano/presentation/provider/back/todo/controller/todo_controller.dart';
 import 'package:volcano/presentation/provider/back/todo/providers.dart';
-import 'package:volcano/presentation/provider/front/todo/record_voice/record_voice_with_wave.dart';
 import 'package:volcano/presentation/provider/front/todo/reset_values.dart';
 import 'package:volcano/presentation/provider/global/progress_controller.dart';
 
@@ -87,6 +85,9 @@ class PostTodoController extends _$PostTodoController {
               });
               // NOTE get the latest info of todo
               ref.read(todoControllerProvider.notifier).executeReadTodo();
+              ref
+                  .read(goalInfoGetterProvider.notifier)
+                  .executeGetGoalInfo(toast: toast);
             }
 
             // NOTE delete all of data
@@ -141,6 +142,9 @@ class PostTodoController extends _$PostTodoController {
                     );
                 // NOTE get the latest info of todo
                 ref.read(todoControllerProvider.notifier).executeReadTodo();
+                ref
+                    .read(goalInfoGetterProvider.notifier)
+                    .executeGetGoalInfo(toast: toast);
               });
               showToastMessage(toast, '💡 TODO Added', ToastWidgetKind.success);
             } else {
