@@ -36,6 +36,7 @@ class MyApp extends ConsumerWidget {
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,
       routeInformationProvider: goRouter.routeInformationProvider,
+      debugShowCheckedModeBanner: false,
       title: 'Volcano',
       theme: createTheme(),
       builder: (context, child) {
