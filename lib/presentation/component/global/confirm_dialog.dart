@@ -23,10 +23,10 @@ class ConfirmDialog extends ConsumerWidget {
       width: width / 1.5,
       height: height / 2,
       margin: EdgeInsets.only(
-        right: width >= 850 ? width * 0.3 : 20,
-        left: width >= 850 ? width * 0.3 : 20,
-        top: 250,
-        bottom: 250,
+        right: width >= 800 ? width * 0.3 : 20,
+        left: width >= 800 ? width * 0.3 : 20,
+        top: width >= 800 && width <= 850 ? height * 0.35 : 250, // 250
+        bottom: width >= 800 && width <= 850 ? height * 0.35 : 250,
       ),
       padding: const EdgeInsets.all(30),
       decoration: const BoxDecoration(

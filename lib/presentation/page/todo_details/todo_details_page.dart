@@ -117,7 +117,7 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
       ),
       body: Stack(
         children: [
-          MediaQuery.of(context).size.width >= 850
+          MediaQuery.of(context).size.width >= 800
               ? ClipPath(
                   clipper: OvalBottomBorderClipper(),
                   child: Container(

@@ -44,6 +44,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     final authExecuteSignUpMethodsControllerNotifier =
         ref.watch(authExecuteSignUpControllerProvider.notifier);
 
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -51,11 +54,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 120),
+            SizedBox(
+              height: width >= 800 && width <= 850 ? height * 0.15 : 120,
+            ),
             Center(
               child: Assets.images.volcanoLogo.image(width: 250),
             ),
-            const SizedBox(height: 70),
+            SizedBox(height: width >= 800 && width <= 850 ? height * 0.15 : 70),
             Expanded(
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,
@@ -123,7 +128,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ),
                   ),
                   Positioned(
-                    bottom: 100,
+                    bottom: width >= 800 && width <= 850 ? height * 0.17 : 100,
                     child: WhiteMainButton(
                       onPress: () async {
                         HapticFeedback.mediumImpact();
@@ -169,7 +174,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ),
                   ),
                   Positioned(
-                    bottom: 50,
+                    bottom: width >= 800 && width <= 850 ? height * 0.12 : 50,
                     child: BouncedButton(
                       child: Row(
                         children: [
