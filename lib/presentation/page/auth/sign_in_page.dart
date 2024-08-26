@@ -74,7 +74,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             child: Assets.images.volcanoLogo.image(width: 250),
           ),
           Padding(
-            padding:  EdgeInsets.all( width >= 800 && width <= 850 ? height * 0.1 :70),
+            padding: EdgeInsets.all(
+              width >= 800 && width <= 850 ? height * 0.1 : 70,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

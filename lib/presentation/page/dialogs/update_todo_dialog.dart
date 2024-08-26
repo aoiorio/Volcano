@@ -396,7 +396,7 @@ class UpdateTodoDialog extends ConsumerWidget {
       child: Container(
         height: 100,
         width: 100,
-        margin:  EdgeInsets.only(
+        margin: EdgeInsets.only(
           right: 30,
           left: 30,
           top: 800 <= width && width <= 850 ? 200 : 20,

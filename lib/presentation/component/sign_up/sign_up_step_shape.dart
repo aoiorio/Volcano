@@ -138,7 +138,7 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
             ),
           ),
           Positioned(
-            bottom: width >= 800 && width <= 850 ? height * 0.1: 90,
+            bottom: width >= 800 && width <= 850 ? height * 0.1 : 90,
             child: WhiteMainButton(
               titleWidget: Text(
                 ref.watch(signUpStepCounterProvider) == 2
