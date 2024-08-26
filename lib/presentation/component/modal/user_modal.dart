@@ -40,7 +40,6 @@ class UserModal extends HookConsumerWidget {
         .getRight()
         .fold(() => null, (userInfo) => userInfo);
     final toast = FToast();
-    // final isEditing = ref.watch(isEditingProvider);
     final isEditing = useState(false);
     final usernameTextEditingController =
         ref.watch(usernameTextEditingControllerProvider);

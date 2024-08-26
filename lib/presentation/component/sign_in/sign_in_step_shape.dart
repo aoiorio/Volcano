@@ -121,7 +121,7 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
             ),
           ),
           Positioned(
-            top: 385,
+            bottom: width >= 800 && width <= 850 ? height * 0.1: 90,
             child: WhiteMainButton(
               titleWidget: Text(
                 signInStepCounter == 1 ? '"Finish"' : '"Next"',
@@ -131,8 +131,6 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              //signInStepCounter == 1 ? '"Finish"' : '"Next"',
-              // widget.hintString.contains('confirm') ? '"Finish"' : '"Next"',
               onPress: () {
                 HapticFeedback.mediumImpact();
                 signInStepCounter == 1

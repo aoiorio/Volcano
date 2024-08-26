@@ -128,7 +128,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                           : ref.watch(isDoneTutorialProvider)
                               ? 1
                               : 0.6,
-                  child: width >= 850
+                  child: width >= 800
                       ? ClipPath(
                           clipper: OvalBottomBorderClipper(),
                           child: Container(
@@ -158,7 +158,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 50),
                         child: SizedBox(
-                          width: width >= 850 ? width / 2 : width * 0.8, // 320,
+                          width: width >= 800 ? width / 2 : width * 0.8, // 320,
                           height: 300,
                           child: BouncedButton(
                             child: DecoratedBox(
@@ -285,7 +285,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                       ),
                       const Gap(50),
                       SizedBox(
-                        width: width >= 850 ? width / 2 : width * 0.85, // 340
+                        width: width >= 800 ? width / 2 : width * 0.85, // 340
                         height: 80,
                         child: BouncedButton(
                           child: DecoratedBox(
@@ -336,7 +336,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                       Container(
                                         margin: const EdgeInsets.only(top: 50),
                                         child: ShimmerWidget(
-                                          width: width >= 850
+                                          width: width >= 800
                                               ? width / 2
                                               : width * 0.86,
                                           height: 220,
@@ -347,7 +347,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                       Container(
                                         margin: const EdgeInsets.only(top: 50),
                                         child: ShimmerWidget(
-                                          width: width >= 850
+                                          width: width >= 800
                                               ? width / 2
                                               : width * 0.86,
                                           height: 220,
@@ -419,7 +419,7 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
                                         ],
                                       ),
                                     ),
-                                    width >= 850
+                                    width >= 800
                                         ? const SizedBox()
                                         : SmoothPageIndicator(
                                             controller: pageController,

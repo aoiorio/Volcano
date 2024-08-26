@@ -30,10 +30,10 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
       width: 340,
       height: 34,
       margin: EdgeInsets.only(
-        right: width >= 850 ? width * 0.3 : 30,
-        left: width >= 850 ? width * 0.3 : 30,
-        top: 210,
-        bottom: 210,
+        right: width >= 800 ? width * 0.3 : 30,
+        left: width >= 800 ? width * 0.3 : 30,
+        top: width >= 800 && width <= 850 ? 380 : 210,
+        bottom: width >= 800 && width <= 850 ? 380 : 210,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -61,7 +61,7 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
                   icon: const Icon(Icons.close),
                 ),
               ),
-              Gap(width >= 850 ? 40 : 15),
+              Gap(width >= 800 ? 40 : 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

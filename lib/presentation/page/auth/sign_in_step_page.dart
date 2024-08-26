@@ -32,6 +32,8 @@ class SignInStepPage extends ConsumerWidget {
         textEditingControllerType: TextEditingControllerType.password,
       ),
     ];
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -66,9 +68,9 @@ class SignInStepPage extends ConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(
-              height: 150,
-            ),
+            SizedBox(
+              height: width >= 800 && width <= 850 ? height * 0.15 : 150,
+            ), // 150
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -110,7 +112,9 @@ class SignInStepPage extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 80),
+            SizedBox(
+              height: width >= 800 && width <= 850 ? height * 0.15 : 80,
+            ),
             // NOTE show page
             stepPages[stepCount],
           ],

@@ -74,7 +74,7 @@ class TutorialPage extends HookConsumerWidget {
               // DONE I think I can separate it with two patterns like ipad or pc and iphone
               child: Container(
                 height: MediaQuery.of(context).size.height / 2 + 50,
-                width: width >= 850 ? width - 100 : width / 2 + 130,
+                width: width >= 800 ? width - 100 : width / 2 + 130,
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
