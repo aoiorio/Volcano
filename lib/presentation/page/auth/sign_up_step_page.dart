@@ -42,6 +42,9 @@ class SignUpStepPage extends ConsumerWidget {
       ),
     ];
 
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       // NOTE it means that when I show up keyboard, the widgets won't move
       // resizeToAvoidBottomInset: false,
@@ -78,9 +81,9 @@ class SignUpStepPage extends ConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(
-              height: 150,
-            ),
+            SizedBox(
+              height: width >= 800 && width <= 850 ? height * 0.15 : 150,
+            ), // 150
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -140,7 +143,9 @@ class SignUpStepPage extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 80),
+            SizedBox(
+              height: width >= 800 && width <= 850 ? height * 0.15 : 80,
+            ),
             // NOTE show page
             stepPages[stepCount],
           ],

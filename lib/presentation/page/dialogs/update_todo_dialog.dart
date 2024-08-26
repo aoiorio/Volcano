@@ -169,7 +169,13 @@ class UpdateTodoDialog extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: width >= 850 ? height * 0.08 : 50),
+          SizedBox(
+            height: width >= 800 && width <= 850
+                ? height * 0.05
+                : width >= 850
+                    ? height * 0.08
+                    : 36,
+          ),
           WhiteMainButton(
             titleWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -326,7 +332,13 @@ class UpdateTodoDialog extends ConsumerWidget {
               ],
             ),
           ),
-          SizedBox(height: width >= 850 ? height * 0.08 : 55),
+          SizedBox(
+            height: width >= 800 && width <= 850
+                ? height * 0.05
+                : width >= 850
+                    ? height * 0.08
+                    : 36,
+          ),
           WhiteMainButton(
             titleWidget: Text(
               '"Update TODO"',
@@ -384,11 +396,11 @@ class UpdateTodoDialog extends ConsumerWidget {
       child: Container(
         height: 100,
         width: 100,
-        margin: const EdgeInsets.only(
+        margin: EdgeInsets.only(
           right: 30,
           left: 30,
-          top: 20,
-          bottom: 20,
+          top: 800 <= width && width <= 850 ? 200 : 20,
+          bottom: 800 <= width && width <= 850 ? 200 : 20,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),

@@ -32,6 +32,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     final signInEmailStatus = ref.watch(signInEmailStatusProvider) ? 'OK' : '';
     final signInPasswordStatus =
         ref.watch(signInPasswordStatusProvider) ? 'OK' : '';
+
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xffD7D7D7),
       extendBodyBehindAppBar: true,
@@ -63,12 +67,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 120),
+          SizedBox(
+            height: width >= 800 && width <= 850 ? height * 0.15 : 120,
+          ),
           Center(
             child: Assets.images.volcanoLogo.image(width: 250),
           ),
           Padding(
-            padding: const EdgeInsets.all(70),
+            padding: EdgeInsets.all(
+              width >= 800 && width <= 850 ? height * 0.1 : 70,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -163,7 +171,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   ),
                 ),
                 Positioned(
-                  bottom: 100,
+                  bottom: width >= 800 && width <= 850 ? height * 0.17 : 100,
                   child: WhiteMainButton(
                     onPress: () async {
                       HapticFeedback.mediumImpact();

@@ -28,7 +28,6 @@ Future<void> main() async {
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-
   // This widget is the root of Volcano.
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -21,10 +21,10 @@ class ToSignUpDialog extends HookConsumerWidget {
     return Container(
       constraints: BoxConstraints(minWidth: width / 1.5, minHeight: height / 2),
       margin: EdgeInsets.only(
-        right: width >= 850 ? width * 0.3 : 20,
-        left: width >= 850 ? width * 0.3 : 20,
-        top: 190,
-        bottom: 190,
+        right: width >= 800 ? width * 0.3 : 20,
+        left: width >= 800 ? width * 0.3 : 20,
+        top: width >= 800 && width <= 850 ? height * 0.3 : 190, // 250
+        bottom: width >= 800 && width <= 850 ? height * 0.3 : 190, // 190,
       ),
       padding: const EdgeInsets.all(30),
       decoration: const BoxDecoration(
