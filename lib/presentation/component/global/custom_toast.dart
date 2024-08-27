@@ -24,6 +24,7 @@ void showToastMessage(
     );
     // ignore: avoid_catches_without_on_clauses
   } catch (e) {
+    // debugPrint(e.toString());
     debugPrint('showToast error occurred');
   }
 }
