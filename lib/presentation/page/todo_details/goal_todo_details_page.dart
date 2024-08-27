@@ -85,7 +85,7 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          MediaQuery.of(context).size.width >= 800
+          MediaQuery.of(context).size.width >= 400
               ? ClipPath(
                   clipper: OvalBottomBorderClipper(),
                   child: Container(

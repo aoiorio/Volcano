@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
@@ -50,18 +49,21 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 10),
-                child: IconButton(
-                  highlightColor: Colors.transparent,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    context.pop();
-                  },
-                  icon: const Icon(Icons.close),
+              SizedBox(
+                height: 20,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 10),
+                  child: IconButton(
+                    highlightColor: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      context.pop();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
                 ),
               ),
-              Gap(width >= 800 ? 40 : 15),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -173,6 +175,7 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
                   ),
                 ],
               ),
+              const Spacer(),
             ],
           ),
         ),
