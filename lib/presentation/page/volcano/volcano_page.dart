@@ -15,6 +15,7 @@ import 'package:volcano/presentation/importer/volcano_page_importer.dart';
 import 'package:volcano/presentation/page/dialogs/to_sign_up_dialog.dart';
 import 'package:volcano/presentation/page/tutorial/tutorial_page.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/front/notification/notification_controller.dart';
 import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
 
 final isPushedVoiceButtonProvider = StateProvider<bool>((ref) {
@@ -60,6 +61,9 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
       ref
           .read(goalInfoGetterProvider.notifier)
           .executeGetGoalInfo(toast: toast);
+
+      // NOTE turn on the notification
+      ref.read(notificationControllerProvider.notifier).requestPermissions();
     });
   }
 
