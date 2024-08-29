@@ -97,7 +97,6 @@ class PostTodoController extends _$PostTodoController {
             return value;
           }),
         );
-    context.pop();
   }
 
   void postTodoFromText(FToast toast, BuildContext context) {
@@ -163,6 +162,5 @@ class PostTodoController extends _$PostTodoController {
             return value;
           }),
         );
-    context.pop();
   }
 }
