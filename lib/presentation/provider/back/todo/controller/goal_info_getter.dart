@@ -23,8 +23,8 @@ class GoalInfoGetter extends _$GoalInfoGetter {
         .executeGetGoalInfo(token: token)
         .then((value) {
       if (value.isRight()) {
-        value.getRight().fold(() => null, (goalPercentage) {
-          state = Either.right(goalPercentage);
+        value.getRight().fold(() => null, (goalInfo) {
+          state = Either.right(goalInfo);
         });
       } else if (value.isLeft()) {
         state = Either.left(BackEndError(statusCode: 404));

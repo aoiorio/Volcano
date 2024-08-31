@@ -1,10 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../global/shared_preference_provider.dart';
 
 part 'shared_preference.g.dart';
 
-final sharedPreferencesProvider =
-    Provider<SharedPreferences>((_) => throw UnimplementedError());
 
 @riverpod
 class AuthSharedPreference extends _$AuthSharedPreference {
