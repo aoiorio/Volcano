@@ -4,7 +4,6 @@ import '../../global/shared_preference_provider.dart';
 
 part 'shared_preference.g.dart';
 
-
 @riverpod
 class AuthSharedPreference extends _$AuthSharedPreference {
   @override
