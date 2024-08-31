@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/global/shared_preference_provider.dart';
 
 part 'is_done_tutorial.g.dart';
 
