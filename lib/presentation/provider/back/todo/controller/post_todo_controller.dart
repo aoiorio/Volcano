@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:volcano/core/config.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
@@ -97,7 +96,6 @@ class PostTodoController extends _$PostTodoController {
             return value;
           }),
         );
-    context.pop();
   }
 
   void postTodoFromText(FToast toast, BuildContext context) {
@@ -163,6 +161,5 @@ class PostTodoController extends _$PostTodoController {
             return value;
           }),
         );
-    context.pop();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
@@ -15,6 +16,7 @@ import 'package:volcano/presentation/importer/volcano_page_importer.dart';
 import 'package:volcano/presentation/page/dialogs/to_sign_up_dialog.dart';
 import 'package:volcano/presentation/page/tutorial/tutorial_page.dart';
 import 'package:volcano/presentation/provider/back/auth/shared_preference.dart';
+import 'package:volcano/presentation/provider/front/notification/notification_controller.dart';
 import 'package:volcano/presentation/provider/global/is_done_tutorial.dart';
 
 final isPushedVoiceButtonProvider = StateProvider<bool>((ref) {
@@ -28,7 +30,8 @@ class VolcanoPage extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _VolcanoPageState();
 }
 
-class _VolcanoPageState extends ConsumerState<VolcanoPage> {
+class _VolcanoPageState extends ConsumerState<VolcanoPage>
+    with WidgetsBindingObserver {
   final recorder = AudioRecorder();
   final FToast toast = FToast();
   final player = AudioPlayer();
@@ -42,12 +45,14 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
     recorder.dispose();
     recorderController.dispose();
     player.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
   void initState() {
     super.initState();
     toast.init(context);
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(todoControllerProvider.notifier).executeReadTodo();
 
@@ -60,7 +65,28 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage> {
       ref
           .read(goalInfoGetterProvider.notifier)
           .executeGetGoalInfo(toast: toast);
+
+      // NOTE notification feature
+      ref
+          .read(notificationControllerProvider.notifier)
+          .initializeNotification();
+
+      // NOTE turn on the notification
+      ref.read(notificationControllerProvider.notifier).requestPermissions();
+
+      // NOTE send notification to users at 10:07
+      ref
+          .read(notificationControllerProvider.notifier)
+          .scheduleDailyNotification();
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // NOTE for removing badge on the icon, I must do it
+    if (state == AppLifecycleState.resumed) {
+      FlutterAppBadger.removeBadge();
+    }
   }
 
   @override
