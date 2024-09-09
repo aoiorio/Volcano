@@ -32,7 +32,7 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
               ? goalInfo.todayGoal!.todayTodo ?? []
               : goalInfo.monthGoal!.monthTodo ?? [],
         );
-
+    // TODO create search feature
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -65,23 +65,6 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
             ),
           ),
         ),
-        actions: const [
-          // NOTE filter feature
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 10),
-          //   child: IconButton(
-          //     highlightColor: Colors.transparent,
-          //     onPressed: () {
-          // TODO create filter feature here (pop up)
-          //       debugPrint('Click filter');
-          //     },
-          //     icon: const Icon(
-          //       Icons.tune,
-          //       size: 24,
-          //     ),
-          //   ),
-          // ),
-        ],
       ),
       body: Stack(
         children: [
@@ -109,18 +92,23 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
                     '"No Todo Found"',
                   ),
                 )
-              : ListView.builder(
-                  itemCount: todoList.length,
-                  itemBuilder: (context, index) {
-                    // NOTE run rebuild when todo changed
-                    return TodoDetailsCard(
-                      todo: todoList[index],
-                      startColorCode:
-                          goalType == GoalType.today ? 0xffAEADB9 : 0xffBCBCB4,
-                      endColorCode: 0xffBABBBA,
-                      isGoalInfo: true,
-                    );
-                  },
+              : Column(
+                  children: [
+                    ListView.builder(
+                      itemCount: todoList.length,
+                      itemBuilder: (context, index) {
+                        // NOTE run rebuild when todo changed
+                        return TodoDetailsCard(
+                          todo: todoList[index],
+                          startColorCode: goalType == GoalType.today
+                              ? 0xffAEADB9
+                              : 0xffBCBCB4,
+                          endColorCode: 0xffBABBBA,
+                          isGoalInfo: true,
+                        );
+                      },
+                    ),
+                  ],
                 ),
         ],
       ),

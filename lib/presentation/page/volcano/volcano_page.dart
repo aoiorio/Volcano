@@ -78,6 +78,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage>
       ref
           .read(notificationControllerProvider.notifier)
           .scheduleDailyNotification();
+
+      // ref.read(isDoneTutorialProvider.notifier).deleteIsDoneTutorial();
     });
   }
 

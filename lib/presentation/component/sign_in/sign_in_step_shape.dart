@@ -122,7 +122,7 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
           ),
           Positioned(
             // NOTE it must be top position, due to the keyboard bug if it's bottom expression
-            top: width >= 800 && width <= 850 ? height * 0.45 : 385,
+            top: width >= 800 ? height * 0.45 : 385,
             child: WhiteMainButton(
               titleWidget: Text(
                 signInStepCounter == 1 ? '"Finish"' : '"Next"',

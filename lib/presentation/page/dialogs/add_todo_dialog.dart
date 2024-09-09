@@ -378,6 +378,7 @@ class AddTodoDialog extends ConsumerWidget {
                     .read(isDoneTutorialProvider.notifier)
                     .changeIsDoneTutorial();
               }
+              // TODO fix toast bug here
               context.pop();
             },
           ),
