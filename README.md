@@ -27,17 +27,13 @@
 
 <br>
 
-<br>
-
-# 🌋 {"Contents"}
+## 🌋 {"Contents"}
 
 ### [{1: "🫣 Overview"}]()
 
 ### [{2: "🍽️ Methods"}]()
 
 ### [{3: "🫐 Thoughts"}]()
-
-### [{4. "🦭 Next"}]()
 
 <br>
 
@@ -81,7 +77,7 @@ That's the reason of why Volcano was created.
 
 <br>
 
-## 🍈 {"Features & Terms"}
+## 🍈 {"Features & Durations"}
 
 <br>
 
@@ -129,3 +125,108 @@ That's the reason of why Volcano was created.
 - "🦀 Volcano API": [Volcano API](https://github.com/aoiorio/VolcanoAPI)
 - "🪡 Slides": [Volcano Slides](https://docs.google.com/presentation/d/1eIEV2Hm08teWd2m_5D9OY7se3-NyqIaro5_hdHCcKiI/edit?usp=sharing)
 - "🧳 Requirements Definition Slides": [Volcano Requirements Definition Slides](https://docs.google.com/presentation/d/1VScbl4NEXO8QbhK5rt-C63ebLQKySBvkVg6RB1wOrgI/edit?usp=sharing)
+
+<br>
+
+<br>
+
+# {2: "🍽️ Methods"}
+
+<br>
+
+## 📺 "Technologies"
+
+### 🪟 "Front-End"
+<br>
+
+<img src="https://img.shields.io/badge/Dart-3.19.6-d9d9d9?logo=flutter">
+<img src="https://img.shields.io/badge/Dart-3.3.4-d9d9d9?logo=dart">
+<img src="https://img.shields.io/badge/architecture-onion_architecture-d9d9d9">
+
+### 🐘 "Back-End"
+<br>
+
+<img src="https://img.shields.io/badge/Python-3.12.3-blue?logo=python">
+<img src="https://img.shields.io/badge/FastAPI-0.99.0-blue?logo=fastapi">
+<img src="https://img.shields.io/badge/architecture-onion_architecture-d9d9d9">
+
+### 🌯 "Infrastructure"
+<img src="https://img.shields.io/badge/AWS_Lambda-white?logo=awslambda">
+<img src="https://img.shields.io/badge/Amazon_API_Gateway-white?logo=amazonapigateway">
+
+### 🫑 "Design"
+<br>
+<a href="https://www.figma.com/design/mdtvg3qX7BxmcpDqgEFeJM/Volcano?node-id=0-1&t=jY2GYAAmbcv06Y3E-1">
+    <img src="https://img.shields.io/badge/Figma-gray?logo=figma">
+</a>
+
+<br>
+
+## 📸 "Pictures"
+<br>
+
+| "As an User"| "As a Developer"|
+|----|----|
+|<img src="readme_assets/method-picture-user.png" width=400>|<img src="readme_assets/method-picture-me.png" width=400>|
+
+<br>
+
+<br>
+
+# {3: "🫐 Thoughts"}
+
+<br>
+
+## "💎 My Favorites"
+<br>
+
+###  1. 🐠 **Saving Hex Color Code In Database**
+- Reason
+    - I wanted to create a great app to recognize types directly through my eyes
+
+- Difficult Points
+    - Converting color codes to Flutter's color codes
+    - Generating RBG with range for color I like
+
+### 2. 🙃 Displaying Today's TODOs
+- Reason
+    - When I open Volcano in the morning, I can see what I have to do today and achieve it without forgetting something
+
+- Difficult Points
+    - I was torn between splitting the API endpoints of getting Today's TODO and Month's TODO or not (Finally I decided to combine them together)
+
+### 3. 🗂️ Using Onion Architecture
+- Reason
+    - I usually write spaghetti codes so I was craving for writing clean and updatable codes by myself
+
+- Difficult Points
+    - I've started to learn about Onion Architecture without any knowledge of it. So I struggled with how I create folder structure
+
+<br>
+
+## "🤠 What I've got"
+<br>
+
+### "I felt like I was working with my teammates even I've developed this by my own"
+- I used architecture like I was creating an app with someone
+- When I merge my PR to a branch, I always send "LGTM" photo on my issue or PR pages and it seemed like I was reviewed from my boss
+- I also tried to separate URLs of Amazon API Gateway such as prod and dev like the actual projects do in companies
+
+
+<br>
+
+<br>
+
+<a href="https://www.buymeacoffee.com/aoiorio" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+<br>
+
+<br>
+
+
+```python
+{
+    "status_code": 500,
+    "message": "Thank you."
+}
+```
