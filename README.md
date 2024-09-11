@@ -45,13 +45,12 @@
 
 <br>
 
-<br>
 
 # {1: "🫣 Overview"}
 
 <br>
 
-<img src="readme_assets/VolcanoAppStoreScreenShotsRound.png">
+<img src="readme_assets/volcano-app-store-screenshots.png" style="border-radius: 20px">
 
 <br>
 
@@ -77,7 +76,7 @@ That's the reason of why Volcano was created.
 <br>
 
 ## 🐓 {"Persona"}
-<img src="readme_assets/volcano-persona.svg" style="border-radius: 20px">
+<img src="readme_assets/volcano-persona.png" style="border-radius: 20px">
 
 
 <br>
