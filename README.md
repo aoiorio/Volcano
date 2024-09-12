@@ -141,23 +141,15 @@ That's the reason of why Volcano was created.
 ### 🪟 "Front-End"
 <br>
 
-<img src="https://img.shields.io/badge/Dart-3.19.6-d9d9d9?logo=flutter">
-<img src="https://img.shields.io/badge/Dart-3.3.4-d9d9d9?logo=dart">
-<img src="https://img.shields.io/badge/architecture-onion_architecture-d9d9d9">
+<img src="https://img.shields.io/badge/Dart-3.19.6-d9d9d9?logo=flutter"><img src="https://img.shields.io/badge/Dart-3.3.4-d9d9d9?logo=dart"><img src="https://img.shields.io/badge/architecture-onion_architecture-d9d9d9">
 
 ### 🐘 "Back-End"
-<br>
-
-<img src="https://img.shields.io/badge/Python-3.12.3-blue?logo=python">
-<img src="https://img.shields.io/badge/FastAPI-0.99.0-blue?logo=fastapi">
-<img src="https://img.shields.io/badge/architecture-onion_architecture-d9d9d9">
+<img src="https://img.shields.io/badge/Python-3.12.3-blue?logo=python"><img src="https://img.shields.io/badge/FastAPI-0.99.0-blue?logo=fastapi"><img src="https://img.shields.io/badge/architecture-onion_architecture-d9d9d9">
 
 ### 🌯 "Infrastructure"
-<img src="https://img.shields.io/badge/AWS_Lambda-white?logo=awslambda">
-<img src="https://img.shields.io/badge/Amazon_API_Gateway-white?logo=amazonapigateway">
+<img src="https://img.shields.io/badge/AWS_Lambda-white?logo=awslambda"><img src="https://img.shields.io/badge/Amazon_API_Gateway-white?logo=amazonapigateway">
 
 ### 🫑 "Design"
-<br>
 <a href="https://www.figma.com/design/mdtvg3qX7BxmcpDqgEFeJM/Volcano?node-id=0-1&t=jY2GYAAmbcv06Y3E-1">
     <img src="https://img.shields.io/badge/Figma-gray?logo=figma">
 </a>
@@ -169,13 +161,14 @@ That's the reason of why Volcano was created.
 
 | "As an User"| "As a Developer"|
 |----|----|
-|<img src="readme_assets/method-picture-user.png" width=500>|<img src="readme_assets/method-picture-me.png" width=500>|
+|<img src="readme_assets/method-picture-user.png" width=600>|<img src="readme_assets/method-picture-me.png" width=600>|
 
 <br>
 
 ## ```🧠 "ERD"```
+<div align="center">
 <img src="readme_assets/volcano-erd.png" width=600>
-
+</div>
 <br>
 
 <br>
