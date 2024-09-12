@@ -29,11 +29,11 @@
 
 ## ```🌋 {"Contents"}```
 
-### [```{1: "🫣 Overview"}```]()
+### [```{1: "🫣 Overview"}```](#1--overview)
 
-### [```{2: "🍽️ Methods"}```]()
+### [```{2: "🍽️ Methods"}```](#2-️-methods)
 
-### [```{3: "🫐 Thoughts"}```]()
+### [```{3: "🫐 Thoughts"}```](#3--thoughts)
 
 <br>
 
@@ -155,6 +155,7 @@ That's the reason of why Volcano was created.
 </a>
 
 <br>
+
 
 ## ```📸 "Pictures"```
 <br>
