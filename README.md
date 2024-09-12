@@ -27,22 +27,22 @@
 
 <br>
 
-## 🌋 {"Contents"}
+## ```🌋 {"Contents"}```
 
-### [{1: "🫣 Overview"}]()
+### [```{1: "🫣 Overview"}```]()
 
-### [{2: "🍽️ Methods"}]()
+### [```{2: "🍽️ Methods"}```]()
 
-### [{3: "🫐 Thoughts"}]()
-
-<br>
+### [```{3: "🫐 Thoughts"}```]()
 
 <br>
 
 <br>
 
+<br>
 
-# {1: "🫣 Overview"}
+
+# ```{1: "🫣 Overview"}```
 
 <br>
 
@@ -50,14 +50,14 @@
 
 <br>
 
-## 🌭 {"What is Volcano"}
+## ```🌭 "What is Volcano"```
 
 **Volcano** is a simple TODO app that can recognize your voices and convert them to texts as a **TODO**.
 You can tell your TODO to Volcano like you're speaking with someone.
 
 <br>
 
-## 🧈 {"Why"}
+## ```🧈 "Why"```
 
 I usually write down my TODOs on my note every single day.
 <br>
@@ -71,13 +71,13 @@ That's the reason of why Volcano was created.
 
 <br>
 
-## 🐓 {"Persona"}
+## ```🐓 "Persona"```
 <img src="readme_assets/volcano-persona.png" style="border-radius: 20px">
 
 
 <br>
 
-## 🍈 {"Features & Durations"}
+## ```🍈 "Features & Durations"```
 
 <br>
 
@@ -121,7 +121,7 @@ That's the reason of why Volcano was created.
 
 <br>
 
-## 🫨 {"Links"}
+## ```🫨 "Links"```
 - "🦀 Volcano API": [Volcano API](https://github.com/aoiorio/VolcanoAPI)
 - "🪡 Slides": [Volcano Slides](https://docs.google.com/presentation/d/1eIEV2Hm08teWd2m_5D9OY7se3-NyqIaro5_hdHCcKiI/edit?usp=sharing)
 - "🧳 Requirements Definition Slides": [Volcano Requirements Definition Slides](https://docs.google.com/presentation/d/1VScbl4NEXO8QbhK5rt-C63ebLQKySBvkVg6RB1wOrgI/edit?usp=sharing)
@@ -130,11 +130,13 @@ That's the reason of why Volcano was created.
 
 <br>
 
-# {2: "🍽️ Methods"}
+<br>
+
+# ```{2: "🍽️ Methods"}```
 
 <br>
 
-## 📺 "Technologies"
+## ```📺 "Technologies"```
 
 ### 🪟 "Front-End"
 <br>
@@ -162,22 +164,29 @@ That's the reason of why Volcano was created.
 
 <br>
 
-## 📸 "Pictures"
+## ```📸 "Pictures"```
 <br>
 
 | "As an User"| "As a Developer"|
 |----|----|
-|<img src="readme_assets/method-picture-user.png" width=400>|<img src="readme_assets/method-picture-me.png" width=400>|
+|<img src="readme_assets/method-picture-user.png" width=500>|<img src="readme_assets/method-picture-me.png" width=500>|
+
+<br>
+
+## ```🧠 "ERD"```
+<img src="readme_assets/volcano-erd.png" width=600>
 
 <br>
 
 <br>
 
-# {3: "🫐 Thoughts"}
+<br>
+
+# ```{3: "🫐 Thoughts"}```
 
 <br>
 
-## "💎 My Favorites"
+## ```💎 "My Favorites"```
 <br>
 
 ###  1. 🐠 **Saving Hex Color Code In Database**
@@ -204,7 +213,7 @@ That's the reason of why Volcano was created.
 
 <br>
 
-## "🤠 What I've got"
+## ```🤠 "What I've got"```
 <br>
 
 ### "I felt like I was working with my teammates even I've developed this by my own"
