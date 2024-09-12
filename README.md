@@ -29,11 +29,11 @@
 
 ## ```🌋 {"Contents"}```
 
-### [```{1: "🫣 Overview"}```](#1--overview)
+### [```{1: "🫣 Overview"}```](#1--overview-1)
 
-### [```{2: "🍽️ Methods"}```](#2-️-methods)
+### [```{2: "🍽️ Methods"}```](#2-️-methods-1)
 
-### [```{3: "🫐 Thoughts"}```](#3--thoughts)
+### [```{3: "🫐 Thoughts"}```](#3--thoughts-1)
 
 <br>
 
