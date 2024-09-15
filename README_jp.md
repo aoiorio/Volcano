@@ -158,6 +158,8 @@
 
 <br>
 
+<br>
+
 <details><summary>"📂 Folder Structure"</summary>
 
 ## ```"📂 Folder Structure"```
