@@ -34,6 +34,8 @@
 
 ### [```{3: "🫐 Thoughts"}```](#3--thoughts-1)
 
+
+### [🍣 "Japanese"](https://github.com/aoiorio/Volcano/blob/main/README_jp.md)
 <br>
 
 <br>
@@ -84,7 +86,7 @@ That's the reason of why Volcano was created.
 
     - **Voice Recognizing Feature & Add TODO From Voice Feature** - 2024/06/12 - 06/28
 
-    - **Add From Text Feature** - 2024/06/12 - 06/28
+    - **Add TODO From Text Feature** - 2024/06/12 - 06/28
 
     - **Playing Voice Feature** - 2024/06/28 - 07/6
 
@@ -227,7 +229,7 @@ That's the reason of why Volcano was created.
 
 - 🏆 "State Management"
     - [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
-    - [flutter_hooks](https://pub.dev/packages/flutter_hooks) (for use_effect method)
+    - [flutter_hooks](https://pub.dev/packages/flutter_hooks) (for useEffect and useState method)
     - [hooks_riverpod](https://pub.dev/packages/hooks_riverpod)
     - [riverpod_annotation](https://pub.dev/packages/riverpod_annotation)
 
@@ -246,7 +248,7 @@ That's the reason of why Volcano was created.
 
 <br>
 
-- 🦁 "For Creating Voice To TODO Feature"
+- 🦁 "Creating Voice To TODO Feature"
     - [speech_to_text](https://pub.dev/packages/speech_to_text) (for recognizing voice)
     - [record](https://pub.dev/packages/record) (for recording voice)
     - [audio_waveforms](https://pub.dev/packages/audio_waveforms) (for displaying audio waves while users are recording)
@@ -278,7 +280,7 @@ That's the reason of why Volcano was created.
 <br>
 
 - 🐗 "Others"
-    - [flutter_gen](https://pub.dev/packages/flutter_gen) (for controlling icons and fonts)
+    - [flutter_gen](https://pub.dev/packages/flutter_gen) (for controlling images and fonts)
     - [flutter_svg](https://pub.dev/packages/flutter_svg) (for importing svg)
     - [url_launcher](https://pub.dev/packages/url_launcher) (for launching privacy policy and terms of service docs)
     - [flutter_native_timezone](https://pub.dev/packages/flutter_native_timezone) (for setting local timezone)
