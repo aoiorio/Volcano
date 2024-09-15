@@ -4,8 +4,8 @@
     <a href="https://apps.apple.com/jp/app/volcano-with-todo/id6657991782">
         <img src="readme_assets/download-on-the-app-store.png" width=150>
     </a>
-        <br>
-        <br>
+    <br>
+    <br>
     <a href="https://github.com/aoiorio/Volcano/releases/tag/v1.1.0">
         <img src="https://img.shields.io/badge/Volcano_version-1.1.0-white">
     </a>
@@ -155,6 +155,8 @@ That's the reason of why Volcano was created.
 
 <br>
 
+<details><summary>"📂 Folder Structure"</summary>
+
 ## ```"📂 Folder Structure"```
 ```dart
 └── 📁lib
@@ -216,11 +218,14 @@ That's the reason of why Volcano was created.
     └── main.dart
 ```
 
+</details>
+
+
 <br>
 
 ## ```🐊 "Flutter Dependencies"```
 
-- 🏆 Controlling the State
+- 🏆 "State Management"
     - [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
     - [flutter_hooks](https://pub.dev/packages/flutter_hooks) (for use_effect method)
     - [hooks_riverpod](https://pub.dev/packages/hooks_riverpod)
@@ -228,7 +233,7 @@ That's the reason of why Volcano was created.
 
 <br>
 
-- 🐙 Connecting to API Endpoints
+- 🐙 "Connecting To The API Endpoints"
     - [retrofit](https://pub.dev/packages/retrofit)
     - [dio](https://pub.dev/packages/dio)
     - [http](https://pub.dev/packages/http)
@@ -236,12 +241,12 @@ That's the reason of why Volcano was created.
 
 <br>
 
-- 🌎 Implementing Authentication Feature
+- 🌎 "Implementing Authentication Feature"
     - [shared_preferences](https://pub.dev/packages/shared_preferences) (for storing JWT token)
 
 <br>
 
-- 🦁 For Creating Voice To TODO Feature
+- 🦁 "For Creating Voice To TODO Feature"
     - [speech_to_text](https://pub.dev/packages/speech_to_text) (for recognizing voice)
     - [record](https://pub.dev/packages/record) (for recording voice)
     - [audio_waveforms](https://pub.dev/packages/audio_waveforms) (for displaying audio waves while users are recording)
@@ -249,19 +254,19 @@ That's the reason of why Volcano was created.
 
 <br>
 
-- 🎧 Implementing Notification Feature
+- 🎧 "Implementing Notification Feature"
     - [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) (for send notification at fixed time everyday)
     - [flutter_app_badger](https://pub.dev/packages/flutter_app_badger) (for removing badge from the app icon)
 
 <br>
 
-- 🚌 Transition
+- 🚌 "Transition"
     - [go_router](https://pub.dev/packages/go_router)
     - [page_transition](https://pub.dev/packages/page_transition) (for making smooth transaction)
 
 <br>
 
-- 🎲 Creating UI
+- 🎲 "Creating UI"
     - [shimmer](https://pub.dev/packages/shimmer) (for providing great UX by using skelton effects)
     - [percent_indicator](https://pub.dev/packages/percent_indicator) (for displaying percentage from number for TODO goals)
     - [smooth_page_indicator](https://pub.dev/packages/smooth_page_indicator) (for creating dots under TODO goals cards)
@@ -272,7 +277,7 @@ That's the reason of why Volcano was created.
 
 <br>
 
-- 🐗 Others
+- 🐗 "Others"
     - [flutter_gen](https://pub.dev/packages/flutter_gen) (for controlling icons and fonts)
     - [flutter_svg](https://pub.dev/packages/flutter_svg) (for importing svg)
     - [url_launcher](https://pub.dev/packages/url_launcher) (for launching privacy policy and terms of service docs)
