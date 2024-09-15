@@ -3,7 +3,6 @@
     <br>
     <a href="https://apps.apple.com/jp/app/volcano-with-todo/id6657991782">
         <img src="readme_assets/download-on-the-app-store.png" width=150>
-        <!-- TODO draw illustration of Download on the App Store -->
     </a>
         <br>
         <br>
@@ -61,7 +60,7 @@ You can tell your TODO to Volcano like you're speaking with someone.
 
 I usually write down my TODOs on my note every single day.
 <br>
-But I perceived that it's pain in the neck and will definitely forget something what I'm going to do today.
+But I perceived that it's pain in the neck and I will definitely forget something what I'm going to do today.
 
 So I came up with an application idea to manage my TODOs with more comfortable way.
 
@@ -156,6 +155,135 @@ That's the reason of why Volcano was created.
 
 <br>
 
+## ```"📂 Folder Structure"```
+```dart
+└── 📁lib
+    └── 📁core
+        └── errors.dart // for writing original error type (e.g. BackEndError)
+    └── 📁domain // for creating the base
+        └── 📁entity
+        └── 📁repository
+        └── 📁usecase
+    └── 📁gen // for storing generated assets by using fluttergen
+    └── 📁infrastructure // for materializing the methods of repository from domain
+        └── 📁datasource // for creating methods of getting data from API Endpoints
+            └── 📁auth
+            └── 📁todo
+            └── 📁type_color_code
+            └── 📁user
+        └── 📁dto // for specializing the type of data
+        └── 📁model // for the types that users input
+            └── 📁auth
+            └── 📁todo
+            └── 📁user
+        └── 📁repository // for using datasource to materialize reposiotry methods of domain 
+    └── 📁presentation // for creating UI
+        └── 📁component
+            └── 📁global
+            └── 📁modal
+            └── 📁sign_in
+            └── 📁sign_up
+            └── 📁todo
+        └── 📁importer
+            └── volcano_page_importer.dart
+        └── 📁page
+            └── 📁auth
+            └── 📁dialogs
+            └── 📁todo_details
+            └── 📁tutorial
+            └── 📁volcano
+        └── 📁provider // for managing data by using riverpod
+            └── 📁back
+                └── 📁auth
+                └── 📁todo
+                └── 📁type_color_code
+                └── 📁user
+                └── global_back_providers.dart
+            └── 📁front
+                └── 📁auth
+                └── 📁notification
+                └── 📁todo
+                └── 📁tutorial
+            └── 📁global
+        └── 📁routes
+            └── 📁routes_model
+            └── routes.dart
+        └── 📁supporter
+            └── notification_random_message.dart
+        └── 📁theme
+            └── theme.dart
+    └── 📁usecase // for giving data to presentation layer with repository methods
+    └── main.dart
+```
+
+<br>
+
+## ```🐊 "Flutter Dependencies"```
+
+- 🏆 Controlling the State
+    - [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
+    - [flutter_hooks](https://pub.dev/packages/flutter_hooks) (for use_effect method)
+    - [hooks_riverpod](https://pub.dev/packages/hooks_riverpod)
+    - [riverpod_annotation](https://pub.dev/packages/riverpod_annotation)
+
+<br>
+
+- 🐙 Connecting to API Endpoints
+    - [retrofit](https://pub.dev/packages/retrofit)
+    - [dio](https://pub.dev/packages/dio)
+    - [http](https://pub.dev/packages/http)
+    - [fpdart](https://pub.dev/packages/fpdart) (for using Either as a type)
+
+<br>
+
+- 🌎 Implementing Authentication Feature
+    - [shared_preferences](https://pub.dev/packages/shared_preferences) (for storing JWT token)
+
+<br>
+
+- 🦁 For Creating Voice To TODO Feature
+    - [speech_to_text](https://pub.dev/packages/speech_to_text) (for recognizing voice)
+    - [record](https://pub.dev/packages/record) (for recording voice)
+    - [audio_waveforms](https://pub.dev/packages/audio_waveforms) (for displaying audio waves while users are recording)
+    - [just_audio](https://pub.dev/packages/just_audio) (for playing audio from URL)
+
+<br>
+
+- 🎧 Implementing Notification Feature
+    - [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) (for send notification at fixed time everyday)
+    - [flutter_app_badger](https://pub.dev/packages/flutter_app_badger) (for removing badge from the app icon)
+
+<br>
+
+- 🚌 Transition
+    - [go_router](https://pub.dev/packages/go_router)
+    - [page_transition](https://pub.dev/packages/page_transition) (for making smooth transaction)
+
+<br>
+
+- 🎲 Creating UI
+    - [shimmer](https://pub.dev/packages/shimmer) (for providing great UX by using skelton effects)
+    - [percent_indicator](https://pub.dev/packages/percent_indicator) (for displaying percentage from number for TODO goals)
+    - [smooth_page_indicator](https://pub.dev/packages/smooth_page_indicator) (for creating dots under TODO goals cards)
+    - [gap](https://pub.dev/packages/gap) (for making some gaps between widgets)
+    - [flutter_spinkit](https://pub.dev/packages/flutter_spinkit) (for displaying hourglass when Volcano is loading)
+    - [fluttertoast](https://pub.dev/packages/fluttertoast) (for displaying whether it's successful or not)
+    - [modal_bottom_sheet](https://pub.dev/packages/modal_bottom_sheet) (for making UserModal)
+
+<br>
+
+- 🐗 Others
+    - [flutter_gen](https://pub.dev/packages/flutter_gen) (for controlling icons and fonts)
+    - [flutter_svg](https://pub.dev/packages/flutter_svg) (for importing svg)
+    - [url_launcher](https://pub.dev/packages/url_launcher) (for launching privacy policy and terms of service docs)
+    - [flutter_native_timezone](https://pub.dev/packages/flutter_native_timezone) (for setting local timezone)
+    - [pedantic_mono](https://pub.dev/packages/pedantic_mono) (for analyzing my codes)
+    - [flutter_lints](https://pub.dev/packages/flutter_lints)
+
+**And more! If you want to check all of them, please go to my [pubspec.yaml](https://github.com/aoiorio/Volcano/blob/main/pubspec.yaml#L30-L82)**
+
+<br>
+
 
 ## ```📸 "Pictures"```
 <br>
@@ -222,10 +350,10 @@ That's the reason of why Volcano was created.
 
 <a href="https://www.buymeacoffee.com/aoiorio" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-<br>
 
 <br>
 
+<br>
 
 ```python
 {
@@ -233,3 +361,14 @@ That's the reason of why Volcano was created.
     "message": "Thank you."
 }
 ```
+
+<br>
+
+<br>
+
+ <a href="https://apps.apple.com/jp/app/volcano-with-todo/id6657991782">
+    <div align=center>
+        <img src="readme_assets/fish-with-download-button.PNG" width=400>
+    </div>
+
+ </a>
