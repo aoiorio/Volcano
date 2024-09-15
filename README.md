@@ -157,6 +157,8 @@ That's the reason of why Volcano was created.
 
 <br>
 
+<br>
+
 <details><summary>"📂 Folder Structure"</summary>
 
 ## ```"📂 Folder Structure"```
