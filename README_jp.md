@@ -123,6 +123,11 @@
 
 <br>
 
+## ```👑 "Images"```
+<img src="readme_assets/page-images.png">
+
+<br>
+
 ## ```🫨 "Links"```
 - "🦀 Volcano API": [Volcano API](https://github.com/aoiorio/VolcanoAPI)
 - "🪡 スライド": [Volcano Slides](https://docs.google.com/presentation/d/1eIEV2Hm08teWd2m_5D9OY7se3-NyqIaro5_hdHCcKiI/edit?usp=sharing)

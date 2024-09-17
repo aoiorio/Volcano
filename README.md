@@ -122,6 +122,11 @@ That's the reason of why Volcano was created.
 
 <br>
 
+## ```👑 "Images"```
+<img src="readme_assets/page-images.png">
+
+<br>
+
 ## ```🫨 "Links"```
 - "🦀 Volcano API": [Volcano API](https://github.com/aoiorio/VolcanoAPI)
 - "🪡 Slides": [Volcano Slides](https://docs.google.com/presentation/d/1eIEV2Hm08teWd2m_5D9OY7se3-NyqIaro5_hdHCcKiI/edit?usp=sharing)
@@ -294,7 +299,7 @@ That's the reason of why Volcano was created.
 <br>
 
 
-## ```📸 "Pictures"```
+## ```📸 "Method's Pictures"```
 <br>
 
 | "As an User"| "As a Developer"|
