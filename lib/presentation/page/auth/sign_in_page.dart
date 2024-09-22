@@ -44,22 +44,25 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         automaticallyImplyLeading: false,
         leadingWidth: 80,
         // NOTE Back button
-        leading: SizedBox(
-          width: 50,
-          height: 50,
-          child: BouncedButton(
-            child: Container(
-              margin: const EdgeInsets.only(left: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+        leading: Container(
+          margin: EdgeInsets.only(top: width <= 375 ? 10 : 0),
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: BouncedButton(
+              child: Container(
+                margin: const EdgeInsets.only(left: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.arrow_back),
               ),
-              child: const Icon(Icons.arrow_back),
+              onPress: () {
+                HapticFeedback.lightImpact();
+                context.pop(true);
+              },
             ),
-            onPress: () {
-              HapticFeedback.lightImpact();
-              context.pop(true);
-            },
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -68,14 +71,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: width >= 800 && width <= 850 ? height * 0.15 : 120,
+            height: width >= 380 ? height * 0.15 : height * 0.1,
           ),
           Center(
-            child: Assets.images.volcanoLogo.image(width: 250),
+            child: Assets.images.volcanoLogo.image(width: width <= 375 ? 200 : 250),
           ),
           Padding(
             padding: EdgeInsets.all(
-              width >= 800 && width <= 850 ? height * 0.1 : 70,
+              width >= 800 && width <= 850 ? height * 0.1 : height * 0.1,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -171,7 +174,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   ),
                 ),
                 Positioned(
-                  bottom: width >= 800 && width <= 850 ? height * 0.17 : 100,
+                  bottom: width >= 800 && width <= 850 ? height * 0.17 : width <= 375 ? height * 0.05 : height * 0.08,
                   child: WhiteMainButton(
                     onPress: () async {
                       HapticFeedback.mediumImpact();

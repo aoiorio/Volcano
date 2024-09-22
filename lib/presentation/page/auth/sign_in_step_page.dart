@@ -43,19 +43,22 @@ class SignInStepPage extends ConsumerWidget {
         leading: SizedBox(
           width: 50,
           height: 50,
-          child: BouncedButton(
-            child: Container(
-              margin: const EdgeInsets.only(left: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+          child: Container(
+            margin: EdgeInsets.only(top: width <= 375 ? 10 : 0),
+            child: BouncedButton(
+              child: Container(
+                margin: const EdgeInsets.only(left: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.arrow_back),
               ),
-              child: const Icon(Icons.arrow_back),
+              onPress: () {
+                HapticFeedback.lightImpact();
+                context.pop(true);
+              },
             ),
-            onPress: () {
-              HapticFeedback.lightImpact();
-              context.pop(true);
-            },
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -69,7 +72,7 @@ class SignInStepPage extends ConsumerWidget {
         child: Column(
           children: [
             SizedBox(
-              height: width >= 800 && width <= 850 ? height * 0.15 : 150,
+              height: width >= 800 && width <= 850 ? height * 0.15 : height * 0.18,
             ), // 150
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
