@@ -70,7 +70,7 @@ class _TodoListCardState extends ConsumerState<TodoListCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: 230,
+                    width: MediaQuery.of(context).size.width * 0.5, // 230
                     child: Text(
                       widget.readTodoList.type.toString(),
                       style: Theme.of(context)
