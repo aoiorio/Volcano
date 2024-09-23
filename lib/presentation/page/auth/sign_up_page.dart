@@ -63,9 +63,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   .image(width: width <= 375 ? 200 : 250),
             ),
             SizedBox(
-                height: width >= 800 && width <= 850
-                    ? height * 0.1
-                    : height * 0.06),
+              height:
+                  width >= 800 && width <= 850 ? height * 0.1 : height * 0.06,
+            ),
             Expanded(
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,

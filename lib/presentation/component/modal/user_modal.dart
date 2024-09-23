@@ -239,7 +239,8 @@ class UserModal extends HookConsumerWidget {
                                       alignment: Alignment.center,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            left: width * 0.001),
+                                          left: width * 0.001,
+                                        ),
                                         child: Text(
                                           '"DONE": ${userInfo.doneTodoNum}\n"NOT YET": ${userInfo.notYetTodoNum}',
                                           style: Theme.of(context)
