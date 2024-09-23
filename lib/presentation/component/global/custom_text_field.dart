@@ -23,6 +23,8 @@ class CustomTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,10 +33,12 @@ class CustomTextField extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: 15),
                 child: Text(
                   '"$titleText"',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: Colors.black),
+                  style: deviceWidth <= 375
+                      ? const TextStyle(fontSize: 16)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.black),
                 ),
               )
             : const SizedBox(),

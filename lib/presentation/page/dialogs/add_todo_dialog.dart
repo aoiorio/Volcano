@@ -2,8 +2,10 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/presentation/component/global/bounced_button.dart';
@@ -46,10 +48,10 @@ class AddTodoDialog extends ConsumerWidget {
           ),
         ],
       ),
-      const Text(
+      Text(
         '"Please Write \n About Your TODO"',
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: width <= 375 ? 16 : 20),
       ),
     ];
 
@@ -57,29 +59,29 @@ class AddTodoDialog extends ConsumerWidget {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, top: 5),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: BouncedButton(
-                child: const Icon(
+          SizedBox(height: height * 0.02),
+          GestureDetector(
+            onTap: () {
+              ref.read(resetValuesProvider.notifier).resetValues();
+              if (!ref.watch(isDoneTutorialProvider)) {
+                ref
+                    .read(isDoneTutorialProvider.notifier)
+                    .changeIsDoneTutorial();
+              }
+              context.pop();
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(left: 20, top: 5),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Icon(
                   Icons.close,
                   color: Color(0xff747474),
                 ),
-                onPress: () {
-                  ref.read(resetValuesProvider.notifier).resetValues();
-                  if (!ref.watch(isDoneTutorialProvider)) {
-                    ref
-                        .read(isDoneTutorialProvider.notifier)
-                        .changeIsDoneTutorial();
-                  }
-                  context.pop();
-                },
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: width <= 375 ? height * 0.01 : height * 0.03), // 20
           isAddingFromText ? textWidgets[1] : textWidgets[0],
           const SizedBox(height: 25),
           CustomTextField(
@@ -176,7 +178,6 @@ class AddTodoDialog extends ConsumerWidget {
                       Container(
                         width: 14,
                         height: 14,
-                        margin: const EdgeInsets.only(left: 15),
                         decoration: BoxDecoration(
                           color: const Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5),
@@ -208,12 +209,13 @@ class AddTodoDialog extends ConsumerWidget {
               ref.read(addTodoStepCountProvider.notifier).increment();
             },
           ),
+          Gap(height * 0.03),
         ],
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: height * 0.02),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 5),
             child: Align(
@@ -229,7 +231,8 @@ class AddTodoDialog extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
+          SizedBox(height: width <= 375 ? height * 0.01 : height * 0.03), // 20
           isAddingFromText ? textWidgets[1] : textWidgets[0],
           const SizedBox(height: 30),
           Container(
@@ -381,6 +384,7 @@ class AddTodoDialog extends ConsumerWidget {
               context.pop();
             },
           ),
+          Gap(height * 0.03),
         ],
       ),
     ];
