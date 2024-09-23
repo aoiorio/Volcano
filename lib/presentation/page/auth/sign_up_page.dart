@@ -55,12 +55,17 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: width >= 800 && width <= 850 ? height * 0.15 : 120,
+              height: width >= 380 ? height * 0.15 : height * 0.05,
+              // height: width >= 800 && width <= 850 ? height * 0.15 : 120,
             ),
             Center(
-              child: Assets.images.volcanoLogo.image(width: 250),
+              child: Assets.images.volcanoLogo
+                  .image(width: width <= 375 ? 200 : 250),
             ),
-            SizedBox(height: width >= 800 && width <= 850 ? height * 0.15 : 70),
+            SizedBox(
+              height:
+                  width >= 800 && width <= 850 ? height * 0.1 : height * 0.06,
+            ),
             Expanded(
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,
@@ -128,7 +133,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ),
                   ),
                   Positioned(
-                    bottom: width >= 800 && width <= 850 ? height * 0.17 : 100,
+                    bottom: width >= 800 && width <= 850
+                        ? height * 0.17
+                        : height * 0.12,
                     child: WhiteMainButton(
                       onPress: () async {
                         HapticFeedback.mediumImpact();
@@ -174,7 +181,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ),
                   ),
                   Positioned(
-                    bottom: width >= 800 && width <= 850 ? height * 0.12 : 50,
+                    bottom: width >= 800 && width <= 850
+                        ? height * 0.12
+                        : height * 0.07, // 50
                     child: BouncedButton(
                       child: Row(
                         children: [
@@ -197,7 +206,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ),
                   ),
                   Positioned(
-                    bottom: 10,
+                    bottom: 2,
                     child: Row(
                       children: [
                         TextButton(

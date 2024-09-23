@@ -60,13 +60,18 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
             ),
           ),
           Positioned(
-            top: 50,
+            top: height * 0.06, // 50
             child: Text(
               widget.stepTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.white),
+              style: width <= 375
+                  ? Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.white)
+                  : Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
             ),
           ),
           Positioned(
@@ -122,7 +127,7 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
           ),
           Positioned(
             // NOTE it must be top position, due to the keyboard bug if it's bottom expression
-            top: width >= 800 && width <= 850 ? height * 0.45 : 385,
+            top: width >= 380 ? height * 0.45 : height * 0.43, // 385
             child: WhiteMainButton(
               titleWidget: Text(
                 signInStepCounter == 1 ? '"Finish"' : '"Next"',

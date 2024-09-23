@@ -57,6 +57,8 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
       return readTodoList[typeIndex!].values ?? [];
     });
 
+    final width = MediaQuery.of(context).size.width;
+
     final typeColorCodeObject = ref
         .read(
           typeColorCodeControllerProvider.notifier,
@@ -117,7 +119,7 @@ class _TodoDetailsPageState extends ConsumerState<TodoDetailsPage> {
       ),
       body: Stack(
         children: [
-          MediaQuery.of(context).size.width >= 400
+          width >= 400 || width <= 375
               ? ClipPath(
                   clipper: OvalBottomBorderClipper(),
                   child: Container(

@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  record_darwin: 1f6619f2abac4d1ca91d3eeab038c980d76f1517
+  record_darwin: df0a677188e5fed18472550298e675f19ddaffbe
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e

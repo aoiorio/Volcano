@@ -32,6 +32,7 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
               ? goalInfo.todayGoal!.todayTodo ?? []
               : goalInfo.monthGoal!.monthTodo ?? [],
         );
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -85,7 +86,7 @@ class GoalTodoDetailsPage extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          MediaQuery.of(context).size.width >= 400
+          width >= 400 || width <= 375
               ? ClipPath(
                   clipper: OvalBottomBorderClipper(),
                   child: Container(

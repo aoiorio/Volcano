@@ -63,17 +63,21 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
             ),
           ),
           Positioned(
-            top: 50,
+            top: height * 0.06,
             child: Text(
               widget.stepTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.white),
+              style: width <= 375
+                  ? Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.white)
+                  : Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
             ),
           ),
           Positioned(
-            // top: 20,
             child: SizedBox(
               width: 300,
               height: 90,
@@ -138,7 +142,7 @@ class _SignUpStepShapeState extends ConsumerState<SignUpStepShape> {
             ),
           ),
           Positioned(
-            top: width >= 800 && width <= 850 ? height * 0.45 : 385,
+            top: width >= 380 ? height * 0.45 : height * 0.43,
             child: WhiteMainButton(
               titleWidget: Text(
                 ref.watch(signUpStepCounterProvider) == 2
