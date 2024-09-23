@@ -245,10 +245,12 @@ class AddTodoDialog extends ConsumerWidget {
                   padding: const EdgeInsets.only(bottom: 15),
                   child: Text(
                     '"Description"',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.black),
+                    style: width <= 375
+                      ? const TextStyle(fontSize: 16)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.black),
                   ),
                 ),
                 Container(
@@ -303,10 +305,12 @@ class AddTodoDialog extends ConsumerWidget {
               children: [
                 Text(
                   '"Priority"',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: Colors.black),
+                  style: width <= 375
+                      ? const TextStyle(fontSize: 16)
+                      : Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.black),
                 ),
                 const SizedBox(height: 15),
                 SizedBox(
