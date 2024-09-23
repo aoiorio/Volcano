@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:volcano/gen/assets.gen.dart';
 import 'package:volcano/infrastructure/dto/todo.dart';
@@ -39,7 +40,7 @@ class UpdateTodoDialog extends ConsumerWidget {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: height * 0.02),
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 5),
             child: Align(
@@ -56,11 +57,11 @@ class UpdateTodoDialog extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
+          SizedBox(height: height * 0.02),
+          Text(
             '"Update TODO"',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: width <= 375 ? 16 : 20),
           ),
           const SizedBox(height: 30),
           CustomTextField(
@@ -157,7 +158,6 @@ class UpdateTodoDialog extends ConsumerWidget {
                       Container(
                         width: 14,
                         height: 14,
-                        margin: const EdgeInsets.only(left: 15),
                         decoration: BoxDecoration(
                           color: const Color(0xffD9D9D9),
                           borderRadius: BorderRadius.circular(5),
@@ -189,6 +189,7 @@ class UpdateTodoDialog extends ConsumerWidget {
               ref.read(updateTodoStepCounterProvider.notifier).state++;
             },
           ),
+          Gap(height * 0.03),
         ],
       ),
       Column(
@@ -387,6 +388,7 @@ class UpdateTodoDialog extends ConsumerWidget {
               updateTodoControllerNotifier.resetUpdateTodoValues();
             },
           ),
+          Gap(height * 0.03),
         ],
       ),
     ];
