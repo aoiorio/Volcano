@@ -246,11 +246,11 @@ class AddTodoDialog extends ConsumerWidget {
                   child: Text(
                     '"Description"',
                     style: width <= 375
-                      ? const TextStyle(fontSize: 16)
-                      : Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(color: Colors.black),
+                        ? const TextStyle(fontSize: 16)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: Colors.black),
                   ),
                 ),
                 Container(

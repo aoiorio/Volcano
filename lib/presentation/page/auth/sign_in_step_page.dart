@@ -72,7 +72,8 @@ class SignInStepPage extends ConsumerWidget {
         child: Column(
           children: [
             SizedBox(
-              height: width >= 800 && width <= 850 ? height * 0.15 : height * 0.18,
+              height:
+                  width >= 800 && width <= 850 ? height * 0.15 : height * 0.18,
             ), // 150
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

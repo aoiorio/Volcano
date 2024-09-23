@@ -60,16 +60,18 @@ class _SignInStepShapeState extends ConsumerState<SignInStepShape> {
             ),
           ),
           Positioned(
-            top: height *0.06, // 50
+            top: height * 0.06, // 50
             child: Text(
               widget.stepTitle,
-              style: width <= 375 ? Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: Colors.white):Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.white),
+              style: width <= 375
+                  ? Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.white)
+                  : Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
             ),
           ),
           Positioned(

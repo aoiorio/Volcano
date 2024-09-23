@@ -74,7 +74,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             height: width >= 380 ? height * 0.15 : height * 0.1,
           ),
           Center(
-            child: Assets.images.volcanoLogo.image(width: width <= 375 ? 200 : 250),
+            child: Assets.images.volcanoLogo
+                .image(width: width <= 375 ? 200 : 250),
           ),
           Padding(
             padding: EdgeInsets.all(
@@ -174,7 +175,11 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   ),
                 ),
                 Positioned(
-                  bottom: width >= 800 && width <= 850 ? height * 0.17 : width <= 375 ? height * 0.05 : height * 0.08,
+                  bottom: width >= 800 && width <= 850
+                      ? height * 0.17
+                      : width <= 375
+                          ? height * 0.05
+                          : height * 0.08,
                   child: WhiteMainButton(
                     onPress: () async {
                       HapticFeedback.mediumImpact();
