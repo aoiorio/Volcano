@@ -24,6 +24,7 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final toast = FToast();
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Container(
       width: 340,
@@ -31,8 +32,8 @@ class UpdateOrDeleteDialog extends ConsumerWidget {
       margin: EdgeInsets.only(
         right: width >= 800 ? width * 0.3 : 30,
         left: width >= 800 ? width * 0.3 : 30,
-        top: width >= 800 && width <= 850 ? 380 : 210,
-        bottom: width >= 800 && width <= 850 ? 380 : 210,
+        top: width >= 800 && width <= 850 ? 380 : height * 0.25,
+        bottom: width >= 800 && width <= 850 ? 380 : height * 0.25,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),

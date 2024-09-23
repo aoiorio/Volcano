@@ -154,7 +154,8 @@ class _VolcanoPageState extends ConsumerState<VolcanoPage>
                           : ref.watch(isDoneTutorialProvider)
                               ? 1
                               : 0.6,
-                  child: width >= 400
+                  // NOTE if the device is too big or too small, I'll return other shape'
+                  child: width >= 400 || width <= 375
                       ? ClipPath(
                           clipper: OvalBottomBorderClipper(),
                           child: Container(
