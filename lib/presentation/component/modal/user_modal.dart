@@ -71,8 +71,7 @@ class UserModal extends HookConsumerWidget {
                   : height / 2 + 90,
             ),
             alignment: Alignment.center,
-            padding:
-                const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 20, bottom: 30),
             child: userInfo == null
                 // DONE add shimmer effect
                 ? Row(
@@ -239,8 +238,8 @@ class UserModal extends HookConsumerWidget {
                                       width: 190,
                                       alignment: Alignment.center,
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 25),
+                                        padding: EdgeInsets.only(
+                                            left: width * 0.001),
                                         child: Text(
                                           '"DONE": ${userInfo.doneTodoNum}\n"NOT YET": ${userInfo.notYetTodoNum}',
                                           style: Theme.of(context)
@@ -300,7 +299,7 @@ class UserModal extends HookConsumerWidget {
                                             ),
                                       ),
                               ),
-                              Gap(width * 0.1),
+                              Gap(width * 0.1), // 0.08
                               BouncedButton(
                                 onPress: isEditing.value
                                     ? () {
