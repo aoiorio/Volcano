@@ -35,15 +35,15 @@ class AddTodoDialog extends ConsumerWidget {
     final height = MediaQuery.of(context).size.height;
 
     final textWidgets = <Widget>[
-      const Column(
+      Column(
         children: [
           Text(
             '"We Recognized Them"',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: width <= 375 ? 16 : 20),
           ),
           Text(
             '"Click To Update"',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: width <= 375 ? 16 : 20),
           ),
         ],
       ),
