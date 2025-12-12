@@ -6,6 +6,7 @@ part 'shared_preference.g.dart';
 
 @riverpod
 class AuthSharedPreference extends _$AuthSharedPreference {
+
   @override
   String build() {
     final prefs = ref.watch(sharedPreferencesProvider);
